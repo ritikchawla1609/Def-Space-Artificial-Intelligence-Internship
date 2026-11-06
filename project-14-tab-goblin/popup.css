@@ -1,0 +1,210 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #0b1120;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --goblin-green: #059669;
+  --goblin-amber: #f59e0b;
+  --goblin-red: #ef4444;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 350px;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.goblin-app {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Header */
+.goblin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.goblin-meta h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.goblin-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.goblin-avatar {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s ease;
+}
+
+.goblin-avatar:hover {
+  transform: scale(1.1);
+}
+
+/* Tabs Scroll Area */
+.tabs-scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tabs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.tab-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tab-item-card:hover {
+  border-color: #38bdf8;
+  background-color: #1a2538;
+}
+
+.tab-item-card.is-asleep {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
+.tab-title-tag {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.age-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.btn-keep {
+  background: none;
+  border: 1px solid #475569;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10.5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-keep.active {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+/* Sessions Section */
+.sessions-section {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-input);
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+/* Footer Actions */
+.goblin-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #334155;
+}
+
+.btn-feed {
+  background: linear-gradient(90deg, #059669 0%, #047857 100%);
+  color: #fff;
+}
+
+.btn-feed:hover {
+  background: linear-gradient(90deg, #047857 0%, #065f46 100%);
+}
+
+.btn-xs {
+  background: none;
+  border: none;
+  color: #38bdf8;
+  cursor: pointer;
+  font-size: 11px;
+}

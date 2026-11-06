@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Focus Board — Interactive Extension Testbed</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f0f0f; color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    
+    /* Top Bar */
+    .yt-navbar { height: 56px; background-color: #0f0f0f; border-bottom: 1px solid #272727; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+    .yt-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+    .yt-logo span { color: #ff0000; font-size: 20px; }
+    .ext-badge { background: #2563eb; color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    
+    /* Main Layout */
+    .yt-main { display: grid; grid-template-columns: 1fr 380px; flex: 1; overflow: hidden; }
+    .video-area { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+    
+    /* Video Player */
+    .video-player-container { background: #000; border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; position: relative; border: 1px solid #272727; }
+    canvas#simPlayer { width: 100%; height: 100%; display: block; }
+    .player-controls { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); padding: 12px; display: flex; align-items: center; gap: 12px; }
+    .btn-play { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
+    .time-readout { font-family: monospace; font-size: 13px; color: #aaa; }
+    
+    .video-info h2 { font-size: 18px; margin-bottom: 6px; }
+    .video-meta { font-size: 12px; color: #aaa; }
+    
+    /* Comments section */
+    .comments-section { background: #181818; border-radius: 8px; padding: 16px; border: 1px solid #272727; }
+    .comments-section h3 { font-size: 14px; margin-bottom: 8px; }
+    
+    /* Right Focus Sidebar (Matching PDF Page 11 screenshot) */
+    .focus-sidebar { background: #121212; border-left: 1px solid #272727; display: flex; flex-direction: column; padding: 20px; gap: 16px; overflow-y: auto; }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #272727; padding-bottom: 10px; }
+    .sidebar-title { font-size: 15px; font-weight: 700; color: #fff; }
+    .today-tag { font-size: 12px; color: #38bdf8; font-weight: 600; }
+    
+    /* Switches card */
+    .card { background: #1e1e1e; border-radius: 8px; padding: 14px; border: 1px solid #2f2f2f; display: flex; flex-direction: column; gap: 10px; font-size: 12.5px; }
+    .switch-row { display: flex; justify-content: space-between; align-items: center; }
+    
+    /* Gate Box */
+    .gate-box { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; }
+    .gate-box h4 { font-size: 12px; color: #f87171; margin-bottom: 4px; }
+    .gate-box p { font-size: 12px; color: #cbd5e1; font-style: italic; }
+    
+    /* Study List */
+    .study-item { display: flex; align-items: center; gap: 8px; padding: 8px; background: #242424; border-radius: 6px; font-size: 12px; cursor: pointer; }
+    .study-item.active { border-left: 3px solid #ff0000; background: #2a2a2a; }
+    
+    /* Timestamp notes */
+    .note-pill { background: #272727; border-radius: 6px; padding: 8px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 2px; cursor: pointer; transition: all 0.15s ease; }
+    .note-pill:hover { background: #333; }
+    .note-time { color: #38bdf8; font-family: monospace; font-weight: 700; }
+    
+    /* Recommended list (hidden when toggled) */
+    .recommendations-box { background: #1a1a1a; padding: 14px; border-radius: 8px; border: 1px dashed #444; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+    }
+    .nav-back-pill:hover { background: rgba(239, 68, 68, 0.3); border-color: #ef4444; }
+
+    @media (max-width: 900px) {
+      body { height: auto; overflow-y: auto; }
+      .yt-main { grid-template-columns: 1fr; overflow: visible; }
+      .focus-sidebar { border-left: none; border-top: 1px solid #272727; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="yt-navbar">
+    <div style="display:flex; align-items:center;">
+      <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+      <div class="yt-logo"><span>▶</span> YouTube <span class="ext-badge">Focus Board Active</span></div>
+    </div>
+    <div style="font-size: 12px; color: #aaa;">url: youtube.com/watch?v=thermo4</div>
+  </nav>
+
+  <main class="yt-main">
+    <!-- Left Video & Content Area -->
+    <section class="video-area">
+      <div class="video-player-container">
+        <canvas id="simPlayer" width="640" height="360"></canvas>
+        <div class="player-controls">
+          <button class="btn-play" id="btnPlayPause">▶</button>
+          <div class="time-readout" id="videoTimeReadout">00:00 / 45:00</div>
+          <span style="font-size: 11px; color: #38bdf8; margin-left: auto;">Click timestamp notes to jump player</span>
+        </div>
+      </div>
+
+      <div class="video-info">
+        <h2>Lecture 2: Carnot Cycle & Second Law of Thermodynamics</h2>
+        <div class="video-meta">Prof. R. Sharma · Bharat Space Education · 182K views</div>
+      </div>
+
+      <!-- Distraction Sections to be hidden by extension -->
+      <div class="comments-section" id="commentsSection">
+        <h3>Comments (342)</h3>
+        <p style="font-size: 12px; color: #888;">Comments are visible. Toggle 'Hide Comments' in Focus Board to eliminate this distraction.</p>
+      </div>
+
+      <div class="recommendations-box" id="recsSection">
+        <h4 style="font-size: 13px; margin-bottom: 6px;">Recommended Shorts & Next Videos</h4>
+        <p style="font-size: 12px; color: #888;">Recommended algorithm feeds are currently visible. Toggle 'Hide Recommendations' in the sidebar to remove.</p>
+      </div>
+    </section>
+
+    <!-- Right Focus Board Panel (Strictly Matching PDF Page 11) -->
+    <aside class="focus-sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Study Board</span>
+        <span class="today-tag" id="sidebarTodayTime">Today: 38 min</span>
+      </div>
+
+      <!-- "Why Are You Here?" Gate -->
+      <div class="gate-box">
+        <h4>Why are you here?</h4>
+        <p id="dispGateReason">"Revising thermodynamics"</p>
+        <span style="font-size: 11px; color: #38bdf8; display: block; margin-top: 4px;">Session unlocks YouTube for 60 minutes</span>
+      </div>
+
+      <!-- Distraction Toggles -->
+      <div class="card">
+        <div class="switch-row">
+          <span>Shorts & recommendations hidden</span>
+          <input type="checkbox" id="chkShortsRecs" checked>
+        </div>
+        <div class="switch-row">
+          <span>Comments hidden</span>
+          <input type="checkbox" id="chkComm" checked>
+        </div>
+      </div>
+
+      <!-- Study List -->
+      <div class="card">
+        <div style="font-weight: 700; font-size: 12px; margin-bottom: 4px;">Study list</div>
+        <div class="study-item" id="itemLec1">✓ Lecture 1: First Law</div>
+        <div class="study-item active" id="itemLec2">▶ Lecture 2: Carnot Cycle</div>
+      </div>
+
+      <!-- Timestamped Notes -->
+      <div class="card">
+        <div style="font-weight: 700; font-size: 12px; margin-bottom: 4px;">Notes linked to timestamps</div>
+        <div class="note-pill" onclick="jumpTo(760)">
+          <span class="note-time">12:40 · Carnot cycle</span>
+          <span style="color:#ddd;">Ideal heat engine efficiency derivation</span>
+        </div>
+        <div class="note-pill" onclick="jumpTo(1455)" style="margin-top:6px;">
+          <span class="note-time">24:15 · Entropy formula</span>
+          <span style="color:#ddd;">Clausius inequality and reversibility</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const simPlayer = document.getElementById('simPlayer');
+    const pCtx = simPlayer.getContext('2d');
+    const videoTimeReadout = document.getElementById('videoTimeReadout');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const commentsSection = document.getElementById('commentsSection');
+    const recsSection = document.getElementById('recsSection');
+    const chkShortsRecs = document.getElementById('chkShortsRecs');
+    const chkComm = document.getElementById('chkComm');
+    const sidebarTodayTime = document.getElementById('sidebarTodayTime');
+
+    let isPlaying = false;
+    let currentSeconds = 760; // 12:40 start
+    let totalSeconds = 45 * 60;
+    let studyMinutesToday = 38;
+
+    function renderPlayerCanvas() {
+      pCtx.fillStyle = '#0f172a';
+      pCtx.fillRect(0, 0, simPlayer.width, simPlayer.height);
+
+      // Blackboard / Chalkboard graphic
+      pCtx.fillStyle = '#1e293b';
+      pCtx.roundRect(40, 30, simPlayer.width - 80, simPlayer.height - 70, 8);
+      pCtx.fill();
+
+      pCtx.fillStyle = '#38bdf8';
+      pCtx.font = 'bold 18px monospace';
+      pCtx.fillText("THERMODYNAMICS: CARNOT CYCLE", 60, 70);
+
+      pCtx.fillStyle = '#f8fafc';
+      pCtx.font = '14px sans-serif';
+      pCtx.fillText("eta = 1 - (Tc / Th) = W_net / Q_in", 60, 110);
+      pCtx.fillText("Current Video Timestamp: " + formatSecs(currentSeconds), 60, 150);
+
+      // Diagram
+      pCtx.strokeStyle = '#ef4444';
+      pCtx.lineWidth = 2;
+      pCtx.strokeRect(60, 180, 120, 80);
+      pCtx.fillStyle = '#cbd5e1';
+      pCtx.font = '12px sans-serif';
+      pCtx.fillText("Heat Engine", 80, 225);
+    }
+
+    function formatSecs(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    function jumpTo(seconds) {
+      currentSeconds = seconds;
+      videoTimeReadout.textContent = `${formatSecs(currentSeconds)} / ${formatSecs(totalSeconds)}`;
+      renderPlayerCanvas();
+    }
+
+    btnPlayPause.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlayPause.textContent = isPlaying ? '❚❚' : '▶';
+    });
+
+    chkShortsRecs.addEventListener('change', (e) => {
+      recsSection.style.display = e.target.checked ? 'none' : 'block';
+    });
+    chkComm.addEventListener('change', (e) => {
+      commentsSection.style.display = e.target.checked ? 'none' : 'block';
+    });
+
+    setInterval(() => {
+      if (isPlaying) {
+        currentSeconds++;
+        videoTimeReadout.textContent = `${formatSecs(currentSeconds)} / ${formatSecs(totalSeconds)}`;
+        renderPlayerCanvas();
+      }
+    }, 1000);
+
+    // Initial state
+    recsSection.style.display = 'none';
+    commentsSection.style.display = 'none';
+    renderPlayerCanvas();
+    videoTimeReadout.textContent = `${formatSecs(currentSeconds)} / ${formatSecs(totalSeconds)}`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "sourceFile": "raw-video.mp4",
+  "originalDuration": 312.4,
+  "segments": [
+    { "id": 1, "start": 0.0, "end": 6.8, "text": "Welcome back! Today I'm demonstrating how autonomous AI agents are changing software engineering forever.", "keep": true },
+    { "id": 2, "start": 6.8, "end": 14.8, "text": "[Silence 8.0s - adjusting camera angle]", "keep": false, "reason": "0:07 · 8 s silence" },
+    { "id": 3, "start": 14.8, "end": 22.4, "text": "In traditional development, you spend days building boilerplate code, fixing minor button styling, and wiring APIs.", "keep": true },
+    { "id": 4, "start": 22.4, "end": 28.2, "text": "umm, so basically, like, you know what I mean...", "keep": false, "reason": "0:23 · \"umm, so basically\" filler" },
+    { "id": 5, "start": 28.2, "end": 38.5, "text": "With modern agentic tools, you direct the agent like an executive editor. You write high-level architectural requirements.", "keep": true },
+    { "id": 6, "start": 38.5, "end": 44.0, "text": "You write high-level architectural requirements. Let me rephrase that.", "keep": false, "reason": "0:39 · repeated sentence retake" },
+    { "id": 7, "start": 44.0, "end": 56.0, "text": "The agent creates the code, verifies edge cases, and delivers production-grade apps that run 100% offline.", "keep": true },
+    { "id": 8, "start": 56.0, "end": 64.5, "text": "[Silence 8.5s - coughing and sipping water]", "keep": false, "reason": "0:56 · 8.5 s silence" },
+    { "id": 9, "start": 64.5, "end": 74.0, "text": "We built 17 complete projects across web tools, phone apps, and extensions in just one week.", "keep": true },
+    { "id": 10, "start": 74.0, "end": 79.2, "text": "umm, so yeah, basically that's the whole point.", "keep": false, "reason": "1:14 · filler words" },
+    { "id": 11, "start": 79.2, "end": 90.0, "text": "Try building your own AI-powered tools today. Check out the repository link below and start creating!", "keep": true }
+  ]
+}

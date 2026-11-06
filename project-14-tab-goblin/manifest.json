@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Goblin — Memory Saver & Tab Manager",
+  "version": "1.0.0",
+  "description": "A goblin eats the tabs you ignored. Put idle tabs to sleep using tab discard without closing them, protect forms, and save sessions.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tab Goblin"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

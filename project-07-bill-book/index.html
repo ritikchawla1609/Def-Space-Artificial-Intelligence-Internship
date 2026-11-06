@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Book — Offline Shopkeeper Billing & UPI App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/qrious.min.js"></script>
+  <script src="assets/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Top System Header -->
+    <header class="app-topbar">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <span class="brand-icon">🧾</span>
+        <span class="shop-name-display" id="headerShopName">Sharma Stores</span>
+      </div>
+      <div class="top-actions">
+        <button id="btnProfileModal" class="btn-icon" title="Edit Shop Profile & UPI ID">⚙️</button>
+        <button id="btnViewToggle" class="btn-view-toggle">History</button>
+      </div>
+    </header>
+
+    <!-- Main Screens Viewport -->
+    <main class="app-viewport">
+      <!-- 1. BILLING / NEW BILL SCREEN -->
+      <section class="screen-view active" id="billingScreen">
+        <!-- Receipt Sheet Container (Capturable as Image) -->
+        <div class="receipt-card" id="receiptCard">
+          <div class="receipt-header">
+            <div>
+              <h2 id="receiptShopName">Sharma Stores</h2>
+              <div class="receipt-sub" id="receiptShopAddress">Main Market, Sector 4</div>
+              <div class="receipt-sub" id="receiptShopPhone">Phone: +91 98765 01234</div>
+            </div>
+            <div class="receipt-meta">
+              <span class="bill-num" id="receiptBillNumber">#104</span>
+              <span class="bill-date" id="receiptDate">05 Nov 2026</span>
+            </div>
+          </div>
+
+          <div class="receipt-divider"></div>
+
+          <!-- Items Table -->
+          <div class="items-table-header">
+            <span>Item</span>
+            <span>Qty</span>
+            <span>Rate</span>
+            <span>Amount</span>
+          </div>
+
+          <div class="receipt-items-list" id="receiptItemsList">
+            <!-- Dynamic rows e.g. Rice 2kg ₹120, Oil 1L ₹165 -->
+          </div>
+
+          <div class="receipt-divider"></div>
+
+          <!-- Totals Breakdown -->
+          <div class="receipt-totals">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span id="receiptSubtotal">₹285.00</span>
+            </div>
+            <div class="total-row discount-row" id="receiptDiscountRow" style="display: none;">
+              <span>Discount (<span id="receiptDisPct">0</span>%):</span>
+              <span id="receiptDiscountVal">-₹0.00</span>
+            </div>
+            <div class="total-row tax-row" id="receiptTaxRow" style="display: none;">
+              <span>GST (<span id="receiptTaxPct">0</span>%):</span>
+              <span id="receiptTaxVal">+₹0.00</span>
+            </div>
+            <div class="total-row grand-total">
+              <span>Total Payable:</span>
+              <span class="total-amount" id="receiptGrandTotal">₹285.00</span>
+            </div>
+          </div>
+
+          <!-- UPI QR Code Section -->
+          <div class="upi-section">
+            <div class="qr-canvas-wrapper">
+              <canvas id="upiQrCanvas"></canvas>
+            </div>
+            <div class="upi-instructions">
+              <strong>Scan with any UPI app</strong>
+              <div class="upi-apps-icons">GPay · PhonePe · Paytm · BHIM</div>
+              <div class="upi-id-tag" id="displayUpiId">UPI: sharmastores@oksbi</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Items Action Panel -->
+        <div class="item-entry-panel">
+          <div class="item-quick-select-row">
+            <select id="quickItemSelect" class="styled-select">
+              <option value="">-- Choose Item from Catalog --</option>
+              <option value="Rice (Basmati)|kg|60">Rice (Basmati) — ₹60/kg</option>
+              <option value="Sunflower Oil|L|165">Sunflower Oil — ₹165/L</option>
+              <option value="Wheat Flour (Atta)|kg|45">Wheat Flour (Atta) — ₹45/kg</option>
+              <option value="Sugar|kg|42">Sugar — ₹42/kg</option>
+              <option value="Toor Dal|kg|140">Toor Dal — ₹140/kg</option>
+              <option value="Masala Tea|pack|90">Masala Tea — ₹90/pack</option>
+            </select>
+          </div>
+
+          <div class="item-inputs-row">
+            <input type="text" id="inpItemName" placeholder="Item Name" class="input-field" style="flex: 2;">
+            <input type="number" id="inpQty" placeholder="Qty" value="1" min="1" step="0.5" class="input-field" style="flex: 1;">
+            <input type="number" id="inpRate" placeholder="Price ₹" value="120" class="input-field" style="flex: 1.2;">
+            <button id="btnAddItem" class="btn btn-sm btn-primary">+ Add</button>
+          </div>
+
+          <div class="tax-discount-row">
+            <div class="inline-field">
+              <label>Discount %:</label>
+              <input type="number" id="inpDiscount" min="0" max="100" value="0">
+            </div>
+            <div class="inline-field">
+              <label>GST Tax %:</label>
+              <input type="number" id="inpTax" min="0" max="28" value="0">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Action Bar (WhatsApp & Download) -->
+        <div class="billing-footer-actions">
+          <button id="btnShareWhatsapp" class="btn btn-whatsapp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            Share on WhatsApp
+          </button>
+          <button id="btnSaveImage" class="btn btn-secondary">
+            Save as Image
+          </button>
+          <button id="btnFinishBill" class="btn btn-success">
+            Save Bill & Next
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. SALES HISTORY SCREEN -->
+      <section class="screen-view" id="historyScreen" style="display: none;">
+        <!-- Daily Sales Summary Card (Matching PDF Page 9) -->
+        <div class="daily-sales-card">
+          <span class="sales-label">Today's Sales</span>
+          <div class="sales-grand" id="todaySalesAmount">₹4,860</div>
+          <div class="sales-count" id="todayBillsCount">5 bills generated today</div>
+        </div>
+
+        <div class="history-controls-row">
+          <input type="text" id="historySearch" placeholder="Search bill # or item..." class="input-field">
+          <button id="btnNewBillFromHistory" class="btn btn-primary btn-sm">+ New Bill</button>
+        </div>
+
+        <!-- Recent Bills List -->
+        <div class="bills-list-container" id="billsListContainer">
+          <!-- Populated dynamically e.g. #104 ₹285, #103 ₹640 -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Shop Profile Modal -->
+    <div class="modal-backdrop" id="profileModal" style="display: none;">
+      <div class="modal-sheet">
+        <div class="modal-header">
+          <h3>Shop & UPI Profile</h3>
+          <button class="btn-close" id="btnCloseProfile">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Shop Name:</label>
+            <input type="text" id="profShopName" value="Sharma Stores">
+          </div>
+          <div class="form-group">
+            <label>Merchant UPI ID (e.g. name@oksbi / name@paytm):</label>
+            <input type="text" id="profUpiId" value="sharmastores@oksbi">
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp Number:</label>
+            <input type="text" id="profPhone" value="+91 98765 01234">
+          </div>
+          <div class="form-group">
+            <label>Shop Address:</label>
+            <input type="text" id="profAddress" value="Main Market, Sector 4, New Delhi">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-block" id="btnSaveProfile">Save Shop Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

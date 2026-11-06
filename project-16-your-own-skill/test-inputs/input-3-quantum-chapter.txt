@@ -1,0 +1,20 @@
+=== CHAPTER 7: QUANTUM COMPUTING & SUPERPOSITION ===
+Author: Institute of Advanced Physics
+
+1. Fundamental Unit: The Qubit
+While a classical bit exists strictly in state |0> or |1>, a quantum qubit exists in a linear superposition:
+|psi> = alpha|0> + beta|1>, where |alpha|^2 + |beta|^2 = 1.
+The probabilities of measuring 0 or 1 correspond to |alpha|^2 and |beta|^2 respectively.
+
+2. Quantum Entanglement & Bell States
+Two qubits are entangled when their composite quantum state cannot be factored into product states of individual qubits.
+The canonical Bell State |Phi+> = (1 / sqrt(2)) * (|00> + |11>).
+Measuring the first qubit immediately collapses the second qubit, regardless of spatial separation.
+
+3. Quantum Gates
+- Hadamard Gate (H): Maps basis states |0> and |1> into equal superposition states.
+- Pauli-X (NOT gate): Flips |0> to |1> and vice versa.
+- CNOT (Controlled-NOT): Entangles two qubits based on control state.
+
+4. No-Cloning Theorem
+An unknown arbitrary quantum state cannot be duplicated identically without destroying the original state.

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle to Fix</title>
+  <style>
+    body { width: 300px; font-family: -apple-system, sans-serif; background: #0f172a; color: #fff; padding: 14px; margin: 0; font-size: 13px; }
+    h3 { font-size: 15px; margin-bottom: 8px; color: #f43f5e; display: flex; align-items: center; gap: 6px; }
+    p { font-size: 12px; color: #94a3b8; line-height: 1.4; margin-bottom: 12px; }
+    .shortcut-badge { background: #1e293b; border: 1px solid #334155; padding: 4px 8px; border-radius: 4px; font-family: monospace; color: #38bdf8; display: inline-block; margin-bottom: 12px; }
+    .btn { width: 100%; background: #f43f5e; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    .btn:hover { background: #e11d48; }
+    .footer-note { font-size: 11px; color: #10b981; margin-top: 10px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h3>⭕ Circle to Fix</h3>
+  <p>Circle any broken button, layout bug, or overflow on this page to create a prompt for your AI coding assistant.</p>
+  <div>Shortcut: <span class="shortcut-badge">Alt + Shift + C</span></div>
+  <button id="btnActivateDrawing" class="btn">Start Circle Mode ✏️</button>
+  <div class="footer-note">🔒 Sends zero data to any server</div>
+
+  <script>
+    document.getElementById('btnActivateDrawing').addEventListener('click', () => {
+      if (window.chrome && chrome.tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          if (tabs[0]?.id) {
+            chrome.tabs.sendMessage(tabs[0].id, { type: 'START_DRAWING' });
+            window.close();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

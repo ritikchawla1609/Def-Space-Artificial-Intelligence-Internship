@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Focus Board — Study & Distraction Blocker",
+  "version": "1.0.0",
+  "description": "Block Shorts, recommendations, and comments on YouTube. Add timestamped study notes and intentionality session gates.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YouTube Focus Board"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Goblin — Interactive Extension Testbed</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: 100vw; height: 100vh; overflow-y: auto; background-color: #0b0f19; padding: 24px; }
+    .testbed-layout { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+    
+    /* Simulated 47-tab browser window */
+    .browser-window-sim { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .browser-tabs-strip { background: #0f172a; padding: 8px 10px; display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid #334155; }
+    .sim-tab-pill { background: #1e293b; color: #94a3b8; padding: 4px 10px; border-radius: 6px; font-size: 11px; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+    .sim-tab-pill.active { background: #334155; color: #fff; }
+    .sim-tab-pill.asleep { opacity: 0.5; border: 1px dashed #64748b; }
+    
+    .browser-page-body { padding: 30px; display: flex; flex-direction: column; gap: 16px; background: #0b1120; min-height: 400px; color: #f8fafc; }
+    .form-protection-demo { background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; border-radius: 8px; padding: 16px; }
+    
+    /* Extension Floating Popup */
+    .ext-widget-frame { background: #0f172a; border: 2px solid #059669; border-radius: 14px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); height: fit-content; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 4px;
+    }
+    .nav-back-pill:hover { background: rgba(5, 150, 105, 0.3); border-color: #059669; }
+
+    @media (max-width: 900px) {
+      body { padding: 12px; }
+      .testbed-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="testbed-layout">
+    <!-- Simulated Browser with 47 tabs -->
+    <div class="browser-window-sim">
+      <div class="browser-tabs-strip" id="browserTabsStrip">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <!-- Rendered tabs -->
+      </div>
+      <div class="browser-page-body">
+        <h2 style="font-size: 20px;">Current Tab: Internship Application Form</h2>
+        <p style="color: #94a3b8; font-size: 13px;">This page simulates a half-filled form protected by the Goblin's "Keep List".</p>
+
+        <div class="form-protection-demo">
+          <h4 style="color: #60a5fa; margin-bottom: 8px;">🛡️ Form Protection Guarantee:</h4>
+          <p style="font-size: 12px; line-height: 1.5; color: #cbd5e1;">
+            Requirement: <em>"A half-filled form is never lost."</em><br>
+            The Tab Goblin inspects form inputs and adheres to user whitelist tags (Keep), ensuring active work is never discarded or closed.
+          </p>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 14px; font-size: 12.5px; color: #a7f3d0;">
+          <strong>Memory Discard API Active:</strong> Discarding tabs releases 70%+ background RAM while leaving tabs accessible in the browser tab bar!
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Tab Goblin Extension Widget (Matching PDF Page 16) -->
+    <aside class="ext-widget-frame">
+      <div class="goblin-app" style="width: 100%; padding: 0;">
+        <header class="goblin-header">
+          <div class="goblin-meta">
+            <h2 id="totalTabsCountText">47 tabs open</h2>
+            <div class="goblin-sub" id="goblinStatusSub">31 asleep · goblin is full</div>
+          </div>
+          <div class="goblin-avatar" id="goblinAvatar">
+            <svg id="goblinSvg" viewBox="0 0 100 100" width="48" height="48">
+              <circle id="goblinFace" cx="50" cy="50" r="42" fill="#059669"/>
+              <polygon points="12,42 0,20 25,32" fill="#047857"/>
+              <polygon points="88,42 100,20 75,32" fill="#047857"/>
+              <circle cx="36" cy="44" r="7" fill="#ffffff"/>
+              <circle cx="64" cy="44" r="7" fill="#ffffff"/>
+              <circle cx="38" cy="45" r="3.5" fill="#0f172a"/>
+              <circle cx="66" cy="45" r="3.5" fill="#0f172a"/>
+              <path id="goblinMouth" d="M 30 68 Q 50 82 70 68" stroke="#0f172a" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </header>
+
+        <section class="tabs-scroll-area">
+          <div class="list-heading">
+            <span>Tabs by Last Activity</span>
+            <span style="font-size: 11px; color: #38bdf8;">Idle Tabs Ranked</span>
+          </div>
+          <div class="tabs-list" id="tabsList"></div>
+        </section>
+
+        <section class="sessions-section" id="sessionsSection" style="display: none;">
+          <div class="list-heading">
+            <span>Saved Sessions</span>
+            <button id="btnCloseSessions" class="btn-xs">Close</button>
+          </div>
+          <div class="sessions-list" id="sessionsList"></div>
+        </section>
+
+        <footer class="goblin-footer">
+          <button id="btnSaveSession" class="btn btn-secondary">Save session</button>
+          <button id="btnFeedGoblin" class="btn btn-feed">Feed the goblin 🍖</button>
+        </footer>
+      </div>
+    </aside>
+  </div>
+
+  <script src="popup.js"></script>
+  <script>
+    // Populate top 47 tabs strip
+    const strip = document.getElementById('browserTabsStrip');
+    const demoTitles = [
+      'Physics lecture (3d)', 'Laptop prices (6d)', 'Internship form [Keep]',
+      'GitHub repo', 'Reddit keyboards', 'Gmail inbox', 'AWS console',
+      'Claude chat', 'HuggingFace', 'StackOverflow', 'MDN Web docs',
+      'arXiv paper', 'Notion workspace', 'Spotify web', 'LeetCode #42'
+    ];
+    for (let i = 0; i < 35; i++) {
+      const pill = document.createElement('div');
+      pill.className = `sim-tab-pill ${i === 2 ? 'active' : (i > 5 ? 'asleep' : '')}`;
+      const title = demoTitles[i % demoTitles.length];
+      pill.innerHTML = `<span>${i > 5 ? '💤' : '🌐'}</span> <span>${title}</span>`;
+      strip.appendChild(pill);
+    }
+  </script>
+</body>
+</html>

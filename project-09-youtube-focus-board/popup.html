@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Focus Board</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="header">
+      <div class="brand">
+        <span class="logo">🎯</span>
+        <span class="title">Focus Board</span>
+      </div>
+      <div class="today-time">
+        Today: <strong id="todayTimeText">38 min</strong>
+      </div>
+    </header>
+
+    <!-- Focus Distraction Toggles -->
+    <section class="toggles-card">
+      <div class="toggle-row">
+        <span>Hide YouTube Shorts</span>
+        <label class="switch">
+          <input type="checkbox" id="chkHideShorts" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>Hide Recommended Videos</span>
+        <label class="switch">
+          <input type="checkbox" id="chkHideRecs" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>Hide Comments Section</span>
+        <label class="switch">
+          <input type="checkbox" id="chkHideComments" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- "Why Are You Here?" Gate -->
+    <section class="gate-card" id="gateCard">
+      <div class="gate-header">
+        <span class="gate-icon">🛡️</span>
+        <span class="gate-title">Intentionality Gate</span>
+      </div>
+      <div id="gateActiveStatus" class="gate-status">
+        Session: <strong id="gateTimeLeft">48 mins remaining</strong>
+        <div class="gate-purpose" id="gatePurposeText">"Revising Thermodynamics Chapter 4"</div>
+      </div>
+      <div id="gateUnlockForm" style="display: none;">
+        <label>Why are you opening YouTube?</label>
+        <input type="text" id="inpGateReason" placeholder="e.g. Watching lecture 2 on Carnot cycle...">
+        <button id="btnUnlock60" class="btn btn-primary btn-sm">Unlock for 60 Minutes</button>
+      </div>
+    </section>
+
+    <!-- Study List & Timestamped Notes -->
+    <section class="study-card">
+      <div class="card-tabs">
+        <button id="tabStudyList" class="tab-btn active">Study List</button>
+        <button id="tabNotes" class="tab-btn">Timestamp Notes</button>
+      </div>
+
+      <!-- Study List View -->
+      <div id="studyListView" class="tab-content">
+        <div class="items-list" id="studyListItems">
+          <!-- Rendered items -->
+        </div>
+        <div class="add-row">
+          <input type="text" id="inpNewVideo" placeholder="Add video title or URL...">
+          <button id="btnAddVideo" class="btn btn-sm btn-secondary">+ Add</button>
+        </div>
+      </div>
+
+      <!-- Timestamp Notes View -->
+      <div id="notesView" class="tab-content" style="display: none;">
+        <div class="items-list" id="notesListItems">
+          <!-- Rendered timestamp notes -->
+        </div>
+        <div class="add-row">
+          <input type="text" id="inpNoteTime" placeholder="12:40" style="width: 55px;">
+          <input type="text" id="inpNoteText" placeholder="Note (e.g. Carnot efficiency derivation)..." style="flex: 1;">
+          <button id="btnAddNote" class="btn btn-sm btn-secondary">+ Note</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>100% Offline · Survives Chrome restart</span>
+      <a href="index.html" target="_blank" class="testbed-link">Open Testbed ↗</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

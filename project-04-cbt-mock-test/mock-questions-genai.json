@@ -1,0 +1,149 @@
+{
+  "examTitle": "GenAI & Systems Architecture Assessment (15 Questions)",
+  "durationMinutes": 30,
+  "positiveMarks": 4,
+  "negativeMarks": 1,
+  "subjects": ["Generative AI", "Software Architecture", "Browser Engineering"],
+  "questions": [
+    {
+      "id": 1,
+      "subject": "Generative AI",
+      "question": "In Transformer self-attention, what is the computational complexity with respect to sequence length N?",
+      "options": ["O(N)", "O(N log N)", "O(N^2)", "O(N^3)"],
+      "correct": 2,
+      "explanation": "Standard self-attention computes an N x N attention matrix (Q * K^T), resulting in O(N^2) memory and time complexity."
+    },
+    {
+      "id": 2,
+      "subject": "Generative AI",
+      "question": "Which temperature parameter value produces the most deterministic greedy token sampling in LLMs?",
+      "options": ["T = 0.0", "T = 0.7", "T = 1.0", "T = 2.0"],
+      "correct": 0,
+      "explanation": "Temperature = 0 collapses the softmax probability distribution onto the argmax token, generating strictly deterministic output."
+    },
+    {
+      "id": 3,
+      "subject": "Generative AI",
+      "question": "What is the primary function of Vector Embeddings in Retrieval-Augmented Generation (RAG)?",
+      "options": [
+        "To encrypt user queries",
+        "To map semantic meaning into high-dimensional geometric proximity",
+        "To compress text into zip format",
+        "To fine-tune model weights"
+      ],
+      "correct": 1,
+      "explanation": "Embeddings project semantic meaning into dense vectors where cosine distance reflects conceptual similarity."
+    },
+    {
+      "id": 4,
+      "subject": "Generative AI",
+      "question": "In LoRA (Low-Rank Adaptation), parameter-efficient fine-tuning is achieved by decomposing weight update delta-W into:",
+      "options": ["Eigenvalues only", "Two low-rank matrices B and A such that W = W0 + B*A", "Random gaussian noise", "Scalar multipliers"],
+      "correct": 1,
+      "explanation": "LoRA constrains the rank of delta-W through matrix multiplication of rank r << d, drastically reducing trainable parameters."
+    },
+    {
+      "id": 5,
+      "subject": "Generative AI",
+      "question": "What technique avoids catastrophic forgetting during sequential task learning in AI?",
+      "options": ["Gradient Ascent", "Elastic Weight Consolidation / Replay buffers", "Random dropout 0.99", "Zero initialization"],
+      "correct": 1,
+      "explanation": "Elastic Weight Consolidation slows down learning on weights critical to previous tasks, preventing catastrophic forgetting."
+    },
+    {
+      "id": 6,
+      "subject": "Software Architecture",
+      "question": "Which design pattern is best suited for decoupling notification producers from unknown consumers?",
+      "options": ["Singleton", "Observer / Pub-Sub", "Decorator", "Factory Method"],
+      "correct": 1,
+      "explanation": "Observer/Pub-Sub enables loose coupling where publishers dispatch events to registered subscribers without tight dependencies."
+    },
+    {
+      "id": 7,
+      "subject": "Software Architecture",
+      "question": "What does the 'I' represent in SOLID principles of object-oriented design?",
+      "options": ["Inheritance Hierarchy", "Interface Segregation Principle", "Inversion of Control", "Immutable State"],
+      "correct": 1,
+      "explanation": "Interface Segregation states that clients should not be forced to depend upon interfaces they do not use."
+    },
+    {
+      "id": 8,
+      "subject": "Software Architecture",
+      "question": "In ACID database transactions, what does Isolation guarantee?",
+      "options": [
+        "Transactions run entirely on separate physical disks",
+        "Concurrent execution of transactions leaves the database in the same state as if executed serially",
+        "Data is never deleted",
+        "Hardware failures are prevented"
+      ],
+      "correct": 1,
+      "explanation": "Isolation prevents race conditions and dirty reads by ensuring concurrent transactions execute without interference."
+    },
+    {
+      "id": 9,
+      "subject": "Software Architecture",
+      "question": "Which data structure provides amortized O(1) time complexity for lookup, insertion, and deletion?",
+      "options": ["Binary Search Tree", "Hash Table", "Skip List", "Red-Black Tree"],
+      "correct": 1,
+      "explanation": "Hash tables compute array index via hashing function providing O(1) amortized average operations."
+    },
+    {
+      "id": 10,
+      "subject": "Software Architecture",
+      "question": "In Distributed Systems, what does CAP theorem state is impossible to guarantee simultaneously in network partitions?",
+      "options": ["Consistency and Availability", "Concurrency and Portability", "Speed and Reliability", "Accuracy and Compression"],
+      "correct": 0,
+      "explanation": "Under network partition (P), a distributed system must trade off between Consistency (C) and Availability (A)."
+    },
+    {
+      "id": 11,
+      "subject": "Browser Engineering",
+      "question": "What is the primary benefit of Service Workers in Progressive Web Apps (PWAs)?",
+      "options": [
+        "Accessing native GPU assembly instructions directly",
+        "Interception of network requests and offline asset caching",
+        "Bypassing Same-Origin Policy",
+        "Executing root level shell commands"
+      ],
+      "correct": 1,
+      "explanation": "Service Workers run in a background thread intercepting HTTP fetch requests, enabling instant offline cache serving."
+    },
+    {
+      "id": 12,
+      "subject": "Browser Engineering",
+      "question": "In Chrome Extension Manifest V3, what replaces persistent background pages?",
+      "options": ["ActiveX plugins", "Ephemeral Service Workers", "Native C++ daemons", "WebSocket servers"],
+      "correct": 1,
+      "explanation": "Manifest V3 replaces background pages with event-driven Service Workers that sleep when idle to preserve system RAM."
+    },
+    {
+      "id": 13,
+      "subject": "Browser Engineering",
+      "question": "Which browser API permits high-performance 2D raster and vector graphics rendering via JavaScript?",
+      "options": ["HTML5 Canvas 2D Context", "Web Audio API", "Web Bluetooth", "Geolocation API"],
+      "correct": 0,
+      "explanation": "HTMLCanvasElement.getContext('2d') gives direct low-level immediate-mode rendering capabilities."
+    },
+    {
+      "id": 14,
+      "subject": "Browser Engineering",
+      "question": "What Chrome API function allows discarding a tab's background memory while keeping its tab entry in the browser tab strip?",
+      "options": ["chrome.tabs.remove()", "chrome.tabs.discard()", "chrome.tabs.reload()", "chrome.tabs.mute()"],
+      "correct": 1,
+      "explanation": "chrome.tabs.discard() unloads the tab's DOM and processes from RAM while leaving the tab in the strip for instant waking."
+    },
+    {
+      "id": 15,
+      "subject": "Browser Engineering",
+      "question": "How does `requestAnimationFrame` differ from `setInterval(..., 16)`?",
+      "options": [
+        "It synchronizes rendering callbacks to the display refresh rate and pauses in hidden tabs",
+        "It runs on a separate GPU thread",
+        "It uses 10x more battery",
+        "There is no difference"
+      ],
+      "correct": 0,
+      "explanation": "requestAnimationFrame aligns execution with the V-Sync refresh cycle and automatically pauses when the tab is backgrounded."
+    }
+  ]
+}

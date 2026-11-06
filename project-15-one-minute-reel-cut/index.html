@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Minute Reel Cut — Video Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="reel-cut-app">
+    <!-- Top Bar -->
+    <header class="app-bar">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <span class="icon">✂️</span>
+        <span class="title">One-Minute Reel Cut</span>
+        <span class="badge">9:16 Vertical</span>
+      </div>
+      <div class="top-meta">
+        <span id="targetDurationBadge" class="duration-badge">Reel Duration: 0:58 (≤ 60s) ✓</span>
+      </div>
+    </header>
+
+    <!-- Main Workspace: Phone Preview on Left, Edit Plan on Right -->
+    <main class="reel-workspace">
+      <!-- Left: 9:16 Vertical Phone Preview Screen (Matching PDF Page 17 screenshot) -->
+      <section class="phone-preview-col">
+        <div class="phone-bezel">
+          <div class="phone-screen-inner">
+            <canvas id="reelCanvas" width="360" height="640"></canvas>
+            
+            <!-- Video Playback Controls Bar -->
+            <div class="reel-playback-bar">
+              <button id="btnPlayReel" class="btn-play">▶</button>
+              <div class="reel-progress-track" id="reelProgressTrack">
+                <div class="reel-progress-fill" id="reelProgressFill" style="width: 0%;"></div>
+              </div>
+              <span class="reel-time" id="reelTimeDisplay">0:00 / 0:58</span>
+            </div>
+
+            <div class="phone-notch">9:16 · 0:58</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Interactive Edit Plan & Timeline (Matching PDF Page 17) -->
+      <section class="edit-plan-col">
+        <div class="edit-plan-card">
+          <div class="card-header">
+            <div>
+              <h2 class="filename-title">raw-video.mp4</h2>
+              <span class="raw-duration">Raw Duration: 5:12</span>
+            </div>
+            <div class="plan-legend">
+              <span class="legend-swatch stay"></span> Red stays
+              <span class="legend-swatch cut"></span> Hatched gets cut
+            </div>
+          </div>
+
+          <!-- Visual Timeline Ribbon Bar -->
+          <div class="timeline-ribbon-container">
+            <div class="timeline-ribbon" id="timelineRibbon">
+              <!-- Rendered segments: Red bars for kept, Hatched grey for cut -->
+            </div>
+          </div>
+
+          <!-- Cut Decisions List (Matching PDF screenshot) -->
+          <div class="segments-list-container">
+            <div class="list-heading">Detected Silences, Fillers & Retakes:</div>
+            <div class="segments-list" id="segmentsList">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Edit Options & Controls -->
+          <div class="options-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkHighlightCaptions" checked> Burn-in Animated Highlighted Subtitles
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkAudioFades" checked> Add 0.5s Audio Fade-In & Out
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkTitleCard" checked> Intro Hook Title: "Agents do the work"
+            </label>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="action-buttons-row">
+            <button id="btnResetPlan" class="btn btn-secondary">Change plan</button>
+            <button id="btnRenderReel" class="btn btn-primary btn-large">Render reel 🎬</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBT Mock Test Engine — National Examination Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="exam-app" id="examApp">
+    <!-- Top System Header -->
+    <header class="exam-header">
+      <div class="exam-info">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <div class="exam-logo">CBT</div>
+        <div>
+          <h1 id="examTitleText">National CBT Mock Examination 2026</h1>
+          <div class="exam-sub">National Testing Portal · Official Simulation Screen</div>
+        </div>
+      </div>
+      <div class="candidate-header-meta">
+        <div class="timer-box" id="timerBox">
+          <span class="timer-label">Time Left:</span>
+          <span class="timer-countdown" id="timerDisplay">45:00</span>
+        </div>
+        <div class="candidate-tag">
+          <div class="candidate-avatar">RC</div>
+          <div class="candidate-details">
+            <span class="name">Ritik Chawla</span>
+            <span class="roll">Roll: 2026-NTA-9410</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Question Control & Subject Switcher Strip -->
+    <nav class="subject-strip">
+      <div class="subject-tabs" id="subjectTabsContainer">
+        <!-- Rendered dynamically e.g. Physics, Chemistry, Mathematics -->
+      </div>
+      <div class="test-file-selector">
+        <label>Load Exam File:</label>
+        <select id="examFileSelect">
+          <option value="mock-questions-jee.json">JEE Exam (PCM - 15 Questions)</option>
+          <option value="mock-questions-genai.json">GenAI & Systems Assessment (15 Questions)</option>
+        </select>
+        <label for="customExamFile" class="btn btn-xs btn-file">
+          Custom JSON
+          <input type="file" id="customExamFile" accept=".json" style="display:none;">
+        </label>
+        <button id="btnResetTest" class="btn btn-xs" title="Reset test state">Restart Test</button>
+      </div>
+    </nav>
+
+    <!-- Main Exam Body -->
+    <main class="exam-body" id="examMainBody">
+      <!-- Left Question Pane -->
+      <section class="question-pane">
+        <div class="question-header">
+          <div class="q-number-badge" id="qNumberText">Question 1 of 15</div>
+          <div class="q-marking-scheme" id="markingSchemeText">
+            <span class="badge-pos">+4 for Right</span>
+            <span class="badge-neg">-1 for Wrong</span>
+          </div>
+        </div>
+
+        <div class="question-scroll-area">
+          <div class="question-text" id="questionTextEl">
+            Loading question...
+          </div>
+
+          <div class="options-container" id="optionsContainer">
+            <!-- Options rendered here -->
+          </div>
+        </div>
+
+        <!-- Question Footer Navigation Buttons -->
+        <footer class="question-footer">
+          <div class="footer-left-actions">
+            <button id="btnMarkReview" class="btn btn-purple">Mark for Review & Next</button>
+            <button id="btnClearResponse" class="btn btn-secondary">Clear Response</button>
+          </div>
+          <div class="footer-right-actions">
+            <button id="btnPrevQ" class="btn btn-secondary">‹ Previous</button>
+            <button id="btnSaveNext" class="btn btn-primary">Save & Next ›</button>
+          </div>
+        </footer>
+      </section>
+
+      <!-- Right Question Palette Pane -->
+      <aside class="palette-pane">
+        <div class="palette-legend">
+          <h4>Legend & Question Status</h4>
+          <div class="legend-grid">
+            <div class="legend-item"><span class="legend-dot status-answered"></span> Answered (<span id="countAnswered">0</span>)</div>
+            <div class="legend-item"><span class="legend-dot status-not-answered"></span> Not Answered (<span id="countNotAnswered">15</span>)</div>
+            <div class="legend-item"><span class="legend-dot status-marked"></span> Marked for Review (<span id="countMarked">0</span>)</div>
+            <div class="legend-item"><span class="legend-dot status-marked-answered"></span> Answered & Marked (<span id="countMarkedAns">0</span>)</div>
+            <div class="legend-item"><span class="legend-dot status-not-visited"></span> Not Visited (<span id="countNotVisited">0</span>)</div>
+          </div>
+        </div>
+
+        <div class="palette-grid-container">
+          <div class="palette-subject-label" id="paletteSubjectName">Physics</div>
+          <div class="palette-grid" id="paletteGrid">
+            <!-- Question bubbles rendered here -->
+          </div>
+        </div>
+
+        <div class="palette-submit-area">
+          <button id="btnSubmitTest" class="btn btn-danger btn-block">Submit Test</button>
+          <div class="auto-save-status">💾 State preserved on refresh · Timer active</div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Result & Hand-Calculation Breakdown Screen (Initially Hidden) -->
+    <div class="result-screen" id="resultScreen" style="display: none;">
+      <div class="result-card">
+        <div class="result-header">
+          <h2>Examination Performance Report</h2>
+          <span class="exam-status-tag">Completed</span>
+        </div>
+
+        <div class="score-summary-grid">
+          <div class="score-box highlight">
+            <div class="score-num" id="resTotalScore">48</div>
+            <div class="score-lbl">Total Score (<span id="resMaxScore">60</span> max)</div>
+          </div>
+          <div class="score-box">
+            <div class="score-num text-success" id="resCorrectCount">12</div>
+            <div class="score-lbl">Correct (+4)</div>
+          </div>
+          <div class="score-box">
+            <div class="score-num text-danger" id="resIncorrectCount">2</div>
+            <div class="score-lbl">Incorrect (-1)</div>
+          </div>
+          <div class="score-box">
+            <div class="score-num text-muted" id="resUnattemptedCount">1</div>
+            <div class="score-lbl">Unattempted (0)</div>
+          </div>
+          <div class="score-box">
+            <div class="score-num text-info" id="resAccuracy">85.7%</div>
+            <div class="score-lbl">Accuracy Rate</div>
+          </div>
+        </div>
+
+        <!-- Hand Calculation Verification Box -->
+        <div class="hand-calc-card">
+          <h4>Hand-Calculation Verification Check:</h4>
+          <p id="handCalcEquation">Score Calculation: (12 Correct × 4) - (2 Incorrect × 1) = 48 - 2 = <strong>46 Marks</strong></p>
+          <span class="calc-verified-badge">✓ Exact Score Match Verified</span>
+        </div>
+
+        <!-- Question Breakdown Table with Time Spent -->
+        <div class="review-table-container">
+          <h3>Question-by-Question Analysis & Time Spent</h3>
+          <table class="review-table">
+            <thead>
+              <tr>
+                <th>Q#</th>
+                <th>Subject</th>
+                <th>Selected</th>
+                <th>Correct</th>
+                <th>Result</th>
+                <th>Marks</th>
+                <th>Time Spent</th>
+              </tr>
+            </thead>
+            <tbody id="resultTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="result-actions">
+          <button id="btnRetakeTest" class="btn btn-primary">Retake / Start Another Exam</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

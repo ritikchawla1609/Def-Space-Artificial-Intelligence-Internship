@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reel Monster — Floating Screen Time Counter</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="device-container">
+    <!-- Top System Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <span class="monster-icon">👾</span>
+        <span class="brand-title">Reel Monster</span>
+      </div>
+      <div class="view-switchers">
+        <button id="btnSwitchFeed" class="btn-pill" title="Toggle between Instagram Reels & YouTube Shorts">
+          Feed: <span id="feedNameLabel">Instagram</span>
+        </button>
+        <button id="btnToggleAppView" class="btn-pill active" title="Toggle App Analytics Dashboard">
+          Stats
+        </button>
+      </div>
+    </header>
+
+    <!-- Phone Simulator Frame -->
+    <div class="phone-screen" id="phoneScreen">
+      <!-- Simulated Social Media Feed (Instagram Reels / YouTube Shorts) -->
+      <div class="feed-view" id="feedView">
+        <div class="feed-card" id="feedCard">
+          <div class="feed-header">
+            <span class="social-tag" id="socialTag">Instagram Reels</span>
+            <span class="audio-track">🎵 Trending Audio · 1.2M reels</span>
+          </div>
+
+          <div class="reel-media-placeholder" id="reelMediaPlaceholder">
+            <!-- Simulated Reel Content -->
+            <div class="reel-video-simulation">
+              <div class="reel-visual-icon" id="reelVisualIcon">🎬</div>
+              <h3 id="reelTitle">Life Hack #42: Never lose your focus again</h3>
+              <p id="reelAuthor">@creator_hub · Reel <span id="currentReelNum">1</span></p>
+            </div>
+          </div>
+
+          <!-- Social Right Action Bar -->
+          <div class="social-actions-sidebar">
+            <div class="action-btn">❤️ <span id="likeCount">142K</span></div>
+            <div class="action-btn">💬 <span>3.4K</span></div>
+            <div class="action-btn">↗️ <span>Share</span></div>
+            <div class="action-btn sound-disc">💿</div>
+          </div>
+
+          <!-- Bottom Swipe Controls -->
+          <div class="swipe-hint-bar">
+            <span>Swipe up or click below to simulate scrolling</span>
+            <button id="btnNextReel" class="btn-swipe-next">Next Reel ⬇</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Draggable Monster Overlay (Stays on Top of Social Apps) -->
+      <div class="monster-bubble" id="monsterBubble" style="top: 140px; right: 20px;">
+        <div class="monster-speech-bubble" id="monsterSpeechBubble">
+          Tap me +1
+        </div>
+        <div class="monster-avatar" id="monsterAvatar">
+          <!-- Animated Monster SVG -->
+          <svg id="monsterSvg" viewBox="0 0 100 100" width="70" height="70">
+            <!-- Body -->
+            <ellipse id="monsterBody" cx="50" cy="55" rx="38" ry="34" fill="#ec4899"/>
+            <!-- Cute Horns -->
+            <polygon points="32,25 24,10 40,22" fill="#be185d"/>
+            <polygon points="68,25 76,10 60,22" fill="#be185d"/>
+            <!-- Big Eyes -->
+            <circle cx="38" cy="46" r="10" fill="#ffffff"/>
+            <circle cx="62" cy="46" r="10" fill="#ffffff"/>
+            <circle id="pupilLeft" cx="40" cy="47" r="4.5" fill="#0f172a"/>
+            <circle id="pupilRight" cx="64" cy="47" r="4.5" fill="#0f172a"/>
+            <!-- Cute Mouth -->
+            <path id="monsterMouth" d="M 42 64 Q 50 72 58 64" stroke="#0f172a" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Cheeks -->
+            <circle cx="28" cy="56" r="4" fill="#f43f5e" opacity="0.6"/>
+            <circle cx="72" cy="56" r="4" fill="#f43f5e" opacity="0.6"/>
+          </svg>
+          <div class="monster-counter-badge" id="monsterCounterBadge">1</div>
+        </div>
+      </div>
+
+      <!-- Inside the App: Analytics & Screen Time Dashboard -->
+      <div class="app-dashboard" id="appDashboard">
+        <div class="dash-header">
+          <h2>Inside Reel Monster</h2>
+          <span class="dash-subtitle">Your Real Social Time Cost</span>
+        </div>
+
+        <!-- Level Selector -->
+        <div class="level-selector-card">
+          <span class="level-label">Counting Mode:</span>
+          <div class="level-toggle-group">
+            <button id="btnLevel1" class="level-btn active" title="Tap monster bubble after each reel">
+              Level 1: Manual
+            </button>
+            <button id="btnLevel2" class="level-btn" title="Counts automatically upon swipe">
+              Level 2: Automatic
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Big Stats -->
+        <div class="big-stats-card">
+          <div class="stat-main">
+            <span class="stat-label">Today's Reel Count</span>
+            <div class="stat-number" id="dashTodayCount">143</div>
+            <span class="stat-sub" id="dashTimeLost">1h 12m lost to infinite scrolling</span>
+          </div>
+        </div>
+
+        <!-- 7 Days Bar Chart -->
+        <div class="chart-card">
+          <div class="chart-title">Last 7 Days Reel Consumption</div>
+          <div class="bar-chart-container" id="barChartContainer">
+            <!-- 7 Bars rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Monster Commentary Card -->
+        <div class="commentary-card">
+          <div class="monster-mini-avatar">👾</div>
+          <div class="commentary-text" id="dashMonsterQuote">
+            "Burp! Your homework says hi. 143 reels today!"
+          </div>
+        </div>
+
+        <div class="dash-footer-actions">
+          <button id="btnResetDay" class="btn btn-secondary btn-sm">Reset Today's Tally</button>
+          <button id="btnInstallPwa" class="btn btn-primary btn-sm">Install to Real Phone</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

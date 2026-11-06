@@ -1,0 +1,17 @@
+=== CANDIDATE RESUME ===
+Name: Alex Kumar
+Role: Junior Software Engineer
+Summary: Passionate, hardworking team player with experience in web apps and cloud. Always eager to learn new technologies and provide synergy.
+Experience:
+- Worked on backend APIs using Python and Flask.
+- Helped internal team members fix bugs in database queries.
+- Responsible for maintaining website uptime and checking logs.
+Skills: Python, HTML, CSS, Git.
+
+=== TARGET JOB DESCRIPTION ===
+Role: Backend Systems Engineer at HyperScale Cloud
+Requirements:
+- 2+ years experience building production distributed microservices.
+- Mastery of high-concurrency systems, Docker containerization, and Kubernetes.
+- Proven track record optimizing database latency and caching (Redis / PostgreSQL).
+- Must demonstrate quantitative impact (e.g. latency reduced by X%, throughput increased by Y%).

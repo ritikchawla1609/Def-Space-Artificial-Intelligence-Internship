@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle to Fix — Interactive Extension Testbed</title>
+  <script src="assets/html2canvas.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0b0f19; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    .browser-frame { max-width: 900px; margin: 30px auto; width: 95%; background: #020617; border-radius: 16px; border: 2px solid #334155; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; }
+    
+    .browser-top { height: 48px; background: #1e293b; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+    .url-bar { background: #0f172a; padding: 5px 14px; border-radius: 20px; font-family: monospace; font-size: 12px; color: #38bdf8; }
+    
+    /* Simulated Web Page Content (Matching PDF Page 13 screenshot) */
+    .page-content { padding: 40px; background: #ffffff; color: #0f172a; min-height: 380px; position: relative; }
+    .pricing-title { font-size: 24px; font-weight: 800; margin-bottom: 24px; color: #0f172a; }
+    
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .price-card { border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+    .price-amount { font-size: 32px; font-weight: 800; color: #0f172a; }
+    
+    /* The intentionally bugged button from PDF Page 13 */
+    .button-buy { background: #3b82f6; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 700; cursor: pointer; text-align: center; }
+    .bugged-card .button-buy {
+      /* Text overflows on phone bug simulation */
+      width: 45px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: clip;
+      background: #ef4444;
+    }
+    
+    /* Extension Floating Controls Bar */
+    .ext-floating-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 2px solid #3b82f6; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; gap: 14px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .btn-tool { background: #0f172a; border: 1px solid #334155; color: #fff; padding: 5px 12px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .btn-tool.active { background: #ef4444; border-color: #ef4444; }
+    
+    /* Full Page Drawing Canvas */
+    #drawingCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+    #drawingCanvas.drawing-active { pointer-events: auto; cursor: crosshair; }
+    
+    /* Copied Banner matching PDF screenshot */
+    .prompt-copied-card {
+      position: absolute; bottom: 20px; right: 20px;
+      background: #0f172a; border: 1.5px solid #334155; border-radius: 8px;
+      padding: 14px 18px; width: 280px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 12px; z-index: 100;
+    }
+    .prompt-copied-header { color: #34d399; font-weight: 700; margin-bottom: 6px; }
+    .prompt-copied-body { color: #cbd5e1; font-family: monospace; font-size: 11px; line-height: 1.4; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+    .nav-back-pill:hover { background: rgba(59, 130, 246, 0.3); border-color: #3b82f6; }
+
+    @media (max-width: 768px) {
+      .ext-floating-bar {
+        position: static;
+        transform: none;
+        margin: 12px auto;
+        border-radius: 12px;
+        flex-wrap: wrap;
+        width: 95%;
+        justify-content: center;
+      }
+      .browser-frame { margin: 10px auto; width: 98%; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Extension Controller -->
+  <div class="ext-floating-bar">
+    <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+    <span style="color:#f43f5e; font-weight:700;">⭕ Circle to Fix</span>
+    <button class="btn-tool active" id="btnCircle">Circle</button>
+    <button class="btn-tool" id="btnBox">Box</button>
+    <button class="btn-tool" id="btnArrow">Arrow</button>
+    <button class="btn-tool" id="btnToggleMode" style="background:#2563eb;">Toggle Drawing Mode</button>
+    <span style="font-size:11px; color:#94a3b8;">Shortcut: Alt+Shift+C</span>
+  </div>
+
+  <div class="browser-frame">
+    <!-- Browser Top Bar -->
+    <div class="browser-top">
+      <div style="display:flex; gap:6px;">
+        <span style="color:#ef4444;">●</span>
+        <span style="color:#f59e0b;">●</span>
+        <span style="color:#10b981;">●</span>
+      </div>
+      <div class="url-bar">my-project.app/pricing</div>
+      <div style="font-size:11px; color:#10b981;">100% Offline</div>
+    </div>
+
+    <!-- Page Content (Pricing Table with Bug) -->
+    <div class="page-content" id="pageContentArea">
+      <h2 class="pricing-title">Pricing</h2>
+
+      <div class="pricing-grid">
+        <!-- Bugged card matching PDF Page 13 -->
+        <div class="price-card bugged-card" id="cardStandard">
+          <div class="price-amount">₹299</div>
+          <button class="button-buy" id="btnBuy1">Buy Now Special</button>
+        </div>
+
+        <div class="price-card" id="cardPro">
+          <div class="price-amount">₹799</div>
+          <button class="button-buy" id="btnBuy2">Buy</button>
+        </div>
+      </div>
+
+      <!-- Transparent Drawing Overlay Canvas -->
+      <canvas id="drawingCanvas" class="drawing-active"></canvas>
+
+      <!-- Prompt Copied Card (Matching PDF Page 13) -->
+      <div class="prompt-copied-card" id="promptCopiedCard">
+        <div class="prompt-copied-header">Prompt copied ✓</div>
+        <div class="prompt-copied-body" id="promptCopiedBody">
+          Fix button.buy in .card: text overflows on phone. Screenshot attached.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const pageArea = document.getElementById('pageContentArea');
+    const promptCard = document.getElementById('promptCopiedCard');
+    const promptBody = document.getElementById('promptCopiedBody');
+
+    let activeTool = 'circle';
+    let isDrawing = false;
+    let sX = 0, sY = 0;
+
+    function resizeCanvas() {
+      canvas.width = pageArea.clientWidth;
+      canvas.height = pageArea.clientHeight;
+      drawDemoRedCircle(); // Draw initial sample red circle matching PDF
+    }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(resizeCanvas, 50);
+
+    // Initial red circle over bugged button (Matching PDF Page 13)
+    function drawDemoRedCircle() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      // Circle around the ₹299 Buy button
+      ctx.ellipse(140, 160, 60, 22, -0.05, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Tool switching
+    document.getElementById('btnCircle').onclick = () => { activeTool = 'circle'; updateTools(); };
+    document.getElementById('btnBox').onclick = () => { activeTool = 'box'; updateTools(); };
+    document.getElementById('btnArrow').onclick = () => { activeTool = 'arrow'; updateTools(); };
+
+    function updateTools() {
+      document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
+      if (activeTool === 'circle') document.getElementById('btnCircle').classList.add('active');
+      if (activeTool === 'box') document.getElementById('btnBox').classList.add('active');
+      if (activeTool === 'arrow') document.getElementById('btnArrow').classList.add('active');
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      const rect = canvas.getBoundingClientRect();
+      sX = e.clientX - rect.left;
+      sY = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const cX = e.clientX - rect.left;
+      const cY = e.clientY - rect.top;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3.5;
+
+      if (activeTool === 'circle') {
+        ctx.beginPath();
+        ctx.ellipse((sX + cX)/2, (sY + cY)/2, Math.abs(cX - sX)/2, Math.abs(cY - sY)/2, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (activeTool === 'box') {
+        ctx.strokeRect(sX, sY, cX - sX, cY - sY);
+      }
+    });
+
+    canvas.addEventListener('mouseup', (e) => {
+      if (!isDrawing) return;
+      isDrawing = false;
+      const rect = canvas.getBoundingClientRect();
+      const endX = e.clientX - rect.left;
+      const endY = e.clientY - rect.top;
+
+      // Find element under center
+      const midX = (sX + endX) / 2;
+      const midY = (sY + endY) / 2;
+      canvas.style.pointerEvents = 'none';
+      const el = document.elementFromPoint(rect.left + midX, rect.top + midY);
+      canvas.style.pointerEvents = 'auto';
+
+      let selector = el ? (el.className ? `${el.tagName.toLowerCase()}.${el.className.split(' ')[0]}` : el.tagName.toLowerCase()) : 'element';
+      if (el?.parentElement?.className) {
+        selector += ` in .${el.parentElement.className.split(' ')[0]}`;
+      }
+
+      const generatedPrompt = `Fix ${selector}: text overflows on phone. Screenshot attached.`;
+      promptBody.textContent = generatedPrompt;
+      promptCard.style.display = 'block';
+
+      navigator.clipboard.writeText(generatedPrompt).catch(() => {});
+    });
+  </script>
+</body>
+</html>

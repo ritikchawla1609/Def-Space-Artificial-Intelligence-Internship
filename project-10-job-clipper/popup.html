@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Clipper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-app">
+    <!-- Top Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="icon">💼</span>
+        <span class="title">Job Clipper</span>
+      </div>
+      <div class="header-actions">
+        <button id="btnExportCsv" class="btn btn-xs btn-secondary" title="Export board to spreadsheet CSV">Export CSV</button>
+        <button id="btnToggleClipForm" class="btn btn-xs btn-primary">+ Clip Job</button>
+      </div>
+    </header>
+
+    <!-- Clip Current Job Form (Editable Fields) -->
+    <section class="clip-panel" id="clipPanel">
+      <div class="panel-header">
+        <span id="clipStatusText">Pre-filled from current page:</span>
+        <button id="btnCloseClipPanel" class="btn-close">&times;</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Job / Internship Role</label>
+          <input type="text" id="inpRole" value="Data Analyst Intern">
+        </div>
+        <div class="form-group">
+          <label>Company Name</label>
+          <input type="text" id="inpCompany" value="Nova Labs">
+        </div>
+        <div class="form-group">
+          <label>Application Deadline</label>
+          <input type="date" id="inpDeadline" value="2026-11-12">
+        </div>
+        <div class="form-group">
+          <label>Job Posting URL</label>
+          <input type="text" id="inpUrl" value="https://nova-labs.space/careers/intern">
+        </div>
+      </div>
+      <button id="btnAddCard" class="btn btn-primary btn-block">Add to Board</button>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-bar">
+      <input type="text" id="inpSearch" placeholder="Search role, company, or status..." class="search-input">
+      <div class="deadline-alert-badge" id="deadlineAlertBadge">
+        ⏰ <span id="dueSoonCount">1</span> Due Soon
+      </div>
+    </div>
+
+    <!-- Kanban Board with 4 Columns: Saved, Applied, Interview, Result -->
+    <main class="kanban-board">
+      <!-- Column 1: Saved -->
+      <div class="kanban-col" data-status="saved" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'saved')">
+        <div class="col-header">
+          <span class="col-title">Saved</span>
+          <span class="col-badge" id="countSaved">2</span>
+        </div>
+        <div class="cards-list" id="colSaved"></div>
+      </div>
+
+      <!-- Column 2: Applied -->
+      <div class="kanban-col" data-status="applied" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'applied')">
+        <div class="col-header">
+          <span class="col-title">Applied</span>
+          <span class="col-badge" id="countApplied">1</span>
+        </div>
+        <div class="cards-list" id="colApplied"></div>
+      </div>
+
+      <!-- Column 3: Interview -->
+      <div class="kanban-col" data-status="interview" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'interview')">
+        <div class="col-header">
+          <span class="col-title">Interview</span>
+          <span class="col-badge" id="countInterview">1</span>
+        </div>
+        <div class="cards-list" id="colInterview"></div>
+      </div>
+
+      <!-- Column 4: Result -->
+      <div class="kanban-col" data-status="result" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'result')">
+        <div class="col-header">
+          <span class="col-title">Result</span>
+          <span class="col-badge" id="countResult">1</span>
+        </div>
+        <div class="cards-list" id="colResult"></div>
+      </div>
+    </main>
+
+    <!-- Edit Card Modal -->
+    <div class="modal-backdrop" id="editModal" style="display: none;">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Edit Application</h3>
+          <button id="btnCloseEditModal" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editCardId">
+          <div class="form-group">
+            <label>Role</label>
+            <input type="text" id="editRole">
+          </div>
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" id="editCompany">
+          </div>
+          <div class="form-group">
+            <label>Deadline</label>
+            <input type="date" id="editDeadline">
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea id="editNotes" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnDeleteCard" class="btn btn-danger btn-sm">Delete</button>
+          <button id="btnSaveEdit" class="btn btn-primary btn-sm">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

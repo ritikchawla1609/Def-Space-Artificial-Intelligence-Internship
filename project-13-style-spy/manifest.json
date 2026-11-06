@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Style Spy — Website Color & Font Kit Grabber",
+  "version": "1.0.0",
+  "description": "Inspect any website to extract its color palette and font typography hierarchy, and export as clean CSS variables.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "clipboardWrite"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Style Spy"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,16 @@
+=== THERMODYNAMICS SEMESTER 4 NOTES ===
+Subject: Mechanical & Aerospace Engineering
+Author: Student Study Group
+
+Section 1: The Laws of Thermodynamics
+- Zeroth Law: Thermal equilibrium is transitive (defines Temperature).
+- First Law: Delta U = Q - W. Energy is conserved. Internal energy U is a state function.
+- Second Law: The total entropy of an isolated system always increases. Clausius statement: No spontaneous heat transfer from cold to hot. Kelvin-Planck statement: Cannot convert all heat into equivalent mechanical work in a cycle.
+- Third Law: Entropy of a perfect crystal approaches zero as temperature approaches absolute zero.
+
+Section 2: The Carnot Cycle
+- Operates between Th (source) and Tc (sink).
+- Composed of 2 reversible isothermals and 2 reversible adiabatics.
+- Thermal efficiency: eta = 1 - (Tc / Th).
+- No engine operating between Th and Tc can have higher efficiency than a reversible Carnot engine because doing so would allow a net transfer of heat from cold to hot without work input, violating the Clausius statement of the Second Law.
+- Page 14 Reference: Second Law Carnot Limits and Reversibility Criteria.

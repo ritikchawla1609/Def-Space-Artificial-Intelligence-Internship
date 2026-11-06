@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Same Page, New Design — Side-by-Side Comparison Showcase</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0b0f19; color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    
+    header { height: 56px; background-color: #111827; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 10; }
+    .brand { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .brand span { color: #f43f5e; }
+    
+    .view-controls { display: flex; gap: 10px; }
+    .btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+    .btn.active { background: #2563eb; border-color: #3b82f6; }
+    
+    .comparison-container { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; position: relative; }
+    
+    .frame-wrapper { display: flex; flex-direction: column; height: 100%; border-right: 2px solid #1f2937; position: relative; }
+    .frame-header { height: 38px; background: #0f172a; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 12px; font-weight: 700; }
+    .badge-before { color: #f87171; background: rgba(239, 68, 68, 0.1); padding: 2px 8px; border-radius: 4px; }
+    .badge-after { color: #34d399; background: rgba(16, 185, 129, 0.1); padding: 2px 8px; border-radius: 4px; }
+    
+    iframe { flex: 1; width: 100%; border: none; background: #fff; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+    }
+    .nav-back-pill:hover { background: rgba(244, 63, 94, 0.3); border-color: #f43f5e; }
+
+    @media (max-width: 900px) {
+      body { height: auto; overflow-y: auto; }
+      header { height: auto; padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+      .comparison-container { grid-template-columns: 1fr; height: auto; }
+      .frame-wrapper { height: 75vh; border-right: none; border-bottom: 2px solid #1f2937; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+      <span>🎨</span> Project 17: Same Page, New Design
+    </div>
+    <div class="view-controls">
+      <a href="design-report.md" target="_blank" class="btn">View Design Audit Report ↗</a>
+      <a href="before.html" target="_blank" class="btn">Open before.html</a>
+      <a href="after.html" target="_blank" class="btn active">Open after.html</a>
+    </div>
+  </header>
+
+  <main class="comparison-container">
+    <!-- Left: Step 1 (Without a skill - before.html) -->
+    <div class="frame-wrapper">
+      <div class="frame-header">
+        <span class="badge-before">Step 1: Without a Skill (before.html)</span>
+        <span style="color: #64748b; font-size: 11px;">Unstyled generic AI look</span>
+      </div>
+      <iframe src="before.html" title="Before Redesign"></iframe>
+    </div>
+
+    <!-- Right: Step 3 (With a design skill - after.html) -->
+    <div class="frame-wrapper" style="border-right: none;">
+      <div class="frame-header">
+        <span class="badge-after">Step 3: With Design Skill (after.html)</span>
+        <span style="color: #10b981; font-size: 11px;">Words stay 100% identical</span>
+      </div>
+      <iframe src="after.html" title="After Redesign"></iframe>
+    </div>
+  </main>
+</body>
+</html>

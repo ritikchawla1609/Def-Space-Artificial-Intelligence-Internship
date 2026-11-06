@@ -1,0 +1,10 @@
+{
+  "name": "Auto Rally — Indian Rickshaw Racing",
+  "short_name": "AutoRally",
+  "description": "A cute auto-rickshaw racing game that your friends can play on their phones.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#eab308",
+  "orientation": "portrait"
+}

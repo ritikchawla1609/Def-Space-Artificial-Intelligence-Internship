@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Clipper — Interactive Simulator & Testbed</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: 100vw; height: 100vh; overflow-y: auto; background-color: #0b0f19; }
+    .testbed-wrapper { max-width: 1100px; margin: 20px auto; padding: 20px; display: flex; flex-direction: column; gap: 24px; }
+    
+    /* Simulated Job Board Browser Bar */
+    .sim-browser-bar { background: #1e293b; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #334155; }
+    .url-chip { background: #0b1120; padding: 6px 14px; border-radius: 20px; font-family: monospace; font-size: 13px; color: #38bdf8; }
+    
+    /* Job Posting Page Layout (Matching PDF Page 12 screenshot) */
+    .job-page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .job-details-sheet { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .job-details-sheet h1 { font-size: 24px; color: #fff; }
+    .job-details-sheet .comp-badge { font-size: 14px; color: #38bdf8; font-weight: 600; }
+    
+    /* Extension Popup Widget Overlay */
+    .clipper-widget-box { background: #0f172a; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 12px; }
+    
+    /* Full Kanban Section */
+    .kanban-section { background: #111827; border: 1px solid #334155; border-radius: 12px; padding: 20px; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+    }
+    .nav-back-pill:hover { background: rgba(59, 130, 246, 0.3); border-color: #3b82f6; }
+
+    @media (max-width: 900px) {
+      .job-page-layout { grid-template-columns: 1fr; }
+      .testbed-wrapper { padding: 12px; margin: 10px auto; }
+      .sim-browser-bar { flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="testbed-wrapper">
+    <!-- Browser Mock Header -->
+    <div class="sim-browser-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <div style="display:flex; gap:6px;">
+          <span style="color:#ef4444;">●</span>
+          <span style="color:#f59e0b;">●</span>
+          <span style="color:#10b981;">●</span>
+        </div>
+      </div>
+      <div class="url-chip">any-job-site.com/careers/data-analyst-intern</div>
+      <div style="font-size: 12px; color: #94a3b8;">Job Clipper Extension Injected</div>
+    </div>
+
+    <!-- Active Job Page + Clipper Widget Side by Side -->
+    <div class="job-page-layout">
+      <!-- Simulated Web Page Content -->
+      <div class="job-details-sheet">
+        <h1>Data Analyst Intern</h1>
+        <div class="comp-badge">Nova Labs · Remote / Bengaluru</div>
+        <p style="color: #cbd5e1; line-height: 1.6; font-size: 13.5px;">
+          Nova Labs is hiring a Data Analyst Intern to work with telemetry data pipelines, telemetry indexing, and high-concurrency offline dashboards.
+        </p>
+        <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 8px; font-size: 12.5px; color: #94a3b8;">
+          <div>• Location: Remote (India)</div>
+          <div>• Duration: 6 Months</div>
+          <div>• Stipend: ₹45,000 / month</div>
+          <div>• Deadline: <strong>12 Nov 2026</strong></div>
+        </div>
+      </div>
+
+      <!-- Clipper Extension Widget (Matching PDF Screenshot) -->
+      <div class="clipper-widget-box">
+        <h3 style="font-size: 14px; color: #fff; font-weight: 700;">Save this job</h3>
+        <div class="form-group">
+          <label>Role</label>
+          <input type="text" id="simRole" value="Data Analyst Intern">
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" id="simComp" value="Nova Labs">
+        </div>
+        <div class="form-group">
+          <label>Deadline</label>
+          <input type="text" id="simDead" value="12 Nov">
+        </div>
+        <button id="btnQuickClip" class="btn btn-primary btn-block">Add to board</button>
+      </div>
+    </div>
+
+    <!-- Interactive Live Kanban Board with Drag and Drop -->
+    <div class="kanban-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="font-size: 18px; font-weight: 700;">Your Applications Kanban Board</h2>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="inpSearch" placeholder="Search applications..." class="search-input" style="width: 220px;">
+          <button id="btnExportCsv" class="btn btn-secondary btn-sm">Export to CSV</button>
+        </div>
+      </div>
+
+      <main class="kanban-board">
+        <div class="kanban-col" data-status="saved" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'saved')">
+          <div class="col-header"><span class="col-title">Saved</span><span class="col-badge" id="countSaved">2</span></div>
+          <div class="cards-list" id="colSaved"></div>
+        </div>
+        <div class="kanban-col" data-status="applied" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'applied')">
+          <div class="col-header"><span class="col-title">Applied</span><span class="col-badge" id="countApplied">1</span></div>
+          <div class="cards-list" id="colApplied"></div>
+        </div>
+        <div class="kanban-col" data-status="interview" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'interview')">
+          <div class="col-header"><span class="col-title">Interview</span><span class="col-badge" id="countInterview">1</span></div>
+          <div class="cards-list" id="colInterview"></div>
+        </div>
+        <div class="kanban-col" data-status="result" ondragover="event.preventDefault()" ondrop="window._dropCard(event, 'result')">
+          <div class="col-header"><span class="col-title">Result</span><span class="col-badge" id="countResult">1</span></div>
+          <div class="cards-list" id="colResult"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-backdrop" id="editModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Edit Application</h3>
+        <button id="btnCloseEditModal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editCardId">
+        <div class="form-group"><label>Role</label><input type="text" id="editRole"></div>
+        <div class="form-group"><label>Company</label><input type="text" id="editCompany"></div>
+        <div class="form-group"><label>Deadline</label><input type="text" id="editDeadline"></div>
+        <div class="form-group"><label>Notes</label><textarea id="editNotes" rows="2"></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnDeleteCard" class="btn btn-danger btn-sm">Delete</button>
+        <button id="btnSaveEdit" class="btn btn-primary btn-sm">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+  <script>
+    document.getElementById('btnQuickClip').addEventListener('click', () => {
+      const role = document.getElementById('simRole').value;
+      const comp = document.getElementById('simComp').value;
+      const dead = document.getElementById('simDead').value;
+      const cards = JSON.parse(localStorage.getItem('jobClipper_cards') || '[]');
+      cards.unshift({
+        id: Date.now().toString(),
+        role: role,
+        company: comp,
+        deadline: '2026-11-12',
+        url: window.location.href,
+        status: 'saved',
+        notes: 'Clipped from Nova Labs job page'
+      });
+      localStorage.setItem('jobClipper_cards', JSON.stringify(cards));
+      location.reload();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Style Spy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="spy-container">
+    <header class="spy-header">
+      <div class="brand">
+        <span class="icon">🎨</span>
+        <span class="title">Style Spy</span>
+      </div>
+      <button id="btnRescan" class="btn btn-xs btn-secondary">Rescan Page</button>
+    </header>
+
+    <!-- 1. Colours Section (Ranked by Usage) -->
+    <section class="section-card">
+      <div class="section-heading">
+        <span>Colours (Ranked by usage)</span>
+        <span class="hint">Click to copy</span>
+      </div>
+      <div class="swatches-grid" id="swatchesGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- 2. Typography / Fonts Section -->
+    <section class="section-card">
+      <div class="section-heading">
+        <span>Fonts & Hierarchy</span>
+        <span class="hint">Click to copy</span>
+      </div>
+      <div class="fonts-list" id="fontsList">
+        <!-- Rendered dynamically: Inter 700 heading, Lora 400 body -->
+      </div>
+    </section>
+
+    <!-- 3. Saved Kits & Export Section -->
+    <section class="section-card kit-card">
+      <div class="section-heading">
+        <span>Save Design Kit</span>
+      </div>
+      <div class="save-kit-row">
+        <input type="text" id="inpKitName" placeholder="Kit name (e.g. Stripe Modern)...">
+        <button id="btnSaveKit" class="btn btn-sm btn-primary">Save Kit</button>
+      </div>
+
+      <div class="saved-kits-selector" id="savedKitsContainer">
+        <label>Saved Kits:</label>
+        <select id="savedKitsDropdown">
+          <option value="">-- Choose saved kit --</option>
+        </select>
+      </div>
+
+      <button id="btnCopyCss" class="btn btn-success btn-block" style="margin-top: 8px;">
+        Copy as CSS Variables 📋
+      </button>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="copyToast" class="toast" style="display: none;">Copied to clipboard! ✓</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

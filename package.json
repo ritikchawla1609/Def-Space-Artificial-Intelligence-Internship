@@ -1,0 +1,21 @@
+{
+  "name": "bharat-space-genai-internship-week2",
+  "version": "1.0.0",
+  "description": "All 17 Projects for Bharat Space Education Research Centre GenAI Internship Week 2 - Instructor: Karan Bagul",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "serve": "npx serve . -l 8080",
+    "test": "node test/verify-suite.js"
+  },
+  "author": "Ritik Chawla",
+  "license": "MIT",
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^3.11.174",
+    "qrcode": "^1.5.4",
+    "qrious": "^4.0.2"
+  }
+}

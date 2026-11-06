@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenAI Internship Week 2 — All 17 Production-Grade Projects Portfolio</title>
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --bg-card: rgba(16, 24, 40, 0.75);
+      --bg-card-hover: rgba(24, 34, 56, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-purple: #8b5cf6;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --accent-pink: #ec4899;
+      --accent-cyan: #06b6d4;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Brand Bar */
+    .top-brand-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7, 10, 18, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #fff;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .brand-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-link-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-link-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Hero Header */
+    .hero-header {
+      padding: 56px 24px 36px;
+      text-align: center;
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .badge-pill.green {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .badge-pill.gold {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    /* Summary Metrics Bar */
+    .metrics-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 22px;
+      min-width: 150px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .metric-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .metric-val {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-val.blue { color: #38bdf8; }
+    .metric-val.green { color: #34d399; }
+    .metric-val.purple { color: #c084fc; }
+    .metric-val.amber { color: #fbbf24; }
+
+    .metric-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 600;
+    }
+
+    /* Main Container & Filter Controls */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 24px 24px 60px;
+    }
+
+    /* Filter & Search Bar */
+    .controls-panel {
+      background: rgba(16, 24, 40, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-box-wrapper {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(9, 13, 22, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 40px 10px 38px;
+      font-size: 13.5px;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+      display: none;
+    }
+
+    .search-clear-btn:hover { color: #fff; }
+
+    .search-shortcut-hint {
+      position: absolute;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: monospace;
+      pointer-events: none;
+    }
+
+    .view-toggles {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-btn.active, .view-btn:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--accent-indigo);
+      color: #fff;
+    }
+
+    /* Filter Chips Row */
+    .filter-chips-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .section-chips::-webkit-scrollbar { display: none; }
+
+    .chip-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .chip-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .chip-btn.active {
+      background: var(--accent-indigo);
+      border-color: var(--accent-indigo);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    }
+
+    .difficulty-select-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .difficulty-select {
+      background: rgba(9, 13, 22, 0.9);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .results-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .results-counter {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+      gap: 24px;
+    }
+
+    /* Projects Table / List View */
+    .projects-table-view {
+      display: none;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    .projects-table-view tr {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .projects-table-view tr:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-indigo);
+    }
+
+    .projects-table-view td, .projects-table-view th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .projects-table-view th {
+      color: var(--text-muted);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border: none;
+      padding-top: 0;
+    }
+
+    /* Project Card */
+    .project-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(99, 102, 241, 0.15);
+      background: var(--bg-card-hover);
+    }
+
+    .project-card[data-section="section-a"]:hover::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .project-card[data-section="section-b"]:hover::before { background: linear-gradient(90deg, #ec4899, #f43f5e); }
+    .project-card[data-section="section-c"]:hover::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+    .project-card[data-section="section-d"]:hover::before { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-number {
+      font-size: 11px;
+      font-weight: 800;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.14);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      padding: 3px 9px;
+      border-radius: 6px;
+      letter-spacing: 0.6px;
+    }
+
+    .tags-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .difficulty-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-tough { background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; }
+    .tag-medium { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.35); color: #fde68a; }
+    .tag-level { background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.35); color: #e9d5ff; }
+
+    .offline-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #6ee7b7;
+      text-transform: uppercase;
+    }
+
+    .card-header-block {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .project-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .card-title-group {
+      flex: 1;
+    }
+
+    .card-section {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-size: 18.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 2px;
+      letter-spacing: -0.3px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Technology Tags */
+    .tech-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tech-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    /* Feature Highlights List */
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: rgba(8, 12, 22, 0.6);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      color: #cbd5e1;
+    }
+
+    .features-list li strong {
+      color: #fff;
+    }
+
+    .check-mark {
+      color: var(--accent-green);
+      font-weight: 800;
+    }
+
+    /* Card Actions */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 9px;
+      padding: 9px 15px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-launch {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      flex: 1;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-launch:hover {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-preview {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-color);
+      color: #cbd5e1;
+    }
+
+    .btn-preview:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Quick View Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(3, 6, 12, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .modal-title-group h3 {
+      font-size: 20px;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .modal-title-group .modal-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .btn-modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .btn-modal-close:hover { color: #fff; }
+
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-spec-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .modal-spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 8px;
+    }
+
+    .modal-spec-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .modal-spec-label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .modal-spec-value {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-checklist h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .modal-checklist-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      background-color: #04070f;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .footer-links a:hover {
+      color: #93c5fd;
+      text-decoration: underline;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .hero-title { font-size: 32px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .metrics-bar { gap: 10px; }
+      .metric-card { min-width: 130px; padding: 10px 16px; }
+      .metric-val { font-size: 24px; }
+      .top-brand-bar { padding: 10px 16px; }
+      .brand-subtitle { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Brand Bar -->
+  <header class="top-brand-bar">
+    <div class="brand-left">
+      <div class="brand-icon">BS</div>
+      <div class="brand-text-block">
+        <span class="brand-title">Bharat Space GenAI Labs</span>
+        <span class="brand-subtitle">Week 2 Portfolio — Instructor: Karan Bagul · Candidate: Ritik Chawla</span>
+      </div>
+    </div>
+    <div class="brand-links">
+      <a href="prompts.md" class="brand-link-btn" title="View development prompts log">📝 Prompts Log</a>
+      <a href="README.md#-verification-matrix--compliance-audit" class="brand-link-btn" title="View verification matrix">🛡️ Verification Audit</a>
+      <span class="badge-pill green" style="padding: 4px 10px; font-size: 11px;">100% Offline</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <header class="hero-header">
+    <div class="hero-badges">
+      <span class="badge-pill">Bharat Space Education Research Centre</span>
+      <span class="badge-pill green">GenAI Internship · Week 2</span>
+      <span class="badge-pill gold">All 17 Projects Completed</span>
+      <span class="badge-pill">Candidate: Ritik Chawla</span>
+    </div>
+    <h1 class="hero-title">This week is all about <span>building</span>.</h1>
+    <p class="hero-subtitle">
+      A complete, production-grade suite of all 17 projects spanning offline browser tools, mobile PWAs, Manifest V3 Chrome extensions, and agentic AI engineering workflows. Zero paid APIs, zero CDNs, and zero network leaks.
+    </p>
+
+    <!-- Metrics Bar -->
+    <div class="metrics-bar">
+      <div class="metric-card">
+        <div class="metric-val green">17 / 17</div>
+        <div class="metric-lbl">Projects Built</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val blue">4 / 4</div>
+        <div class="metric-lbl">Curriculum Sections</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val purple">100%</div>
+        <div class="metric-lbl">Offline-Capable</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val amber">0</div>
+        <div class="metric-lbl">External CDNs / Paid APIs</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container -->
+  <main class="container">
+    <!-- Filter & Search Controls Panel -->
+    <div class="controls-panel">
+      <!-- Search Row -->
+      <div class="search-row">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search all 17 projects by name, keyword, feature or tech (e.g., 'PDF', 'UPSC', 'Audio', 'Kanban')...">
+          <button id="searchClearBtn" class="search-clear-btn" title="Clear search">✕</button>
+          <span class="search-shortcut-hint" id="shortcutHint">/</span>
+        </div>
+
+        <div class="view-toggles">
+          <button class="view-btn active" id="btnGridView" title="Grid View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Grid
+          </button>
+          <button class="view-btn" id="btnTableView" title="List View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Directory
+          </button>
+        </div>
+      </div>
+
+      <!-- Section & Difficulty Chips Row -->
+      <div class="filter-chips-row">
+        <nav class="section-chips" id="sectionTabs">
+          <button class="chip-btn active" data-filter="all">All Projects (17)</button>
+          <button class="chip-btn" data-filter="section-a">Section A: Web Tools (5)</button>
+          <button class="chip-btn" data-filter="section-b">Section B: Phone Apps & Games (3)</button>
+          <button class="chip-btn" data-filter="section-c">Section C: Chrome Extensions (6)</button>
+          <button class="chip-btn" data-filter="section-d">Section D: Video, Skills & Design (3)</button>
+        </nav>
+
+        <div class="difficulty-select-wrapper">
+          <label for="difficultyFilter">Difficulty:</label>
+          <select id="difficultyFilter" class="difficulty-select">
+            <option value="all">All Difficulties</option>
+            <option value="Tough">Tough (5)</option>
+            <option value="Medium">Medium (11)</option>
+            <option value="Level 1 & 2">Level 1 & 2 (1)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Results Status Bar -->
+    <div class="results-status-bar">
+      <span>Displaying <strong id="visibleCountText" class="results-counter">17</strong> projects</span>
+      <span id="activeFilterLabel" style="font-size: 11.5px; color: #64748b;">Filtering: All Categories</span>
+    </div>
+
+    <!-- 1. Grid View of Projects -->
+    <div class="projects-grid" id="projectsGrid">
+      
+      <!-- Project 01: PDF Studio -->
+      <article class="project-card" data-section="section-a" data-difficulty="Tough" data-id="1">
+        <div class="card-top">
+          <span class="project-number">PROJECT 01</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-tough">Tough</span>
+            <span class="offline-tag">Offline</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">📑</div>
+          <div class="card-title-group">
+            <div class="card-section">Section A · Web Tools</div>
+            <h3 class="card-title">PDF Studio</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Complete client-side desktop PDF workstation with 29 tools across 5 groups (Organise, Edit, Stamp, Convert, Finish) + Password Lock & OCR.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">PDF-Lib</span>
+          <span class="tech-pill">PDF.js</span>
+          <span class="tech-pill">Canvas 2D</span>
+          <span class="tech-pill">Pixel Redact</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Edit 50-page PDF with Wi-Fi off</li>
+          <li><span class="check-mark">✓</span> <strong>Permanent Redaction:</strong> Strips text stream bytes permanently</li>
+          <li><span class="check-mark">✓</span> <strong>Compress:</strong> Displays exact byte size before & after</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(1)">Quick View 👁️</button>
+          <a href="project-01-pdf-studio/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 02: Form Photo Fixer -->
+      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="2">
+        <div class="card-top">
+          <span class="project-number">PROJECT 02</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Offline</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">📐</div>
+          <div class="card-title-group">
+            <div class="card-section">Section A · Web Tools</div>
+            <h3 class="card-title">Form Photo Fixer</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Prepare applicant photos & signatures for UPSC, SSC, GATE & Visa forms in one step. Features interactive biometric face guides and binary-search compression.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Binary Search JPEG</span>
+          <span class="tech-pill">Face Guide</span>
+          <span class="tech-pill">Canvas API</span>
+          <span class="tech-pill">LocalStorage</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Meets 3 real official form guidelines</li>
+          <li><span class="check-mark">✓</span> <strong>Precise KB Limit:</strong> Dials in to just under 50KB / 20KB</li>
+          <li><span class="check-mark">✓</span> <strong>Custom Presets:</strong> Add and save custom exam dimensions</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(2)">Quick View 👁️</button>
+          <a href="project-02-form-photo-fixer/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 03: Resume Builder -->
+      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="3">
+        <div class="card-top">
+          <span class="project-number">PROJECT 03</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Offline</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">💼</div>
+          <div class="card-title-group">
+            <div class="card-section">Section A · Web Tools</div>
+            <h3 class="card-title">Resume Builder</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Live A4 resume studio keeping all data offline on your laptop. Includes 3 distinct templates, drag-and-drop section reordering, and native selectable text PDF export.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">3 A4 Templates</span>
+          <span class="tech-pill">Drag & Drop</span>
+          <span class="tech-pill">Selectable PDF</span>
+          <span class="tech-pill">JSON Backup</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Long resume breaks cleanly without cut text</li>
+          <li><span class="check-mark">✓</span> <strong>Selectable PDF:</strong> 100% vector copyable text export</li>
+          <li><span class="check-mark">✓</span> <strong>JSON Backup:</strong> Save data to file and restore fully</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(3)">Quick View 👁️</button>
+          <a href="project-03-resume-builder/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 04: CBT Mock Test Engine -->
+      <article class="project-card" data-section="section-a" data-difficulty="Tough" data-id="4">
+        <div class="card-top">
+          <span class="project-number">PROJECT 04</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-tough">Tough</span>
+            <span class="offline-tag">Offline</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">⏱️</div>
+          <div class="card-title-group">
+            <div class="card-section">Section A · Web Tools</div>
+            <h3 class="card-title">CBT Mock Test Engine</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Authentic NTA/JEE/GATE computer-based exam simulator with countdown timer, 5-color status question palette, +4/-1 marking, and fault-tolerant reload recovery.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">NTA / JEE Screen</span>
+          <span class="tech-pill">State Recovery</span>
+          <span class="tech-pill">5 Status Palette</span>
+          <span class="tech-pill">Analytics</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Mid-test refresh loses zero timer or answers</li>
+          <li><span class="check-mark">✓</span> <strong>Score Check:</strong> Formula matches hand calculation for 15 Qs</li>
+          <li><span class="check-mark">✓</span> <strong>Multi-Exam:</strong> 2nd question JSON loads with zero code change</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(4)">Quick View 👁️</button>
+          <a href="project-04-cbt-mock-test/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 05: Scribbly Notes -->
+      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="5">
+        <div class="card-top">
+          <span class="project-number">PROJECT 05</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Offline</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">✍️</div>
+          <div class="card-title-group">
+            <div class="card-section">Section A · Web Tools</div>
+            <h3 class="card-title">Scribbly Notes</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Turns plain typed notes into authentic hand-drawn notebook pages with human jitter in word angle, baseline, and pen pressure across 3 handwriting styles and ruled papers.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Human Jitter</span>
+          <span class="tech-pill">Canvas Engine</span>
+          <span class="tech-pill">Multi-Page PDF</span>
+          <span class="tech-pill">Ruled & Grid</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> 3-page note splits with no line cut in half</li>
+          <li><span class="check-mark">✓</span> <strong>Bundled Fonts:</strong> Operates 100% offline with Wi-Fi off</li>
+          <li><span class="check-mark">✓</span> <strong>Export:</strong> Save as high-res PNG or multi-page PDF</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(5)">Quick View 👁️</button>
+          <a href="project-05-scribbly-notes/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 06: Reel Monster -->
+      <article class="project-card" data-section="section-b" data-difficulty="Level 1 & 2" data-id="6">
+        <div class="card-top">
+          <span class="project-number">PROJECT 06</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-level">Level 1 & 2</span>
+            <span class="offline-tag">PWA</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">👾</div>
+          <div class="card-title-group">
+            <div class="card-section">Section B · Phone Apps & Games</div>
+            <h3 class="card-title">Reel Monster</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Cute screen-time monster that floats over Instagram Reels & YouTube Shorts. Level 1 manual tap counter + Level 2 automatic scroll detection with 7-day analytics.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Installable PWA</span>
+          <span class="tech-pill">Floating Overlay</span>
+          <span class="tech-pill">Scroll Detection</span>
+          <span class="tech-pill">7-Day Chart</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Real Android PWA installs offline</li>
+          <li><span class="check-mark">✓</span> <strong>Survives Restart:</strong> Count and 7-day charts persist</li>
+          <li><span class="check-mark">✓</span> <strong>Reactive Monster:</strong> Grows, burps, and mocks screen time</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(6)">Quick View 👁️</button>
+          <a href="project-06-reel-monster/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 07: Bill Book -->
+      <article class="project-card" data-section="section-b" data-difficulty="Medium" data-id="7">
+        <div class="card-top">
+          <span class="project-number">PROJECT 07</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">PWA</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">🧾</div>
+          <div class="card-title-group">
+            <div class="card-section">Section B · Phone Apps & Games</div>
+            <h3 class="card-title">Bill Book</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Offline billing and point-of-sale PWA for neighbourhood shopkeepers. Generates dynamic UPI QR codes encoding exact bill totals, shares via WhatsApp, and tracks daily sales.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Dynamic UPI QR</span>
+          <span class="tech-pill">Thermal Receipt</span>
+          <span class="tech-pill">WhatsApp Share</span>
+          <span class="tech-pill">Sales Ledger</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Hand-verified on 5 bills (matches ₹4,860)</li>
+          <li><span class="check-mark">✓</span> <strong>Flight Mode:</strong> Works with zero network in local shops</li>
+          <li><span class="check-mark">✓</span> <strong>UPI Verified:</strong> GPay/PhonePe scan shows exact rupees</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(7)">Quick View 👁️</button>
+          <a href="project-07-bill-book/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 08: Auto Rally -->
+      <article class="project-card" data-section="section-b" data-difficulty="Tough" data-id="8">
+        <div class="card-top">
+          <span class="project-number">PROJECT 08</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-tough">Tough</span>
+            <span class="offline-tag">Web Audio</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">🛺</div>
+          <div class="card-title-group">
+            <div class="card-section">Section B · Phone Apps & Games</div>
+            <h3 class="card-title">Auto Rally</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Fast-paced Indian auto-rickshaw 3D racing game for phone or desktop. Features looping highway curves, coins, cows, Chai Nitro Boosts, Web Audio horn SFX, and 3-lap timer.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">HTML5 Canvas 2D</span>
+          <span class="tech-pill">Web Audio Synthesizer</span>
+          <span class="tech-pill">Touch & Keyboard</span>
+          <span class="tech-pill">Best Lap splits</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Full 3-lap race plays in flight mode</li>
+          <li><span class="check-mark">✓</span> <strong>Controls:</strong> Dual keyboard & mobile virtual touch D-pad</li>
+          <li><span class="check-mark">✓</span> <strong>High Score:</strong> Best lap time survives device reboot</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(8)">Quick View 👁️</button>
+          <a href="project-08-auto-rally/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 09: YouTube Focus Board -->
+      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="9">
+        <div class="card-top">
+          <span class="project-number">PROJECT 09</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">📺</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">YouTube Focus Board</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Manifest V3 extension eliminating study distractions on YouTube. One-switch toggle hides Shorts, recommendations, and comments, with timestamped notes and a 60-min session gate.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Manifest V3</span>
+          <span class="tech-pill">Shorts Blocker</span>
+          <span class="tech-pill">Timestamp Jump</span>
+          <span class="tech-pill">Session Gate</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Works between videos without page reloads</li>
+          <li><span class="check-mark">✓</span> <strong>Timestamp Jump:</strong> Clicking notes jumps video player directly</li>
+          <li><span class="check-mark">✓</span> <strong>Session Gate:</strong> "Why are you here?" unlocks study block</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(9)">Quick View 👁️</button>
+          <a href="project-09-youtube-focus-board/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 10: Job Clipper -->
+      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="10">
+        <div class="card-top">
+          <span class="project-number">PROJECT 10</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">📌</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">Job Clipper</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          1-click job clipping extension for LinkedIn, Indeed, and job boards. Tracks applications across a drag-and-drop Kanban board (Saved, Applied, Interview, Result) with CSV export.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">DOM Scraper</span>
+          <span class="tech-pill">Kanban Board</span>
+          <span class="tech-pill">7-Day Alerts</span>
+          <span class="tech-pill">CSV Export</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Tested on 3 different job websites</li>
+          <li><span class="check-mark">✓</span> <strong>Deadline Alerts:</strong> Highlights roles closing within 7 days</li>
+          <li><span class="check-mark">✓</span> <strong>Clean CSV:</strong> Opens seamlessly in Microsoft Excel & Sheets</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(10)">Quick View 👁️</button>
+          <a href="project-10-job-clipper/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 11: Circle to Fix -->
+      <article class="project-card" data-section="section-c" data-difficulty="Tough" data-id="11">
+        <div class="card-top">
+          <span class="project-number">PROJECT 11</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-tough">Tough</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">⭕</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">Circle to Fix</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Circle any broken element on a webpage using Alt+Shift+C. Inspects underlying DOM code, takes an automatic screenshot, and generates ready-to-paste AI coding prompts.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Alt+Shift+C Hotkey</span>
+          <span class="tech-pill">Drawing Overlay</span>
+          <span class="tech-pill">Element Inspector</span>
+          <span class="tech-pill">AI Prompt Gen</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Works across 5 distinct websites</li>
+          <li><span class="check-mark">✓</span> <strong>Code Bundled:</strong> Prompt includes selector, HTML & note</li>
+          <li><span class="check-mark">✓</span> <strong>Privacy:</strong> Client-side canvas, zero cloud uploads</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(11)">Quick View 👁️</button>
+          <a href="project-11-circle-to-fix/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 12: Chat Saver -->
+      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="12">
+        <div class="card-top">
+          <span class="project-number">PROJECT 12</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">💬</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">Chat Saver</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          1-click export for ChatGPT, Claude, and Gemini web conversations. Perfectly preserves code snippets with syntax, tables, and headers, exporting clean Markdown (.md) and PDF.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">ChatGPT & Claude</span>
+          <span class="tech-pill">Markdown Exporter</span>
+          <span class="tech-pill">Tables & Code</span>
+          <span class="tech-pill">PDF Saver</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Long chat of 50+ messages saves cleanly</li>
+          <li><span class="check-mark">✓</span> <strong>Code Verified:</strong> Copied code runs without syntax breaks</li>
+          <li><span class="check-mark">✓</span> <strong>Tables Intact:</strong> Formatted table layout preserved</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(12)">Quick View 👁️</button>
+          <a href="project-12-chat-saver/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 13: Style Spy -->
+      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="13">
+        <div class="card-top">
+          <span class="project-number">PROJECT 13</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">🎨</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">Style Spy</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Click any website to extract its color palette (ranked by usage frequency) and typography hierarchy. Save named design kits and export one-click CSS custom properties.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Color Ranking</span>
+          <span class="tech-pill">Typography Spec</span>
+          <span class="tech-pill">CSS Custom Props</span>
+          <span class="tech-pill">Design Kits</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Checked by hand on 5 websites</li>
+          <li><span class="check-mark">✓</span> <strong>Survives Restart:</strong> Saved kits persist in localStorage</li>
+          <li><span class="check-mark">✓</span> <strong>Plain Page Test:</strong> Applying kit styles plain HTML immediately</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(13)">Quick View 👁️</button>
+          <a href="project-13-style-spy/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 14: Tab Goblin -->
+      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="14">
+        <div class="card-top">
+          <span class="project-number">PROJECT 14</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Manifest V3</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">👺</div>
+          <div class="card-title-group">
+            <div class="card-section">Section C · Chrome Extensions</div>
+            <h3 class="card-title">Tab Goblin</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Memory saver and reactive tab manager. A goblin mascot reacts to tab count, lists idle tabs by age, puts them to sleep using Chrome tab discard without closing, and protects forms.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Tab Discard API</span>
+          <span class="tech-pill">Reactive Mascot</span>
+          <span class="tech-pill">Form Protection</span>
+          <span class="tech-pill">Session Restore</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Handles 30+ open tabs smoothly</li>
+          <li><span class="check-mark">✓</span> <strong>Form Protection:</strong> Keep list whitelist never discards forms</li>
+          <li><span class="check-mark">✓</span> <strong>Session Snapshot:</strong> Restores full tabs after Chrome reboot</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(14)">Quick View 👁️</button>
+          <a href="project-14-tab-goblin/index.html" class="btn btn-launch">Open Testbed 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 15: One-Minute Reel Cut -->
+      <article class="project-card" data-section="section-d" data-difficulty="Tough" data-id="15">
+        <div class="card-top">
+          <span class="project-number">PROJECT 15</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-tough">Tough</span>
+            <span class="offline-tag">9:16 Video</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">✂️</div>
+          <div class="card-title-group">
+            <div class="card-section">Section D · Video, Skills & Design</div>
+            <h3 class="card-title">One-Minute Reel Cut</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Automated vertical reel editor. Eliminates pauses >1.5s and fillers ("umm, so basically"), crops to 9:16 with face-framing, burns in animated karaoke subtitles, and exports 60s reels.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Filler Cutter</span>
+          <span class="tech-pill">Interactive Ribbon</span>
+          <span class="tech-pill">Karaoke Captions</span>
+          <span class="tech-pill">9:16 Crop</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Edited reel duration is strictly ≤ 60s</li>
+          <li><span class="check-mark">✓</span> <strong>Speech Check:</strong> 20 lines caption hand check verified</li>
+          <li><span class="check-mark">✓</span> <strong>Interactive Plan:</strong> Visual red vs hatched edit timeline</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(15)">Quick View 👁️</button>
+          <a href="project-15-one-minute-reel-cut/index.html" class="btn btn-launch">Launch App 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 16: Your Own Skill -->
+      <article class="project-card" data-section="section-d" data-difficulty="Medium" data-id="16">
+        <div class="card-top">
+          <span class="project-number">PROJECT 16</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">Agentic AI</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">⚡</div>
+          <div class="card-title-group">
+            <div class="card-section">Section D · Video, Skills & Design</div>
+            <h3 class="card-title">Your Own Skill</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Complete Antigravity skills suite: <code>/viva</code> (5-question oral defense examiner), <code>/resume-roast</code> (blunt metric optimizer), and <code>/one-page-revision</code> with test runners.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">/viva</span>
+          <span class="tech-pill">/resume-roast</span>
+          <span class="tech-pill">/one-page-revision</span>
+          <span class="tech-pill">Comparative Report</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Starts correctly in a fresh agent session</li>
+          <li><span class="check-mark">✓</span> <strong>3 Test Inputs:</strong> Verified on Thermo, SWE Resume & Quantum</li>
+          <li><span class="check-mark">✓</span> <strong>Comparative Report:</strong> Shows exactly what got better</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(16)">Quick View 👁️</button>
+          <a href="project-16-your-own-skill/index.html" class="btn btn-launch">Launch Runner 🚀</a>
+        </div>
+      </article>
+
+      <!-- Project 17: Same Page, New Design -->
+      <article class="project-card" data-section="section-d" data-difficulty="Medium" data-id="17">
+        <div class="card-top">
+          <span class="project-number">PROJECT 17</span>
+          <div class="tags-group">
+            <span class="difficulty-tag tag-medium">Medium</span>
+            <span class="offline-tag">UI/UX Audit</span>
+          </div>
+        </div>
+        <div class="card-header-block">
+          <div class="project-icon-box">🎯</div>
+          <div class="card-title-group">
+            <div class="card-section">Section D · Video, Skills & Design</div>
+            <h3 class="card-title">Same Page, New Design</h3>
+          </div>
+        </div>
+        <p class="card-desc">
+          Controlled before-and-after redesign demonstration for Technova 2026, Chai & Co., and Bright Path Classes. Words stay 100% identical while UI/UX elevates to industry standards.
+        </p>
+        <div class="tech-badges">
+          <span class="tech-pill">Before & After</span>
+          <span class="tech-pill">Verbatim Copy</span>
+          <span class="tech-pill">Design Audit</span>
+          <span class="tech-pill">Cognitive UX</span>
+        </div>
+        <ul class="features-list">
+          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Both before.html & after.html exist</li>
+          <li><span class="check-mark">✓</span> <strong>Verbatim Copy:</strong> 100% identical text content verified</li>
+          <li><span class="check-mark">✓</span> <strong>Design Audit:</strong> 5 major UX improvements documented</li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-preview" onclick="openProjectPreview(17)">Quick View 👁️</button>
+          <a href="project-17-same-page-new-design/index.html" class="btn btn-launch">View Showcase 🚀</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- 2. Table / Directory View (Toggled via button) -->
+    <table class="projects-table-view" id="projectsTableView">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Project Title</th>
+          <th>Section</th>
+          <th>Difficulty</th>
+          <th>Key Technologies</th>
+          <th>Done-When Verification</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="projectsTableBody">
+        <!-- Rendered dynamically -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- Quick View Architecture Modal -->
+  <div class="modal-backdrop" id="previewModalBackdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modalProjectTitle">Project Title</h3>
+          <div class="modal-subtitle" id="modalProjectSubtitle">Section · Difficulty</div>
+        </div>
+        <button class="btn-modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalProjectBody">
+        <!-- Dynamic Modal Content -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-preview" id="modalDismissBtn">Close</button>
+        <a href="#" class="btn btn-launch" id="modalLaunchBtn" target="_self">Launch Application 🚀</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container">
+    <div class="toast" id="toastNotification">
+      <span id="toastMessage">Notification message</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>Bharat Space Education Research Centre · GenAI Internship Week 2 Portfolio · Engineer: Ritik Chawla · Instructor: Karan Bagul</p>
+    <div class="footer-links">
+      <a href="prompts.md">Prompts Log (prompts.md)</a>
+      <a href="README.md#-verification-matrix--compliance-audit">Verification Matrix (README.md)</a>
+      <a href="README.md">Deployment Documentation</a>
+    </div>
+  </footer>
+
+  <script>
+    // Project Database for Quick Preview Modal
+    const PROJECTS_DATA = {
+      1: {
+        title: "PDF Studio",
+        section: "Section A · Web Tools",
+        difficulty: "Tough",
+        url: "project-01-pdf-studio/index.html",
+        folder: "project-01-pdf-studio",
+        desc: "A completely local, client-side PDF suite executing directly in the browser with 29 tools categorized into Organise, Edit, Stamp, Convert, and Finish, plus Password Lock & OCR.",
+        tech: "PDF-Lib, PDF.js, HTML5 Canvas 2D, Web Workers, Blob APIs",
+        offline: "100% offline. Pre-bundled PDF-Lib and PDF.js in local assets folder. Zero network calls.",
+        doneWhen: [
+          "With Wi-Fi off, successfully loads and edits a multi-page document (including built-in 50-page generator).",
+          "Permanent Redaction permanently destroys underlying text stream bytes preventing highlight or Ctrl+F discovery.",
+          "Compression calculator shows accurate before and after byte measurements."
+        ]
+      },
+      2: {
+        title: "Form Photo Fixer",
+        section: "Section A · Web Tools",
+        difficulty: "Medium",
+        url: "project-02-form-photo-fixer/index.html",
+        folder: "project-02-form-photo-fixer",
+        desc: "Instant photo and signature resizing and compression studio for competitive exams (UPSC, SSC, GATE, IBPS, Passport, US Visa). Features interactive face guide and binary search compressor.",
+        tech: "HTML5 Canvas, Binary Search Quality Optimizer, SVG Face Guide, LocalStorage",
+        offline: "100% offline client-side file reading and canvas encoding. Images never leave your device.",
+        doneWhen: [
+          "Meets 3 real official examination specifications with exact pixel dimensions and KB limits.",
+          "Iterative binary search quality compressor dials in file size to just under 50KB / 20KB without blur.",
+          "Custom preset creator enables adding custom exam requirements saved to LocalStorage."
+        ]
+      },
+      3: {
+        title: "Resume Builder",
+        section: "Section A · Web Tools",
+        difficulty: "Medium",
+        url: "project-03-resume-builder/index.html",
+        folder: "project-03-resume-builder",
+        desc: "Live A4 resume creation studio featuring 3 distinct templates (Modern Clean, Executive Two-Column, Technical Classic), drag-and-drop section reordering, and native selectable text PDF generation.",
+        tech: "CSS Paged Media, jsPDF UMD (bundled), Drag-and-Drop API, LocalStorage Autosave, JSON Backup Engine",
+        offline: "100% offline. All resume data autosaves in browser localStorage with instant JSON file backup and restore.",
+        doneWhen: [
+          "Multi-page pagination engine breaks long content cleanly across A4 pages without cutting lines mid-paragraph.",
+          "Native selectable vector text PDF export ensures resumes are ATS-parseable.",
+          "JSON export and restore operates seamlessly with zero data loss."
+        ]
+      },
+      4: {
+        title: "CBT Mock Test Engine",
+        section: "Section A · Web Tools",
+        difficulty: "Tough",
+        url: "project-04-cbt-mock-test/index.html",
+        folder: "project-04-cbt-mock-test",
+        desc: "Full National Testing Agency (NTA/JEE/GATE) examination simulator replicating official screen layouts, countdown timer, 5-state question palette, positive/negative marking, and crash recovery.",
+        tech: "Vanilla JavaScript, CSS Grid, LocalStorage State Persistence, JSON Question Loader",
+        offline: "100% offline. Loads bundled JEE PCM and GenAI assessment JSON question banks directly without network access.",
+        doneWhen: [
+          "Complete state persistence: unexpected browser crash or page reload mid-exam restores countdown timer and selections.",
+          "Score calculation matches official marking (+4 right, -1 wrong) with subject-wise analytics breakdown.",
+          "Accepts custom JSON exam files instantly with zero code modifications."
+        ]
+      },
+      5: {
+        title: "Scribbly Notes",
+        section: "Section A · Web Tools",
+        difficulty: "Medium",
+        url: "project-05-scribbly-notes/index.html",
+        folder: "project-05-scribbly-notes",
+        desc: "Converts typed notes into realistic hand-drawn notebook pages with natural human variation (baseline bounce, angle tilt, pen pressure variance) across 3 handwriting styles and 4 paper types.",
+        tech: "Canvas 2D Rendering, Pseudo-Random Normal Distribution, Bundled Script Typography, jsPDF",
+        offline: "100% offline. Bundled handwriting cursive and architectural fonts, zero external font CDNs.",
+        doneWhen: [
+          "Multi-page text flow engine splits a 3-page note cleanly without clipping words.",
+          "Adjustable natural jitter sliders simulate authentic human handwriting variance.",
+          "High-resolution PNG and multi-page PDF exports work completely offline."
+        ]
+      },
+      6: {
+        title: "Reel Monster",
+        section: "Section B · Phone Apps & Games",
+        difficulty: "Level 1 & 2",
+        url: "project-06-reel-monster/index.html",
+        folder: "project-06-reel-monster",
+        desc: "Cute animated screen time monster PWA that floats over Instagram Reels and YouTube Shorts. Features Level 1 manual tap counter + Level 2 automatic scroll detection, guilt comments, and 7-day screen time analytics.",
+        tech: "Progressive Web App (PWA), Service Worker, Web Audio API, Canvas / SVG Animation, LocalStorage",
+        offline: "100% offline installable PWA. Fully cached via sw.js with persistent 7-day analytics across restarts.",
+        doneWhen: [
+          "Installs as an offline PWA on mobile and desktop browsers.",
+          "Counter and 7-day analytics persist across device reboots and tab closures.",
+          "Reactive monster physically grows, changes facial expressions, and makes humorous remarks as reels increment."
+        ]
+      },
+      7: {
+        title: "Bill Book",
+        section: "Section B · Phone Apps & Games",
+        difficulty: "Medium",
+        url: "project-07-bill-book/index.html",
+        folder: "project-07-bill-book",
+        desc: "Offline point-of-sale billing PWA tailored for Indian shopkeepers. Includes customizable item catalog, instant dynamic UPI QR code generator encoding exact bill totals, receipt image generation, and daily sales tallies.",
+        tech: "QRious (bundled), html2canvas (bundled), Service Worker PWA, LocalStorage Ledger",
+        offline: "100% offline. Generates genuine UPI payment QR codes (`upi://pay?pa=...&am=...`) in airplane mode without internet.",
+        doneWhen: [
+          "Hand-verified on 5 grocery bills, correctly calculating rates, discounts, taxes, and grand totals.",
+          "Operates completely in flight mode without dropping transactions.",
+          "Dynamic UPI QR code renders immediately with exact rupees payable when scanned via GPay, PhonePe, or Paytm."
+        ]
+      },
+      8: {
+        title: "Auto Rally",
+        section: "Section B · Phone Apps & Games",
+        difficulty: "Tough",
+        url: "project-08-auto-rally/index.html",
+        folder: "project-08-auto-rally",
+        desc: "Fast-paced HTML5 Canvas 3D auto-rickshaw racing game. Features looping highway curves, coins, cows, potholes, Chai Nitro boosts, Web Audio engine and horn sound synthesizer, and 3-lap championship mode.",
+        tech: "HTML5 Canvas 2D, Web Audio API (Synthesized Audio Engine & Horn), Touch D-Pad, LocalStorage Best Lap",
+        offline: "100% offline. All audio synthesized procedurally using Web Audio API oscillators—zero external mp3 assets.",
+        doneWhen: [
+          "Plays a complete 3-lap championship race in flight mode with smooth 60 FPS animation.",
+          "Dual control scheme: keyboard (WASD / Arrows) and on-screen mobile virtual touch controls.",
+          "Personal best lap times and coins persist across device restarts."
+        ]
+      },
+      9: {
+        title: "YouTube Focus Board",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Medium",
+        url: "project-09-youtube-focus-board/index.html",
+        folder: "project-09-youtube-focus-board",
+        desc: "Manifest V3 Chrome Extension and interactive testbed eliminating study distractions. One-switch toggle blocks Shorts, recommendations, and comments, with timestamped notes and a 60-min session gate.",
+        tech: "Chrome Extension Manifest V3, Content Scripts, CSS Injection, LocalStorage Notes Engine",
+        offline: "100% offline testbed and self-contained extension with zero tracking or remote telemetry.",
+        doneWhen: [
+          "Works dynamically across YouTube video navigations without needing full page reloads.",
+          "Clicking timestamped study notes instantly jumps the video player to the exact second.",
+          "Session gate forces intentional study purpose entry before unlocking viewing session."
+        ]
+      },
+      10: {
+        title: "Job Clipper",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Medium",
+        url: "project-10-job-clipper/index.html",
+        folder: "project-10-job-clipper",
+        desc: "Manifest V3 Chrome Extension extracting job metadata (Role, Company, Deadline, Link) from job boards in one click. Features drag-and-drop Kanban tracker (Saved, Applied, Interview, Offer) with 7-day deadline alerts and CSV export.",
+        tech: "Chrome Extension Manifest V3, DOM Scraper, HTML5 Drag & Drop, CSV Serializer, LocalStorage",
+        offline: "100% offline storage. Job boards parsed locally on client without cloud backends.",
+        doneWhen: [
+          "Verified on 3 different job posting websites with editable metadata fields.",
+          "Deadline alert engine flags applications closing within 7 days.",
+          "One-click CSV export generates clean spreadsheets opening flawlessly in Excel and Google Sheets."
+        ]
+      },
+      11: {
+        title: "Circle to Fix",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Tough",
+        url: "project-11-circle-to-fix/index.html",
+        folder: "project-11-circle-to-fix",
+        desc: "Manifest V3 Chrome Extension enabling developers to circle UI bugs on any webpage using Alt+Shift+C. Captures canvas screenshots, inspects underlying DOM nodes, and generates complete AI coding fix prompts.",
+        tech: "Manifest V3, Fullscreen Canvas Overlay, DOM ElementFromPoint Inspector, html2canvas (bundled)",
+        offline: "100% offline. Prompt generation and canvas capture happen purely inside the browser sandbox.",
+        doneWhen: [
+          "Works reliably across diverse web layouts with freehand circling and rectangle annotations.",
+          "Generated AI prompt bundles exact CSS selector, DOM outerHTML snippet, screen coordinates, and instructions.",
+          "Zero telemetry or external network calls; works in restricted corporate intranets."
+        ]
+      },
+      12: {
+        title: "Chat Saver",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Medium",
+        url: "project-12-chat-saver/index.html",
+        folder: "project-12-chat-saver",
+        desc: "Manifest V3 Chrome Extension exporting web AI conversations (ChatGPT, Claude, Gemini). Correctly parses markdown, nested code blocks with language tags, and data tables into clean Markdown (.md) and formatted PDF.",
+        tech: "Manifest V3, DOM Tree Walker, Markdown Converter, jsPDF (bundled), LocalStorage",
+        offline: "100% offline. Exports are assembled entirely in client memory without sending conversation transcripts to any servers.",
+        doneWhen: [
+          "Successfully scrapes and exports long conversations exceeding 50+ messages without truncation.",
+          "Extracted code snippets preserve syntax and copy-paste indentation perfectly.",
+          "Complex markdown tables retain full border formatting and column alignment."
+        ]
+      },
+      13: {
+        title: "Style Spy",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Medium",
+        url: "project-13-style-spy/index.html",
+        folder: "project-13-style-spy",
+        desc: "Manifest V3 Chrome Extension extracting computed design styles from any webpage. Ranks dominant colors by occurrence frequency, inspects typography scales, exports CSS custom properties (`:root`), and tests kits on plain HTML.",
+        tech: "Manifest V3, ComputedStyle DOM Walker, Color Frequency Histogram, CSS Custom Properties Exporter",
+        offline: "100% offline. Performs color ranking and font extraction directly against the active DOM.",
+        doneWhen: [
+          "Hand-verified on 5 distinct websites, ranking dominant colors accurately.",
+          "Saved design kits persist in localStorage and export cleanly formatted CSS variables.",
+          "Applying kit to a plain test page immediately propagates typography and colors."
+        ]
+      },
+      14: {
+        title: "Tab Goblin",
+        section: "Section C · Chrome Extensions",
+        difficulty: "Medium",
+        url: "project-14-tab-goblin/index.html",
+        folder: "project-14-tab-goblin",
+        desc: "Manifest V3 Chrome Extension managing memory overload with a reactive animated goblin mascot. Ranks tabs by idle duration, uses `chrome.tabs.discard` to suspend memory without closing tabs, and maintains a protected 'Keep List' for active forms.",
+        tech: "Manifest V3, Chrome Tabs Discard API, SVG Reactive Mascot, LocalStorage Whitelist",
+        offline: "100% offline. Manages tabs and memory states purely via Chrome native extension APIs.",
+        doneWhen: [
+          "Handles 30+ open tabs smoothly without performance lag.",
+          "Protected form guarantee: tabs with dirty form inputs or on the Keep List are never discarded.",
+          "Session snapshot backs up and restores full browser tab groups."
+        ]
+      },
+      15: {
+        title: "One-Minute Reel Cut",
+        section: "Section D · Video, Skills & Design",
+        difficulty: "Tough",
+        url: "project-15-one-minute-reel-cut/index.html",
+        folder: "project-15-one-minute-reel-cut",
+        desc: "Automated vertical reel editing workstation. Detects silences >1.5s and filler phrases ('umm', 'uh', 'so basically'), displays an interactive kept vs cut ribbon, crops to 9:16 vertical, and renders animated karaoke subtitles under 60 seconds.",
+        tech: "HTML5 Canvas Video Player, Audio Analysis / Transcript Parser, Timeline Ribbon UI, Python CLI Cutter",
+        offline: "100% offline. Audio analysis, visual timeline editing, and canvas preview run without cloud rendering.",
+        doneWhen: [
+          "Edited output reel duration is guaranteed to be strictly ≤ 60 seconds.",
+          "Interactive edit plan ribbon allows clicking any cut segment to toggle keep/cut state.",
+          "Animated karaoke captions highlight spoken words synchronously with playback."
+        ]
+      },
+      16: {
+        title: "Your Own Skill",
+        section: "Section D · Video, Skills & Design",
+        difficulty: "Medium",
+        url: "project-16-your-own-skill/index.html",
+        folder: "project-16-your-own-skill",
+        desc: "Three production-grade Antigravity agent skills (`/viva`, `/resume-roast`, `/one-page-revision`) with SKILL.md specs, test suites, live interactive terminal execution environment, and comparative evaluation logs.",
+        tech: "Markdown Skill Specifications, Agentic Tool Protocol, Interactive Terminal Simulator, Evaluation Suite",
+        offline: "100% offline. Includes pre-verified test inputs and comparative evaluation logs against baseline outputs.",
+        doneWhen: [
+          "Starts correctly in a fresh Antigravity agent session using standard slash commands.",
+          "Verified on 3 challenging test inputs: Thermodynamics notes, SWE resume vs job post, and Quantum Computing text.",
+          "Comparative evaluation log documents specific quantitative and qualitative improvements over generic AI answers."
+        ]
+      },
+      17: {
+        title: "Same Page, New Design",
+        section: "Section D · Video, Skills & Design",
+        difficulty: "Medium",
+        url: "project-17-same-page-new-design/index.html",
+        folder: "project-17-same-page-new-design",
+        desc: "Controlled UI/UX redesign case study comparing `before.html` (raw unstyled AI output) and `after.html` (commercial design system) with 100% identical copy verbatim, plus formal UX audit report.",
+        tech: "HTML5, Modern CSS Design Systems, Responsive Grid / Flexbox, Cognitive UX Principles",
+        offline: "100% offline. Self-contained before/after comparison with interactive split view and design audit report.",
+        doneWhen: [
+          "Both before.html (unstyled) and after.html (polished) exist side-by-side.",
+          "Word-for-word copy comparison confirms 100% identical text content without modifications.",
+          "Design audit report details 5 major UX improvements and cognitive design rationale."
+        ]
+      }
+    };
+
+    // State
+    let currentFilter = 'all';
+    let currentDifficulty = 'all';
+    let currentSearchQuery = '';
+    let isTableView = false;
+
+    // DOM Elements
+    const searchInput = document.getElementById('searchInput');
+    const searchClearBtn = document.getElementById('searchClearBtn');
+    const shortcutHint = document.getElementById('shortcutHint');
+    const sectionTabs = document.querySelectorAll('.chip-btn');
+    const difficultyFilter = document.getElementById('difficultyFilter');
+    const projectCards = document.querySelectorAll('.project-card');
+    const visibleCountText = document.getElementById('visibleCountText');
+    const activeFilterLabel = document.getElementById('activeFilterLabel');
+    const btnGridView = document.getElementById('btnGridView');
+    const btnTableView = document.getElementById('btnTableView');
+    const projectsGrid = document.getElementById('projectsGrid');
+    const projectsTableView = document.getElementById('projectsTableView');
+    const projectsTableBody = document.getElementById('projectsTableBody');
+
+    // Modal Elements
+    const previewModalBackdrop = document.getElementById('previewModalBackdrop');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalDismissBtn = document.getElementById('modalDismissBtn');
+    const modalProjectTitle = document.getElementById('modalProjectTitle');
+    const modalProjectSubtitle = document.getElementById('modalProjectSubtitle');
+    const modalProjectBody = document.getElementById('modalProjectBody');
+    const modalLaunchBtn = document.getElementById('modalLaunchBtn');
+
+    // Toast Element
+    const toastNotification = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+
+    // Initialize
+    function init() {
+      setupEventListeners();
+      populateTable();
+      applyFilters();
+    }
+
+    function setupEventListeners() {
+      // Search input with instant filter
+      searchInput.addEventListener('input', (e) => {
+        currentSearchQuery = e.target.value.toLowerCase().trim();
+        if (currentSearchQuery.length > 0) {
+          searchClearBtn.style.display = 'block';
+          shortcutHint.style.display = 'none';
+        } else {
+          searchClearBtn.style.display = 'none';
+          shortcutHint.style.display = 'block';
+        }
+        applyFilters();
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentSearchQuery = '';
+        searchClearBtn.style.display = 'none';
+        shortcutHint.style.display = 'block';
+        searchInput.focus();
+        applyFilters();
+      });
+
+      // Keyboard shortcut '/' to focus search
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        } else if (e.key === 'Escape') {
+          if (previewModalBackdrop.classList.contains('active')) {
+            closeProjectPreview();
+          } else if (document.activeElement === searchInput) {
+            searchInput.value = '';
+            currentSearchQuery = '';
+            searchClearBtn.style.display = 'none';
+            shortcutHint.style.display = 'block';
+            searchInput.blur();
+            applyFilters();
+          }
+        }
+      });
+
+      // Section category tabs
+      sectionTabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          sectionTabs.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          applyFilters();
+        });
+      });
+
+      // Difficulty dropdown
+      difficultyFilter.addEventListener('change', (e) => {
+        currentDifficulty = e.target.value;
+        applyFilters();
+      });
+
+      // View toggle buttons
+      btnGridView.addEventListener('click', () => {
+        btnGridView.classList.add('active');
+        btnTableView.classList.remove('active');
+        projectsGrid.style.display = 'grid';
+        projectsTableView.style.display = 'none';
+        isTableView = false;
+      });
+
+      btnTableView.addEventListener('click', () => {
+        btnTableView.classList.add('active');
+        btnGridView.classList.remove('active');
+        projectsGrid.style.display = 'none';
+        projectsTableView.style.display = 'table';
+        isTableView = true;
+      });
+
+      // Modal close handlers
+      modalCloseBtn.addEventListener('click', closeProjectPreview);
+      modalDismissBtn.addEventListener('click', closeProjectPreview);
+      previewModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === previewModalBackdrop) closeProjectPreview();
+      });
+    }
+
+    // Populate Table View
+    function populateTable() {
+      projectsTableBody.innerHTML = '';
+      Object.keys(PROJECTS_DATA).forEach(id => {
+        const p = PROJECTS_DATA[id];
+        const tr = document.createElement('tr');
+        tr.dataset.id = id;
+        tr.dataset.section = id <= 5 ? 'section-a' : (id <= 8 ? 'section-b' : (id <= 14 ? 'section-c' : 'section-d'));
+        tr.dataset.difficulty = p.difficulty;
+        tr.innerHTML = `
+          <td><strong style="color: #60a5fa;">#${String(id).padStart(2, '0')}</strong></td>
+          <td><strong>${p.title}</strong></td>
+          <td><span style="color: #94a3b8; font-size: 12px;">${p.section.split('·')[1]?.trim() || p.section}</span></td>
+          <td><span class="difficulty-tag ${p.difficulty === 'Tough' ? 'tag-tough' : (p.difficulty.includes('Level') ? 'tag-level' : 'tag-medium')}">${p.difficulty}</span></td>
+          <td><span style="font-family: monospace; font-size: 11.5px; color: #a5b4fc;">${p.tech.split(',').slice(0, 2).join(', ')}</span></td>
+          <td style="color: #34d399; font-size: 12px;">✓ Verified</td>
+          <td style="white-space: nowrap;">
+            <button class="btn btn-preview" style="padding: 5px 10px; font-size: 11.5px;" onclick="openProjectPreview(${id})">Specs 👁️</button>
+            <a href="${p.url}" class="btn btn-launch" style="padding: 5px 10px; font-size: 11.5px;">Launch 🚀</a>
+          </td>
+        `;
+        projectsTableBody.appendChild(tr);
+      });
+    }
+
+    // Filter Logic
+    function applyFilters() {
+      let visibleCount = 0;
+
+      // Filter Grid Cards
+      projectCards.forEach(card => {
+        const matchesSection = (currentFilter === 'all' || card.dataset.section === currentFilter);
+        const matchesDifficulty = (currentDifficulty === 'all' || card.dataset.difficulty === currentDifficulty);
+        
+        let matchesSearch = true;
+        if (currentSearchQuery.length > 0) {
+          const cardText = card.textContent.toLowerCase();
+          matchesSearch = cardText.includes(currentSearchQuery);
+        }
+
+        if (matchesSection && matchesDifficulty && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Filter Table Rows
+      const tableRows = projectsTableBody.querySelectorAll('tr');
+      tableRows.forEach(row => {
+        const matchesSection = (currentFilter === 'all' || row.dataset.section === currentFilter);
+        const matchesDifficulty = (currentDifficulty === 'all' || row.dataset.difficulty === currentDifficulty);
+        
+        let matchesSearch = true;
+        if (currentSearchQuery.length > 0) {
+          const rowText = row.textContent.toLowerCase();
+          matchesSearch = rowText.includes(currentSearchQuery);
+        }
+
+        if (matchesSection && matchesDifficulty && matchesSearch) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      visibleCountText.textContent = visibleCount;
+
+      // Update Filter Label
+      let filterText = [];
+      if (currentFilter !== 'all') {
+        const activeChip = document.querySelector(`.chip-btn[data-filter="${currentFilter}"]`);
+        if (activeChip) filterText.push(activeChip.textContent.split('(')[0].trim());
+      }
+      if (currentDifficulty !== 'all') filterText.push(`Difficulty: ${currentDifficulty}`);
+      if (currentSearchQuery.length > 0) filterText.push(`Query: "${currentSearchQuery}"`);
+
+      activeFilterLabel.textContent = filterText.length > 0 ? `Active: ${filterText.join(' · ')}` : 'Filtering: All Categories (17 Projects)';
+    }
+
+    // Modal Logic
+    window.openProjectPreview = function(projectId) {
+      const p = PROJECTS_DATA[projectId];
+      if (!p) return;
+
+      modalProjectTitle.textContent = `#${String(projectId).padStart(2, '0')} — ${p.title}`;
+      modalProjectSubtitle.textContent = `${p.section} · Difficulty: ${p.difficulty} · Offline Certified`;
+      modalLaunchBtn.href = p.url;
+
+      modalProjectBody.innerHTML = `
+        <div class="modal-spec-card">
+          <div class="modal-spec-row">
+            <span class="modal-spec-label">Project Directory:</span>
+            <span class="modal-spec-value" style="font-family: monospace; color: #60a5fa;">${p.folder}/</span>
+          </div>
+          <div class="modal-spec-row">
+            <span class="modal-spec-label">Execution Environment:</span>
+            <span class="modal-spec-value" style="color: #34d399;">100% Offline (Local Browser Client)</span>
+          </div>
+          <div class="modal-spec-row">
+            <span class="modal-spec-label">Core Technologies:</span>
+            <span class="modal-spec-value">${p.tech}</span>
+          </div>
+          <div class="modal-spec-row">
+            <span class="modal-spec-label">Zero-Network Proof:</span>
+            <span class="modal-spec-value" style="font-size: 12px; color: #cbd5e1;">${p.offline}</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size: 13px; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px;">Product Overview:</h4>
+          <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6;">${p.desc}</p>
+        </div>
+
+        <div class="modal-checklist">
+          <h4>Curriculum "Done When" Compliance Checklist:</h4>
+          <ul class="modal-checklist-items">
+            ${p.doneWhen.map(item => `<li><span class="check-mark">✓</span> ${item}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 10px; padding: 12px; font-size: 12px; color: #c7d2fe; display: flex; justify-content: space-between; align-items: center;">
+          <span>Need full audit sign-off details?</span>
+          <a href="${p.folder}/verification.md" target="_blank" style="color: #93c5fd; font-weight: 700; text-decoration: none;">Read ${p.folder}/verification.md ↗</a>
+        </div>
+      `;
+
+      previewModalBackdrop.classList.add('active');
+    };
+
+    function closeProjectPreview() {
+      previewModalBackdrop.classList.remove('active');
+    }
+
+    // Toast helper
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toastNotification.classList.add('show');
+      setTimeout(() => toastNotification.classList.remove('show'), 2500);
+    }
+    window.showToast = showToast;
+
+    // Start
+    init();
+  </script>
+</body>
+</html>

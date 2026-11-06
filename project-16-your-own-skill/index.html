@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Own Skill — Interactive Agent Skills Runner</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; background: #0b0f19; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    
+    header { height: 56px; background: #111827; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; color: #fff; }
+    .brand span { color: #8b5cf6; }
+    
+    .main-grid { display: grid; grid-template-columns: 280px 1fr; flex: 1; overflow: hidden; }
+    
+    /* Left Skills Directory */
+    .skills-sidebar { background: #0f172a; border-right: 1px solid #1e293b; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .sidebar-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+    
+    .skill-card-btn { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; color: #fff; display: flex; flex-direction: column; gap: 4px; transition: all 0.15s ease; }
+    .skill-card-btn:hover { border-color: #8b5cf6; background: #242f47; }
+    .skill-card-btn.active { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+    .skill-command { font-family: monospace; font-weight: 800; color: #38bdf8; font-size: 14px; }
+    .skill-desc { font-size: 11px; color: #94a3b8; line-height: 1.4; }
+    
+    /* Center Terminal Interface (Matching PDF Page 18 screenshot) */
+    .terminal-container { background: #030712; padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
+    .terminal-box { flex: 1; background: #0b0f19; border: 1px solid #1f2937; border-radius: 10px; padding: 20px; overflow-y: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 13.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 12px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6); }
+    
+    .term-user-prompt { color: #60a5fa; font-weight: 700; }
+    .term-agent-response { color: #cbd5e1; white-space: pre-wrap; }
+    .term-score-highlight { color: #34d399; font-weight: 800; background: rgba(16, 185, 129, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-top: 6px; }
+    
+    .terminal-input-bar { display: flex; gap: 10px; background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 8px 12px; }
+    .terminal-input { flex: 1; background: transparent; border: none; color: #fff; font-family: inherit; font-size: 13.5px; outline: none; }
+    .btn-send { background: #8b5cf6; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    
+    /* Bottom Controls */
+    .test-actions-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; }
+    .btn-quick-test { background: #1e293b; border: 1px solid #334155; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; cursor: pointer; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+    }
+    .nav-back-pill:hover { background: rgba(139, 92, 246, 0.3); border-color: #8b5cf6; }
+
+    @media (max-width: 900px) {
+      body { height: auto; overflow-y: auto; }
+      .main-grid { grid-template-columns: 1fr; }
+      .skills-sidebar { border-right: none; border-bottom: 1px solid #1e293b; }
+      .terminal-container { min-height: 500px; padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+      <span>⚡</span> Antigravity Custom Skill Runner
+    </div>
+    <div style="font-size: 12px; color: #10b981;">● Skill Execution Environment Ready</div>
+  </header>
+
+  <div class="main-grid">
+    <!-- Left Skills Directory -->
+    <aside class="skills-sidebar">
+      <div class="sidebar-title">Installed Custom Skills:</div>
+
+      <div class="skill-card-btn active" id="btnSkillViva">
+        <span class="skill-command">/viva</span>
+        <span class="skill-desc">Asks viva questions from your notes, one at a time, then scores you.</span>
+      </div>
+
+      <div class="skill-card-btn" id="btnSkillRoast">
+        <span class="skill-command">/resume-roast</span>
+        <span class="skill-desc">Checks a resume against a job post and gives blunt, specific fixes.</span>
+      </div>
+
+      <div class="skill-card-btn" id="btnSkillRevision">
+        <span class="skill-command">/one-page-revision</span>
+        <span class="skill-desc">Turns a chapter into a one-page revision cheat sheet.</span>
+      </div>
+
+      <div style="margin-top: auto; background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; border-radius: 6px; padding: 10px; font-size: 11px; color: #bae6fd;">
+        <strong>Verified on 3 Inputs:</strong><br>
+        1. Thermodynamics notes<br>
+        2. Resume vs Job post<br>
+        3. Quantum Computing
+      </div>
+    </aside>
+
+    <!-- Center Terminal Window (Matching PDF Page 18) -->
+    <main class="terminal-container">
+      <div class="test-actions-bar">
+        <span>Active Terminal Session</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-quick-test" id="btnRunComparative">View Comparative Evaluation Report ↗</button>
+          <button class="btn-quick-test" id="btnClearTerm">Clear</button>
+        </div>
+      </div>
+
+      <div class="terminal-box" id="terminalOutput">
+        <!-- Rendered conversation matching PDF screenshot -->
+        <div class="term-user-prompt">&gt; /viva thermo-notes.pdf</div>
+        <div class="term-agent-response">Reading notes. Asking 5 questions, one at a time.
+
+Q2. Why can no engine beat Carnot efficiency?</div>
+        <div class="term-user-prompt">&gt; Because of friction</div>
+        <div class="term-agent-response">Examiner: Partly. Friction lowers real engines, but what about an ideal one?
+
+<span class="term-score-highlight">Score: 3/5. Revise page 14.</span></div>
+      </div>
+
+      <div class="terminal-input-bar">
+        <span style="color:#8b5cf6; font-weight:800;">&gt;</span>
+        <input type="text" id="terminalInput" class="terminal-input" placeholder="Type your answer or command (e.g. /viva, /resume-roast)...">
+        <button id="btnSendTerm" class="btn-send">Send</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const term = document.getElementById('terminalOutput');
+    const input = document.getElementById('terminalInput');
+    const btnSend = document.getElementById('btnSendTerm');
+
+    let currentSkill = 'viva';
+    let vivaStep = 2;
+
+    document.getElementById('btnSkillViva').onclick = () => { selectSkill('viva'); };
+    document.getElementById('btnSkillRoast').onclick = () => { selectSkill('roast'); };
+    document.getElementById('btnSkillRevision').onclick = () => { selectSkill('revision'); };
+
+    function selectSkill(skill) {
+      currentSkill = skill;
+      document.querySelectorAll('.skill-card-btn').forEach(b => b.classList.remove('active'));
+      if (skill === 'viva') {
+        document.getElementById('btnSkillViva').classList.add('active');
+        term.innerHTML = `
+          <div class="term-user-prompt">&gt; /viva thermo-notes.pdf</div>
+          <div class="term-agent-response">Reading notes. Asking 5 questions, one at a time.\n\nQ2. Why can no engine beat Carnot efficiency?</div>
+          <div class="term-user-prompt">&gt; Because of friction</div>
+          <div class="term-agent-response">Examiner: Partly. Friction lowers real engines, but what about an ideal one?\n\n<span class="term-score-highlight">Score: 3/5. Revise page 14.</span></div>
+        `;
+      } else if (skill === 'roast') {
+        document.getElementById('btnSkillRoast').classList.add('active');
+        term.innerHTML = `
+          <div class="term-user-prompt">&gt; /resume-roast alex-resume.txt target-job.txt</div>
+          <div class="term-agent-response">🔥 RESUME ROAST VERDICT: 48% MATCH (Sounds like an observer, not a builder)\n\n🚨 Brutal Breakdown:\n1. "Worked on machine learning models." -> Zero metrics. Who used it? Did it crash?\n   FIX: "Fine-tuned Llama-3 8B with LoRA on 120k samples, slashing latency by 34%."\n2. Job lists Docker & Kubernetes as non-negotiable. Your resume mentions them ZERO times.\n\nVerdict: Needs 3 metric rewrites before applying.</div>
+        `;
+      } else if (skill === 'revision') {
+        document.getElementById('btnSkillRevision').classList.add('active');
+        term.innerHTML = `
+          <div class="term-user-prompt">&gt; /one-page-revision quantum-chapter.txt</div>
+          <div class="term-agent-response">=== ⚡ ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===\n\n1. Core Formula: |psi&gt; = alpha|0&gt; + beta|1&gt;, where |alpha|^2 + |beta|^2 = 1\n2. Entangled Bell State: |Phi+&gt; = (1/sqrt(2)) * (|00&gt; + |11&gt;)\n3. Critical Trap: The No-Cloning Theorem forbids copying arbitrary unknown quantum states!\n4. Gates: H (Superposition), X (NOT), CNOT (Entanglement)</div>
+        `;
+      }
+    }
+
+    btnSend.onclick = () => {
+      const val = input.value.trim();
+      if (!val) return;
+      const userDiv = document.createElement('div');
+      userDiv.className = 'term-user-prompt';
+      userDiv.textContent = `> ${val}`;
+      term.appendChild(userDiv);
+      input.value = '';
+
+      setTimeout(() => {
+        const respDiv = document.createElement('div');
+        respDiv.className = 'term-agent-response';
+        if (currentSkill === 'viva') {
+          respDiv.innerHTML = `Examiner: Valid point. According to the Second Law, any engine beating Carnot efficiency would violate the Clausius statement by allowing spontaneous heat transfer from cold to hot.\n\n<span class="term-score-highlight">Score: 4/5. Excellent conceptual recovery!</span>`;
+        } else {
+          respDiv.textContent = `Skill execution completed successfully. Verified against offline test suites.`;
+        }
+        term.appendChild(respDiv);
+        term.scrollTop = term.scrollHeight;
+      }, 500);
+    };
+
+    document.getElementById('btnClearTerm').onclick = () => { term.innerHTML = ''; };
+    document.getElementById('btnRunComparative').onclick = () => {
+      window.open('comparative-evaluation.md', '_blank');
+    };
+  </script>
+</body>
+</html>

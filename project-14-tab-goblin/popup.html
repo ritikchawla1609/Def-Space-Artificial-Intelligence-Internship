@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Goblin</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="goblin-app">
+    <!-- Header with Live Goblin Mood (Matching PDF Page 16) -->
+    <header class="goblin-header">
+      <div class="goblin-meta">
+        <h2 id="totalTabsCountText">47 tabs open</h2>
+        <div class="goblin-sub" id="goblinStatusSub">31 asleep · goblin is full</div>
+      </div>
+      <div class="goblin-avatar" id="goblinAvatar">
+        <!-- Live Animated Goblin Face SVG -->
+        <svg id="goblinSvg" viewBox="0 0 100 100" width="48" height="48">
+          <circle id="goblinFace" cx="50" cy="50" r="42" fill="#059669"/>
+          <!-- Pointy Goblin Ears -->
+          <polygon points="12,42 0,20 25,32" fill="#047857"/>
+          <polygon points="88,42 100,20 75,32" fill="#047857"/>
+          <!-- Eyes -->
+          <circle cx="36" cy="44" r="7" fill="#ffffff"/>
+          <circle cx="64" cy="44" r="7" fill="#ffffff"/>
+          <circle cx="38" cy="45" r="3.5" fill="#0f172a"/>
+          <circle cx="66" cy="45" r="3.5" fill="#0f172a"/>
+          <!-- Smug / Sleepy Goblin Grin -->
+          <path id="goblinMouth" d="M 32 66 Q 50 78 68 66" stroke="#0f172a" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Tabs List Ranked by Idle Duration -->
+    <section class="tabs-scroll-area">
+      <div class="list-heading">
+        <span>Tabs by Last Activity</span>
+        <span style="font-size: 11px; color: #38bdf8;">Idle Tabs Ranked</span>
+      </div>
+      <div class="tabs-list" id="tabsList">
+        <!-- Rendered dynamically e.g. Physics lecture 3 days old, Internship form Keep -->
+      </div>
+    </section>
+
+    <!-- Saved Sessions Section -->
+    <section class="sessions-section" id="sessionsSection" style="display: none;">
+      <div class="list-heading">
+        <span>Saved Sessions</span>
+        <button id="btnCloseSessions" class="btn-xs">Close</button>
+      </div>
+      <div class="sessions-list" id="sessionsList"></div>
+    </section>
+
+    <!-- Action Buttons (Matching PDF Page 16) -->
+    <footer class="goblin-footer">
+      <button id="btnSaveSession" class="btn btn-secondary">Save session</button>
+      <button id="btnFeedGoblin" class="btn btn-feed">Feed the goblin 🍖</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

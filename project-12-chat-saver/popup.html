@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Saver</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="assets/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="popup-box">
+    <!-- Header matching PDF Page 14 screenshot -->
+    <header class="card-header">
+      <span class="icon">💬</span>
+      <span class="title">Save this chat</span>
+    </header>
+
+    <div class="chat-meta-stats">
+      <div class="stat-row">
+        <span>Messages</span>
+        <strong id="msgCountText">24</strong>
+      </div>
+      <div class="stat-row">
+        <span>Code blocks</span>
+        <strong id="codeBlockCountText">3</strong>
+      </div>
+      <div class="stat-row">
+        <span>Detected Title</span>
+        <strong class="title-truncate" id="chatTitleText">Explain RAG simply</strong>
+      </div>
+    </div>
+
+    <!-- Selection Option -->
+    <div class="selection-options">
+      <label class="radio-label">
+        <input type="radio" name="exportScope" value="all" checked id="optScopeAll">
+        <span>Save Full Conversation</span>
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="exportScope" value="selected" id="optScopeSelected">
+        <span>Select specific messages (<span id="selectedCountText">0</span> chosen)</span>
+      </label>
+    </div>
+
+    <!-- Actions (Matching PDF Page 14 buttons) -->
+    <div class="export-actions">
+      <button id="btnSavePdf" class="btn btn-primary btn-block">Save as PDF</button>
+      <button id="btnSaveMd" class="btn btn-secondary btn-block">Save as Markdown</button>
+    </div>
+
+    <footer class="footer-privacy">
+      <span>🔒 100% Client-side · Sends zero data to any server</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

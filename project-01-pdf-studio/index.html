@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Studio — 100% Offline Client-Side PDF Suite</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Bundled Offline Libraries -->
+  <script src="assets/pdf-lib.min.js"></script>
+  <script src="assets/pdf.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <div class="brand-badge"></div>
+        <span class="brand-title">PDF Studio</span>
+        <span class="badge-offline">100% Offline</span>
+      </div>
+      <div class="doc-meta">
+        <span id="currentDocName" class="doc-name">notes-sem4.pdf</span>
+        <span class="meta-dot">·</span>
+        <span id="pageCountBadge" class="page-count">1 page</span>
+        <span class="meta-dot">·</span>
+        <span id="fileSizeBadge" class="file-size">0 KB</span>
+      </div>
+      <div class="top-actions">
+        <button id="btnToggleThumbs" class="btn btn-secondary btn-sm" title="Toggle page thumbnails sidebar">📑 Pages</button>
+        <button id="btnNewDoc" class="btn btn-secondary btn-sm" title="Create a blank or multi-page sample PDF">New / Sample</button>
+        <label for="pdfFileInput" class="btn btn-secondary btn-sm" title="Load any PDF file from your computer">
+          Open PDF
+          <input type="file" id="pdfFileInput" accept="application/pdf" style="display: none;">
+        </label>
+        <button id="btnSavePdf" class="btn btn-primary btn-sm" title="Export & Save final modified PDF">Save PDF</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+      <!-- Left Category Navigation -->
+      <nav class="sidebar-nav">
+        <button class="nav-tab active" data-group="organise">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Organise
+        </button>
+        <button class="nav-tab" data-group="edit">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          Edit
+        </button>
+        <button class="nav-tab" data-group="stamp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Stamp
+        </button>
+        <button class="nav-tab" data-group="convert">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+          Convert
+        </button>
+        <button class="nav-tab" data-group="finish">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Finish
+        </button>
+        <button class="nav-tab" data-group="advanced">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Security & OCR
+        </button>
+      </nav>
+
+      <!-- Center Content Area -->
+      <main class="main-panel">
+        <!-- Sub-Tool Bar (29 tools across groups) -->
+        <div class="toolbar" id="toolbar">
+          <!-- Populated dynamically based on selected group -->
+        </div>
+
+        <!-- Tool Configuration Sub-bar (shows color picker, font size, stroke width, etc.) -->
+        <div class="tool-options" id="toolOptions" style="display: none;"></div>
+
+        <!-- Canvas / Document Viewing Stage -->
+        <div class="stage-container" id="stageContainer">
+          <div class="canvas-wrapper" id="canvasWrapper">
+            <canvas id="pdfCanvas"></canvas>
+            <canvas id="overlayCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Bottom Page Controls -->
+        <div class="page-controls">
+          <button id="btnPrevPage" class="btn btn-sm">‹ Prev</button>
+          <span class="page-indicator">Page <input type="number" id="pageNumInput" min="1" value="1"> of <span id="totalPagesSpan">1</span></span>
+          <button id="btnNextPage" class="btn btn-sm">Next ›</button>
+          <div class="zoom-controls">
+            <button id="btnZoomOut" class="btn btn-icon">-</button>
+            <span id="zoomLevelText">100%</span>
+            <button id="btnZoomIn" class="btn btn-icon">+</button>
+            <button id="btnFitWidth" class="btn btn-sm">Fit</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Pages Thumbnail Strip -->
+      <aside class="thumbnail-sidebar">
+        <div class="sidebar-header">
+          <span>Pages (<span id="thumbCount">1</span>)</span>
+          <button id="btnQuickAddBlank" class="btn btn-xs" title="Insert blank page">+ Blank</button>
+        </div>
+        <div class="thumbnails-list" id="thumbnailsList">
+          <!-- Thumbnails rendered here -->
+        </div>
+      </aside>
+    </div>
+
+    <!-- Modals for Advanced Operations (Compress, Compare, OCR, Details, Passwords) -->
+    <div class="modal-backdrop" id="modalBackdrop" style="display: none;">
+      <div class="modal" id="genericModal">
+        <div class="modal-header">
+          <h3 id="modalTitle">Tool Action</h3>
+          <button id="modalCloseBtn" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Dynamic Modal Content -->
+        </div>
+        <div class="modal-footer" id="modalFooter">
+          <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+          <button class="btn btn-primary" id="modalActionBtn">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Status Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span class="wifi-indicator">🟢 Wi-Fi off · nothing leaves this laptop</span>
+      </div>
+      <div class="footer-center">
+        <span id="statusMessage">Ready. 29 PDF Tools Loaded Offline.</span>
+      </div>
+      <div class="footer-right">
+        <span>GenAI Internship · Project 1</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

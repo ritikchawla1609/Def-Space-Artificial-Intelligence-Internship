@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder — 100% Offline Live A4 Resume Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Bar -->
+    <header class="top-nav">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <span class="brand-badge"></span>
+        <span class="brand-text">Resume Studio</span>
+        <span class="badge-offline">100% Offline</span>
+      </div>
+      <div class="nav-controls">
+        <div class="mobile-pane-toggle" id="mobilePaneToggle">
+          <button id="btnTabEdit" class="pane-tab active">✏️ Edit</button>
+          <button id="btnTabPreview" class="pane-tab">📄 A4 Preview</button>
+        </div>
+        <label for="templateSelect">Template:</label>
+        <select id="templateSelect" class="select-dropdown">
+          <option value="template-modern">Template 1 · Modern Clean</option>
+          <option value="template-executive" selected>Template 2 · Executive Two-Column</option>
+          <option value="template-technical">Template 3 · Technical Classic</option>
+        </select>
+        <button id="btnExportJson" class="btn btn-secondary btn-sm" title="Backup all resume data to JSON">Save JSON</button>
+        <label class="btn btn-secondary btn-sm" title="Restore from JSON backup">
+          Load JSON
+          <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+        </label>
+        <button id="btnExportPdf" class="btn btn-primary" title="Export as native selectable A4 PDF">Export PDF</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="builder-workspace">
+      <!-- Left: Form Editor -->
+      <section class="editor-pane">
+        <div class="editor-header">
+          <h2>Resume Content</h2>
+          <span class="auto-save-text">✓ Autosaved locally</span>
+        </div>
+
+        <div class="accordion-group">
+          <!-- 1. Personal Info -->
+          <details class="section-card" open>
+            <summary class="section-summary">Personal & Contact Information</summary>
+            <div class="section-content">
+              <div class="input-row">
+                <div class="form-field">
+                  <label>Full Name</label>
+                  <input type="text" id="inpFullName" value="Riya Sharma">
+                </div>
+                <div class="form-field">
+                  <label>Professional Title</label>
+                  <input type="text" id="inpTitle" value="GenAI Engineer & Systems Developer">
+                </div>
+              </div>
+              <div class="input-row">
+                <div class="form-field">
+                  <label>Email</label>
+                  <input type="email" id="inpEmail" value="riya@example.com">
+                </div>
+                <div class="form-field">
+                  <label>Phone</label>
+                  <input type="text" id="inpPhone" value="+91 98765 43210">
+                </div>
+              </div>
+              <div class="input-row">
+                <div class="form-field">
+                  <label>LinkedIn / Portfolio</label>
+                  <input type="text" id="inpLinkedin" value="linkedin.com/in/riyasharma">
+                </div>
+                <div class="form-field">
+                  <label>GitHub</label>
+                  <input type="text" id="inpGithub" value="github.com/riyasharma">
+                </div>
+              </div>
+              <div class="form-field">
+                <label>Professional Summary</label>
+                <textarea id="inpSummary" rows="3">High-performing GenAI and software intern with deep expertise in offline-first browser engineering, computer vision, and Chrome extension architecture. Proven record building fast, resilient applications.</textarea>
+              </div>
+            </div>
+          </details>
+
+          <!-- Section Reordering Hub -->
+          <div class="reorder-banner">
+            <span class="reorder-title">Section Order (Drag or click arrows to reorder):</span>
+            <div id="sectionOrderContainer" class="section-order-chips"></div>
+          </div>
+
+          <!-- 2. Work Experience -->
+          <details class="section-card" data-section-id="experience" open>
+            <summary class="section-summary">
+              <span>Experience</span>
+              <button class="btn-add-item" id="btnAddExp">+ Add Experience</button>
+            </summary>
+            <div class="section-content" id="experienceList"></div>
+          </details>
+
+          <!-- 3. Projects -->
+          <details class="section-card" data-section-id="projects" open>
+            <summary class="section-summary">
+              <span>Projects</span>
+              <button class="btn-add-item" id="btnAddProject">+ Add Project</button>
+            </summary>
+            <div class="section-content" id="projectsList"></div>
+          </details>
+
+          <!-- 4. Skills -->
+          <details class="section-card" data-section-id="skills" open>
+            <summary class="section-summary">Skills & Proficiencies</summary>
+            <div class="section-content">
+              <div class="form-field">
+                <label>Languages & Core</label>
+                <input type="text" id="inpSkillsLanguages" value="Python, JavaScript, TypeScript, C++, SQL">
+              </div>
+              <div class="form-field">
+                <label>Frameworks & Tools</label>
+                <input type="text" id="inpSkillsFrameworks" value="React, Node.js, Web APIs, PDF-Lib, Canvas API, Git">
+              </div>
+              <div class="form-field">
+                <label>Specializations</label>
+                <input type="text" id="inpSkillsSpecial" value="LLM Fine-Tuning, Offline-First Architecture, Browser Security">
+              </div>
+            </div>
+          </details>
+
+          <!-- 5. Education -->
+          <details class="section-card" data-section-id="education" open>
+            <summary class="section-summary">
+              <span>Education</span>
+              <button class="btn-add-item" id="btnAddEdu">+ Add Education</button>
+            </summary>
+            <div class="section-content" id="educationList"></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Right: Live A4 Preview Pane -->
+      <section class="preview-pane">
+        <div class="preview-toolbar">
+          <span class="preview-heading">Live A4 Document Preview</span>
+          <div class="preview-actions">
+            <button id="btnZoomOut" class="btn btn-xs">-</button>
+            <span id="zoomText" style="font-size: 12px; min-width: 45px; text-align: center;">95%</span>
+            <button id="btnZoomIn" class="btn btn-xs">+</button>
+            <button id="btnFitPage" class="btn btn-xs">Fit A4</button>
+          </div>
+        </div>
+
+        <div class="preview-stage" id="previewStage">
+          <!-- Live A4 Resume Container -->
+          <div id="resumeDocument" class="a4-page template-executive">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

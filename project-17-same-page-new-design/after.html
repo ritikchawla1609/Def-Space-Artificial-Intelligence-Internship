@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>After Redesign — Modern UI/UX Design System</title>
+  <style>
+    :root {
+      --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-heading);
+      background-color: #0b0f19;
+      color: #f8fafc;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Common Card Styling */
+    .showcase-card {
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* CTA Buttons */
+    .cta-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14.5px;
+      padding: 12px 26px;
+      border-radius: 10px;
+      align-self: flex-start;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.04);
+    }
+
+    /* Tags / Pills Container */
+    .pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pill-item {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* --- SECTION 1: TECHNOVA 2026 (Cyberpunk Fest) --- */
+    .card-technova {
+      background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #1e1035 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.4);
+    }
+
+    .card-technova h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    }
+
+    .card-technova p {
+      font-size: 15px;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .card-technova .cta-btn {
+      background: linear-gradient(90deg, #f59e0b 0%, #eab308 100%);
+      color: #0f172a;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+    }
+
+    .card-technova .pill-item {
+      background: rgba(168, 85, 247, 0.18);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #f3e8ff;
+    }
+
+    /* --- SECTION 2: CHAI AND CO. (Artisan Green Cafe) --- */
+    .card-chai {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 60%, #022c22 100%);
+      border: 1.5px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .card-chai h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .card-chai p {
+      font-size: 15px;
+      color: #d1fae5;
+    }
+
+    .card-chai .cta-btn {
+      background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+    }
+
+    .card-chai .pill-item {
+      background: rgba(4, 120, 87, 0.4);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: #a7f3d0;
+    }
+
+    /* --- SECTION 3: BRIGHT PATH CLASSES (Premium Academic Blue) --- */
+    .card-classes {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #e2e8f0;
+    }
+
+    .card-classes h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .card-classes p {
+      font-size: 15px;
+      color: #475569;
+    }
+
+    .card-classes .cta-btn {
+      background-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-classes .pills-container {
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .card-classes .pill-item {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 600px) {
+      body { padding: 16px; gap: 20px; }
+      .showcase-card { padding: 22px; }
+      .card-technova h1 { font-size: 26px; }
+      .card-chai h2, .card-classes h2 { font-size: 22px; }
+      .cta-btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Section 1: TECHNOVA 2026 -->
+  <article class="showcase-card card-technova">
+    <h1>TECHNOVA 2026</h1>
+    <p>Three days of robotics, code and music.</p>
+    <a href="#" class="cta-btn">Register now</a>
+    <div class="pills-container">
+      <span class="pill-item">Robotics</span>
+      <span class="pill-item">Hackathon</span>
+      <span class="pill-item">Music night</span>
+    </div>
+  </article>
+
+  <!-- Section 2: Chai and Co. -->
+  <article class="showcase-card card-chai">
+    <h2>Chai and Co.</h2>
+    <p>Fresh chai and snacks, all day.</p>
+    <a href="#" class="cta-btn">See today's special</a>
+    <div class="pills-container">
+      <span class="pill-item">Masala chai ₹30</span>
+      <span class="pill-item">Cold coffee ₹90</span>
+      <span class="pill-item">Maska pav ₹45</span>
+    </div>
+  </article>
+
+  <!-- Section 3: Bright Path Classes -->
+  <article class="showcase-card card-classes">
+    <h2>Bright Path Classes</h2>
+    <p>JEE and NEET batches near you.</p>
+    <a href="#" class="cta-btn">Book a free demo</a>
+    <div class="pills-container">
+      <span class="pill-item">Small batches</span>
+      <span class="pill-item">Weekly tests</span>
+      <span class="pill-item">Doubt desk</span>
+    </div>
+  </article>
+</body>
+</html>

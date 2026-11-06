@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribbly Notes — Hand-Drawn Notebook Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <span class="brand-pen">✍️</span>
+        <span class="brand-title">Scribbly Notes</span>
+        <span class="badge-offline">100% Offline</span>
+      </div>
+      <div class="top-controls">
+        <div class="control-item">
+          <label for="fontStyleSelect">Handwriting:</label>
+          <select id="fontStyleSelect" class="styled-select">
+            <option value="architect">1. Architect Casual</option>
+            <option value="cursive">2. Flowing Cursive</option>
+            <option value="neat">3. Neat Student Script</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="inkColorSelect">Pen / Ink:</label>
+          <select id="inkColorSelect" class="styled-select">
+            <option value="blue">Royal Blue Gel</option>
+            <option value="black">Deep Black Pen</option>
+            <option value="red">Correction Red</option>
+            <option value="green">Emerald Green</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="paperStyleSelect">Paper:</label>
+          <select id="paperStyleSelect" class="styled-select">
+            <option value="ruled">Blue Ruled with Margin</option>
+            <option value="grid">Engineering Graph Grid</option>
+            <option value="dot">Modern Dot Grid</option>
+            <option value="sepia">Vintage Parchment</option>
+          </select>
+        </div>
+        <div class="action-buttons">
+          <button id="btnSaveImage" class="btn btn-secondary btn-sm" title="Download current page as PNG">Save Image</button>
+          <button id="btnSavePdf" class="btn btn-primary btn-sm" title="Export all pages as PDF">Save PDF</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Left Editor Pane -->
+      <section class="editor-pane">
+        <div class="editor-header">
+          <span class="editor-label">You type:</span>
+          <div class="editor-tools">
+            <button id="btnInsertSample" class="btn btn-xs">Load Ohm's Law Sample</button>
+            <button id="btnLoad3PageSample" class="btn btn-xs">Load 3-Page Notes</button>
+          </div>
+        </div>
+        <textarea id="plainTextInput" class="text-input-area" placeholder="Type or paste your notes here..."></textarea>
+        
+        <!-- Natural Variation Controls -->
+        <div class="variation-settings-card">
+          <h4>Natural Human Variation Settings:</h4>
+          <div class="setting-slider-row">
+            <label>Baseline Jitter:</label>
+            <input type="range" id="sliderJitterY" min="0" max="4" step="0.5" value="1.8">
+          </div>
+          <div class="setting-slider-row">
+            <label>Word Angle / Tilt:</label>
+            <input type="range" id="sliderJitterRot" min="0" max="3" step="0.2" value="1.4">
+          </div>
+          <div class="setting-slider-row">
+            <label>Pen Pressure Variance:</label>
+            <input type="range" id="sliderPressure" min="0" max="0.4" step="0.05" value="0.15">
+          </div>
+          <div class="academic-disclaimer">
+            ⚠️ <strong>Rule:</strong> For your own notes and revision only. Never submit its pages as handwritten schoolwork.
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Notebook Pages Stage -->
+      <section class="notebook-stage">
+        <div class="stage-nav">
+          <div class="page-count-info">
+            Generated Pages: <strong id="pageTotalCount">1</strong>
+          </div>
+          <div class="page-quick-jump" id="pageJumpBar">
+            <!-- Page jump buttons -->
+          </div>
+        </div>
+
+        <div class="pages-scroll-container" id="pagesScrollContainer">
+          <!-- Canvas Pages rendered dynamically here -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

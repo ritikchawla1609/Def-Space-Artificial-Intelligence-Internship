@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Style Spy — Interactive Extension Testbed</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: 100vw; height: 100vh; overflow-y: auto; background-color: #0b0f19; padding: 20px; }
+    .testbed-grid { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    
+    /* Simulated Web Page (Matching PDF Page 15 screenshot: any-nice-site.com) */
+    .website-mock { background: #ffffff; color: #0f172a; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+    .browser-url-strip { height: 44px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 12px; font-family: monospace; color: #475569; }
+    
+    .website-body { padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+    .site-heading { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 34px; color: #0f172a; }
+    .site-body-text { font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: 16px; color: #334155; line-height: 1.6; }
+    
+    .btn-get-started { background-color: #8b5cf6; color: #ffffff; border: none; padding: 12px 24px; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; align-self: flex-start; }
+    
+    /* Plain Page to Test Applying Kit */
+    .target-plain-page { background: #f8fafc; border: 1.5px dashed #94a3b8; border-radius: 8px; padding: 20px; margin-top: 20px; color: #333; }
+    
+    /* Extension Floating Popup */
+    .ext-widget-frame { background: #0f172a; border: 2px solid #8b5cf6; border-radius: 12px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); height: fit-content; }
+
+    /* Nav Back Pill */
+    .nav-back-pill {
+      background: rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+    }
+    .nav-back-pill:hover { background: rgba(139, 92, 246, 0.2); border-color: #8b5cf6; color: #8b5cf6; }
+
+    @media (max-width: 900px) {
+      body { padding: 12px; }
+      .testbed-grid { grid-template-columns: 1fr; }
+      .website-body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="testbed-grid">
+    <!-- Simulated Website with Beautiful Typography & Colors -->
+    <div class="website-mock">
+      <div class="browser-url-strip">
+        <div style="display:flex; align-items:center;">
+          <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+          <span>🌐 any-nice-site.com</span>
+        </div>
+        <span style="color: #10b981;">● Inspectable</span>
+      </div>
+
+      <div class="website-body">
+        <h1 class="site-heading">Nice design</h1>
+        <p class="site-body-text">
+          Good typography and deliberate color hierarchies elevate plain web interfaces into memorable brand experiences.
+        </p>
+        <button class="btn-get-started">Get started</button>
+
+        <!-- Plain Page to satisfy requirement: "Paste a kit into a plain page and it picks up the style" -->
+        <div class="target-plain-page" id="plainTestTarget">
+          <h4 id="plainTitle">Plain Unstyled Heading</h4>
+          <p id="plainDesc">This plain container tests the exported CSS variables. Click 'Apply Kit to Plain Page' below to watch it pick up the extracted style immediately.</p>
+          <button id="btnApplyToPlain" class="btn btn-secondary btn-sm" style="margin-top: 8px;">Apply Kit to Plain Page 🎨</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Style Spy Extension Widget (Matching PDF Page 15) -->
+    <aside class="ext-widget-frame">
+      <div class="spy-container">
+        <header class="spy-header">
+          <div class="brand">
+            <span class="icon">🎨</span>
+            <span class="title">Style Spy</span>
+          </div>
+          <span style="font-size:11px; color:#10b981;">Active</span>
+        </header>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <span>Colours</span>
+            <span class="hint">Ranked by use</span>
+          </div>
+          <div class="swatches-grid" id="swatchesGrid"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <span>Fonts</span>
+            <span class="hint">Computed</span>
+          </div>
+          <div class="fonts-list" id="fontsList"></div>
+        </section>
+
+        <section class="section-card kit-card">
+          <div class="section-heading">
+            <span>Saved Kits (Survives Restarts)</span>
+          </div>
+          <div class="save-kit-row">
+            <input type="text" id="inpKitName" value="Nice Site Palette">
+            <button id="btnSaveKit" class="btn btn-sm btn-primary">Save</button>
+          </div>
+          <div class="saved-kits-selector" style="margin-top:6px;">
+            <select id="savedKitsDropdown"></select>
+          </div>
+          <button id="btnCopyCss" class="btn btn-success btn-block" style="margin-top: 8px;">Copy as CSS Variables 📋</button>
+        </section>
+
+        <div id="copyToast" class="toast" style="display: none;">Copied to clipboard! ✓</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="popup.js"></script>
+  <script>
+    document.getElementById('btnApplyToPlain').addEventListener('click', () => {
+      const target = document.getElementById('plainTestTarget');
+      target.style.backgroundColor = '#0f172a';
+      target.style.color = '#f8fafc';
+      target.style.border = '2px solid #8b5cf6';
+      document.getElementById('plainTitle').style.fontFamily = "'Inter', sans-serif";
+      document.getElementById('plainTitle').style.color = '#f59e0b';
+      document.getElementById('plainDesc').style.fontFamily = "'Lora', serif";
+      alert("Style picked up! Heading is now Inter (Amber) and Body is now Lora.");
+    });
+  </script>
+</body>
+</html>
