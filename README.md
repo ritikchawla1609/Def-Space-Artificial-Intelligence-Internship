@@ -31,7 +31,7 @@ You can launch the entire project portfolio using any local HTTP server:
 # Option A: Using npm script to launch local server
 npm start
 
-# Option B: Run comprehensive automated test suite (183 tests across all 17 projects)
+# Option B: Run comprehensive automated test suite (238 tests across all 17 projects)
 npm test
 
 # Option C: Using standard Python 3 (instant, zero installs)
@@ -60,7 +60,7 @@ INTERSHIP WEEK2/
 ├── prompts.md                                # Master development prompts log
 ├── package.json                              # Project manifest and quick-start scripts
 ├── README.md                                 # Executive documentation and manual
-├── verify-suite.js                           # Automated Regression Test Suite (183 tests)
+├── verify-suite.js                           # Automated Regression Test Suite (238 tests)
 │
 ├── project-01-pdf-studio/                    # 1. PDF Studio (29 tools, redaction, compression)
 │   ├── index.html, style.css, app.js, README.md, prompts.md, verification.md, assets/

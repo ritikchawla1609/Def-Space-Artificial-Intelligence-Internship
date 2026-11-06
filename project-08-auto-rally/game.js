@@ -255,7 +255,7 @@
       if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
       if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') keys.up = true;
       if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') keys.down = true;
-      if (e.key === ' ' || e.key === 'h' || e.key === 'H') handleHonk();
+      if (e.key === ' ' || e.key === 'b' || e.key === 'B') handleHonk();
       if (e.key === 'Shift') triggerNitro();
     });
 

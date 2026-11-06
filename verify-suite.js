@@ -155,6 +155,68 @@ EXPECTED_PROJECTS.forEach(proj => {
   assert(projHtml.includes('../project-hub.html'), `${proj} links back to Project Hub`);
 });
 
+// 8. Verify Keyboard Navigation & Shortcut 'H' across all 17 projects
+console.log('\n⌨️ Test Group 8: Verifying Global Keyboard Shortcuts (Press H to Return to Hub)...');
+EXPECTED_PROJECTS.forEach(proj => {
+  const projHtml = fs.readFileSync(path.join(proj, 'index.html'), 'utf8');
+  const hasHShortcut = projHtml.includes('../project-hub.html') && (projHtml.includes('"h"') || projHtml.includes("'h'"));
+  assert(hasHShortcut, `${proj} implements keyboard shortcut 'H' to return to Project Hub`);
+});
+
+// 9. Verify 100% Offline-First Architecture (Zero External CDN Calls)
+console.log('\n🛡️ Test Group 9: Verifying 100% Offline Architecture (Zero External CDN Calls)...');
+function findHtmlFiles(dir, list = []) {
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    if (file === 'node_modules' || file === '.git') continue;
+    const full = path.join(dir, file);
+    if (fs.statSync(full).isDirectory()) findHtmlFiles(full, list);
+    else if (file.endsWith('.html')) list.push(full);
+  }
+  return list;
+}
+const allHtmlFiles = findHtmlFiles('.');
+allHtmlFiles.forEach(file => {
+  const content = fs.readFileSync(file, 'utf8');
+  const cdnMatch = content.match(/<(script|link)[^>]+(src|href)=["']https?:\/\/[^"']+/i);
+  assert(!cdnMatch, `Offline verified (0 external script/style CDNs): ${file}`);
+});
+
+// 10. Verify Verbatim Copy Equivalence for Project 17
+console.log('\n🎨 Test Group 10: Verifying Verbatim Copy Integrity for Project 17...');
+const beforeHtml = fs.readFileSync('project-17-same-page-new-design/before.html', 'utf8');
+const afterHtml = fs.readFileSync('project-17-same-page-new-design/after.html', 'utf8');
+function extractBodyWords(html) {
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  if (!bodyMatch) return [];
+  const text = bodyMatch[1].replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '').replace(/<[^>]+>/g, ' ');
+  return text.trim().split(/\s+/).filter(w => w && w !== '·');
+}
+const bWords = extractBodyWords(beforeHtml);
+const aWords = extractBodyWords(afterHtml);
+assert(bWords.length > 0 && bWords.length === aWords.length, `Project 17 word count matches (${bWords.length} words in both files)`);
+assert(bWords.every((w, i) => w === aWords[i]), 'Project 17 before.html and after.html body text matches 100% verbatim');
+
+// 11. Verify Agent Skills Specifications for Project 16
+console.log('\n⚡ Test Group 11: Verifying Agent Skills Specifications for Project 16...');
+const REQUIRED_SKILLS = ['viva', 'resume-roast', 'one-page-revision'];
+REQUIRED_SKILLS.forEach(skill => {
+  const skillFile = path.join('project-16-your-own-skill', 'skills', skill, 'SKILL.md');
+  assert(fs.existsSync(skillFile), `Project 16 skill exists: ${skillFile}`);
+  const content = fs.readFileSync(skillFile, 'utf8');
+  assert(content.includes('---') && content.includes(`name: ${skill}`), `${skill} has valid YAML frontmatter`);
+});
+
+// 12. Verify Video Trim Plan & Transcript for Project 15
+console.log('\n🎬 Test Group 12: Verifying Video Trim Plan for Project 15...');
+const transcriptPath = 'project-15-one-minute-reel-cut/sample-transcript.json';
+assert(fs.existsSync(transcriptPath), 'Project 15 sample transcript exists');
+const transcript = JSON.parse(fs.readFileSync(transcriptPath, 'utf8'));
+const keptSegments = transcript.segments.filter(s => s.keep);
+const totalKeptSec = keptSegments.reduce((sum, s) => sum + (s.end - s.start), 0);
+assert(totalKeptSec <= 60.0, `Project 15 kept segments duration (${totalKeptSec.toFixed(1)}s) is <= 60.0s`);
+assert(fs.existsSync('project-15-one-minute-reel-cut/cli-cutter.py'), 'Project 15 cli-cutter.py exists');
+
 // Summary
 console.log('\n===============================================================');
 console.log(`🏁 TEST SUITE SUMMARY: ${passedTests} of ${totalTests} tests passed (${Math.round((passedTests/totalTests)*100)}%)`);
@@ -167,3 +229,4 @@ if (passedTests === totalTests) {
   console.error('❌ Some tests failed. Check log above.\n');
   process.exit(1);
 }
+

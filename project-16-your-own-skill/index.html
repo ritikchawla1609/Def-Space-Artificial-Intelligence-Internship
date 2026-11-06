@@ -57,6 +57,108 @@
     }
     .nav-back-pill:hover { background: rgba(139, 92, 246, 0.3); border-color: #8b5cf6; }
 
+    /* Modal Styling */
+    .eval-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .eval-modal-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      max-width: 860px;
+      width: 100%;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+    .eval-modal-head {
+      padding: 16px 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .eval-modal-head h2 { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .eval-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .eval-section {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .eval-section h3 {
+      font-size: 14.5px;
+      color: #38bdf8;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eval-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .eval-col-before {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .eval-col-after {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .eval-col-title {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .eval-col-before .eval-col-title { color: #f87171; }
+    .eval-col-after .eval-col-title { color: #34d399; }
+    .eval-code-box {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      white-space: pre-wrap;
+      margin-top: 6px;
+    }
+    .eval-improvements-list {
+      margin-top: 10px;
+      padding-left: 18px;
+      color: #e2e8f0;
+      font-size: 12.5px;
+    }
+
     @media (max-width: 900px) {
       body { height: auto; overflow-y: auto; }
       .main-grid { grid-template-columns: 1fr; }
@@ -132,10 +234,107 @@ Q2. Why can no engine beat Carnot efficiency?</div>
     </main>
   </div>
 
+  <!-- Comparative Evaluation Report Modal -->
+  <div class="eval-modal-backdrop" id="evalModal" style="display: none;">
+    <div class="eval-modal-card">
+      <div class="eval-modal-head">
+        <h2><span>📊</span> Comparative Evaluation: Custom Skill vs Raw Prompting</h2>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <a href="comparative-evaluation.md" target="_blank" class="btn-quick-test" style="text-decoration: none;">Open .md File ↗</a>
+          <button class="btn-quick-test" id="btnCloseEvalModal" style="font-size: 14px; padding: 4px 8px;">✕</button>
+        </div>
+      </div>
+      <div class="eval-modal-body">
+        <div style="font-size: 12.5px; color: #94a3b8; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">
+          <strong>Bharat Space Education Research Centre · GenAI Internship (Week 2, Project 16)</strong><br>
+          Comprehensive empirical evaluation contrasting standard uncached AI prompt results with deterministic, strict agent skill constraints.
+        </div>
+
+        <!-- Section 1 -->
+        <div class="eval-section">
+          <h3><span>🎓</span> 1. Oral Defense Viva Voce (`/viva thermo-notes.pdf`)</h3>
+          <div class="eval-grid">
+            <div class="eval-col-before">
+              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div>• Dumps all 5 questions simultaneously in a giant numbered wall of text.</div>
+              <div>• Fails to wait for student responses before revealing answers.</div>
+              <div>• Gives superficial "Good job!" or "Incorrect" without probing physical laws.</div>
+              <div>• Destroys the authentic oral examination dynamic.</div>
+            </div>
+            <div class="eval-col-after">
+              <div class="eval-col-title">✅ Custom Skill (`/viva`)</div>
+              <div>• Strict turn-by-turn question delivery (one question at a time).</div>
+              <div>• Nuanced diagnostic critique ("Partly... but what about an ideal one?").</div>
+              <div>• Actionable scoring with specific study page references.</div>
+              <div class="eval-code-box">&gt; /viva thermo-notes.pdf
+Reading notes. Asking 5 questions, one at a time.
+Q2. Why can no engine beat Carnot efficiency?
+&gt; Because of friction.
+Examiner: Partly. Friction lowers real engines, but what about an ideal one?
+Score: 3/5. Revise page 14 on Carnot Limits.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="eval-section">
+          <h3><span>🔥</span> 2. Resume Critique &amp; Job Alignment (`/resume-roast`)</h3>
+          <div class="eval-grid">
+            <div class="eval-col-before">
+              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div>• Excessive sycophantic praise ("Great resume! Outstanding background!").</div>
+              <div>• Vague advice: "Consider expanding on your technical achievements."</div>
+              <div>• Misses that key job requirements (Docker, Kubernetes) are 100% absent.</div>
+            </div>
+            <div class="eval-col-after">
+              <div class="eval-col-title">✅ Custom Skill (`/resume-roast`)</div>
+              <div>• Complete removal of sycophantic fluff; brutally honest gap detection.</div>
+              <div>• Direct Google X-Y-Z formula bullet rewrites with quantitative metrics.</div>
+              <div>• Instant match score percentage &amp; explicit skill gap warnings.</div>
+              <div class="eval-code-box">ROAST VERDICT: 48% MATCH (Observer, not an impact-driven engineer)
+🚨 Critical Missing: Docker &amp; Kubernetes are required; resume mentions 0 times.
+💥 Rewrite:
+  OLD: "Worked on backend APIs using Python and Flask."
+  NEW: "Engineered 14 RESTful microservices in Python/Flask with Redis caching, serving 2,500 req/day with 99.9% uptime."</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="eval-section">
+          <h3><span>⚡</span> 3. Quick Revision Cheat Sheet (`/one-page-revision`)</h3>
+          <div class="eval-grid">
+            <div class="eval-col-before">
+              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div>• Generates 8 pages of verbose repetitive paragraphs.</div>
+              <div>• Fails to distinguish between fundamental laws and trivial details.</div>
+            </div>
+            <div class="eval-col-after">
+              <div class="eval-col-title">✅ Custom Skill (`/one-page-revision`)</div>
+              <div>• Compresses entire chapter into a single high-density structured cheat sheet.</div>
+              <div>• Formatted ASCII gate diagrams, formula matrices, and rapid-recall traps.</div>
+              <div class="eval-code-box">=== ⚡ ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===
+1. State: |psi&gt; = alpha|0&gt; + beta|1&gt; (|alpha|^2 + |beta|^2 = 1)
+2. Bell State: |Phi+&gt; = (1/sqrt(2)) * (|00&gt; + |11&gt;)
+3. Critical Trap: No-Cloning Theorem forbids copying arbitrary unknown quantum states!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verification Checklist -->
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 14px; font-size: 12px; color: #a7f3d0;">
+          <strong>✓ Verification Standard:</strong> Verified across 3 challenging inputs (Thermodynamics Notes, SWE Resume vs Job Description, Quantum Computing Chapter). Zero external dependencies, runs 100% offline.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const term = document.getElementById('terminalOutput');
     const input = document.getElementById('terminalInput');
     const btnSend = document.getElementById('btnSendTerm');
+    const evalModal = document.getElementById('evalModal');
+    const btnCloseEvalModal = document.getElementById('btnCloseEvalModal');
 
     let currentSkill = 'viva';
     let vivaStep = 2;
@@ -200,8 +399,16 @@ Q2. Why can no engine beat Carnot efficiency?</div>
     });
 
     document.getElementById('btnClearTerm').onclick = () => { term.innerHTML = ''; };
+
+    // Modal controllers
     document.getElementById('btnRunComparative').onclick = () => {
-      window.open('comparative-evaluation.md', '_blank');
+      evalModal.style.display = 'flex';
+    };
+    btnCloseEvalModal.onclick = () => {
+      evalModal.style.display = 'none';
+    };
+    evalModal.onclick = (e) => {
+      if (e.target === evalModal) evalModal.style.display = 'none';
     };
   </script>
 
@@ -210,7 +417,13 @@ Q2. Why can no engine beat Carnot efficiency?</div>
     window.addEventListener("keydown", (e) => {
       const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
       const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
-      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+      if (isInput) return;
+      const modal = document.getElementById('evalModal');
+      if (e.key === "Escape" && modal && modal.style.display !== "none") {
+        modal.style.display = "none";
+        return;
+      }
+      if (e.key === "h" || e.key === "H" || e.key === "Escape") {
         window.location.href = "../project-hub.html";
       }
     });

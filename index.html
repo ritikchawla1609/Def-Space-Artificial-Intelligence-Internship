@@ -2057,6 +2057,12 @@
         else btnViewGrid.click();
       } else if ((e.key === 'm' || e.key === 'M') && document.activeElement !== searchInput) {
         btnSoundToggle.click();
+      } else if ((e.key === '?' || (e.shiftKey && e.key === '/')) && document.activeElement !== searchInput) {
+        e.preventDefault();
+        btnHelpShortcuts.click();
+      } else if ((e.key === 'h' || e.key === 'H') && document.activeElement !== searchInput) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('🏠 Project Hub — 17 Projects Active');
       } else if (['1','2','3','4','5','6','7','8','9'].includes(e.key) && document.activeElement !== searchInput) {
         const num = parseInt(e.key, 10);
         openLivePreview(num);
