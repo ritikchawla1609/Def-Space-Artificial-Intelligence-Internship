@@ -16,7 +16,7 @@ This repository contains the complete, production-grade implementation of all **
 Every single project has been developed with uncompromising attention to visual polish, responsive ergonomics, resilient state persistence, and client-side computational performance. All tools and applications function completely in **100% offline environments** (even in airplane mode or with Wi-Fi disconnected), relying on pre-bundled local libraries (`PDF-Lib`, `PDF.js`, `jsPDF`, `html2canvas`, `QRious`, and HTML5/Web Audio APIs).
 
 ### Quick Navigation
-- **Master Showcase Hub:** Open [`index.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/index.html) in your browser.
+- **Master Project Hub:** Open [`project-hub.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/project-hub.html) (or [`index.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/index.html)) in your browser.
 - **Verification Audits:** Review each project's dedicated `verification.md` (e.g., [`project-01-pdf-studio/verification.md`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/project-01-pdf-studio/verification.md)) for itemized criteria sign-offs.
 - **Chronological Prompts Log:** Read [`prompts.md`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/prompts.md) for the engineering trajectory.
 
@@ -24,14 +24,14 @@ Every single project has been developed with uncompromising attention to visual 
 
 ## 🚀 Quick Start Guide
 
-### 1. Launch the Master Interactive Hub
+### 1. Launch the Project Hub
 You can launch the entire project portfolio using any local HTTP server:
 
 ```bash
 # Option A: Using npm script to launch local server
 npm start
 
-# Option B: Run comprehensive automated test suite (163 tests across all 17 projects)
+# Option B: Run comprehensive automated test suite (183 tests across all 17 projects)
 npm test
 
 # Option C: Using standard Python 3 (instant, zero installs)
@@ -42,7 +42,7 @@ npx serve . -l 8080
 ```
 
 Once running, navigate to:
-👉 **`http://localhost:8080/`** (or open [`index.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/index.html) directly in any modern browser).
+👉 **`http://localhost:8080/project-hub.html`** (or `http://localhost:8080/` / [`project-hub.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/project-hub.html) directly in any modern browser).
 
 ### 2. Verify 100% Offline Capability
 1. Disconnect your computer from Wi-Fi or enable Airplane Mode.
@@ -55,10 +55,12 @@ Once running, navigate to:
 
 ```text
 INTERSHIP WEEK2/
-├── index.html                                # Master Interactive Showcase Hub
+├── project-hub.html                          # Master Project Hub (Common Interface with Live Simulators)
+├── index.html                                # Web Server Default Entry Point
 ├── prompts.md                                # Master development prompts log
 ├── package.json                              # Project manifest and quick-start scripts
 ├── README.md                                 # Executive documentation and manual
+├── verify-suite.js                           # Automated Regression Test Suite (183 tests)
 │
 ├── project-01-pdf-studio/                    # 1. PDF Studio (29 tools, redaction, compression)
 │   ├── index.html, style.css, app.js, README.md, prompts.md, verification.md, assets/

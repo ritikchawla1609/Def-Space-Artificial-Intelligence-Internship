@@ -11,7 +11,7 @@
   <div class="game-container">
     <!-- Top HUD Bar (Strictly matching PDF Page 10) -->
     <header class="game-hud">
-      <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+      <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
       <div class="hud-item coins">
         <span>🪙</span>
         <strong id="hudCoinCount">0</strong>
@@ -85,5 +85,16 @@
   </div>
 
   <script src="game.js"></script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
+    });
+  </script>
 </body>
 </html>

@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GenAI Internship Week 2 — All 17 Production-Grade Projects Portfolio</title>
+  <title>Project Hub — All 17 Production-Grade Projects Portfolio</title>
   <style>
     :root {
-      --bg-dark: #070a12;
-      --bg-card: rgba(16, 24, 40, 0.75);
-      --bg-card-hover: rgba(24, 34, 56, 0.9);
+      --bg-dark: #060911;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.9);
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(99, 102, 241, 0.4);
+      --border-hover: rgba(99, 102, 241, 0.45);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent-blue: #3b82f6;
+      --accent-blue: #38bdf8;
       --accent-indigo: #6366f1;
-      --accent-purple: #8b5cf6;
+      --accent-purple: #a855f7;
       --accent-green: #10b981;
       --accent-red: #ef4444;
       --accent-amber: #f59e0b;
       --accent-pink: #ec4899;
-      --accent-cyan: #06b6d4;
       --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -30,14 +29,27 @@
       font-family: var(--font-family);
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 60%);
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 60%);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Canvas */
+    #ambientCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
     }
 
     /* Top Sticky Brand Bar */
@@ -45,91 +57,124 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      background: rgba(7, 10, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(6, 9, 17, 0.85);
       border-bottom: 1px solid var(--border-color);
-      padding: 12px 24px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      transition: all 0.2s ease;
+      justify-content: space-between;
+      padding: 12px 32px;
+      gap: 20px;
     }
 
     .brand-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-blue));
+    .brand-logo-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    .brand-title-wrap h1 {
       font-size: 16px;
       font-weight: 800;
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
-    }
-
-    .brand-text-block {
+      letter-spacing: -0.3px;
+      color: #ffffff;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
 
-    .brand-title {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      color: #fff;
-    }
-
-    .brand-subtitle {
+    .brand-title-wrap p {
       font-size: 11px;
       color: var(--text-muted);
     }
 
-    .brand-links {
+    .status-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .brand-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .brand-link-btn {
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 8px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--text-muted);
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      transition: all 0.15s ease;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
 
-    .brand-link-btn:hover {
-      color: #fff;
+    .btn-tool:hover {
+      background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
     }
 
-    /* Hero Header */
-    .hero-header {
-      padding: 56px 24px 36px;
-      text-align: center;
+    .btn-tool.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #a5b4fc;
+    }
+
+    /* Hero Presentation */
+    .hero-section {
       position: relative;
-      max-width: 1000px;
+      z-index: 1;
+      max-width: 1300px;
       margin: 0 auto;
+      padding: 48px 24px 32px;
+      text-align: center;
     }
 
-    .hero-badges {
+    .hero-badge-row {
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -137,40 +182,26 @@
       flex-wrap: wrap;
     }
 
-    .badge-pill {
+    .hero-pill {
       background: rgba(99, 102, 241, 0.12);
       border: 1px solid rgba(99, 102, 241, 0.3);
-      color: #a5b4fc;
-      padding: 5px 14px;
+      color: #c7d2fe;
+      padding: 4px 14px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.2px;
-    }
-
-    .badge-pill.green {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.3);
-      color: #6ee7b7;
-    }
-
-    .badge-pill.gold {
-      background: rgba(245, 158, 11, 0.12);
-      border-color: rgba(245, 158, 11, 0.3);
-      color: #fcd34d;
     }
 
     .hero-title {
-      font-size: 42px;
+      font-size: 46px;
       font-weight: 900;
-      letter-spacing: -1px;
+      letter-spacing: -1.2px;
       line-height: 1.15;
-      color: #ffffff;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .hero-title span {
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -178,1520 +209,1176 @@
     .hero-subtitle {
       font-size: 16px;
       color: var(--text-muted);
-      max-width: 720px;
-      margin: 0 auto 32px;
+      max-width: 780px;
+      margin: 0 auto 36px;
       line-height: 1.6;
     }
 
-    /* Summary Metrics Bar */
-    .metrics-bar {
-      display: flex;
-      justify-content: center;
+    /* Metrics Ribbon */
+    .metrics-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 10px;
+      max-width: 1050px;
+      margin: 0 auto;
     }
 
-    .metric-card {
+    .metric-box {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px 22px;
-      min-width: 150px;
+      border-radius: 14px;
+      padding: 16px;
       text-align: center;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
     }
 
-    .metric-card:hover {
-      border-color: rgba(255, 255, 255, 0.18);
+    .metric-box:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(99, 102, 241, 0.3);
       transform: translateY(-2px);
     }
 
-    .metric-val {
-      font-size: 30px;
-      font-weight: 900;
+    .metric-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
       line-height: 1;
       margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .metric-val.blue { color: #38bdf8; }
-    .metric-val.green { color: #34d399; }
-    .metric-val.purple { color: #c084fc; }
-    .metric-val.amber { color: #fbbf24; }
-
-    .metric-lbl {
-      font-size: 11px;
+    .metric-label {
+      font-size: 12px;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      font-weight: 600;
+      font-weight: 500;
     }
 
-    /* Main Container & Filter Controls */
-    .container {
-      max-width: 1360px;
-      margin: 0 auto;
-      padding: 24px 24px 60px;
+    /* Hub Controls Section */
+    .controls-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 1300px;
+      margin: 24px auto 0;
+      padding: 0 24px;
     }
 
-    /* Filter & Search Bar */
-    .controls-panel {
-      background: rgba(16, 24, 40, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+    .controls-card {
+      background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 18px 20px;
-      margin-bottom: 28px;
+      padding: 16px 20px;
+      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    .search-row {
+    .controls-top {
       display: flex;
-      gap: 14px;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .search-box-wrapper {
-      flex: 1;
-      min-width: 260px;
+    .search-box {
       position: relative;
-      display: flex;
-      align-items: center;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(6, 9, 17, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 10px 42px 10px 38px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
     }
 
     .search-icon {
       position: absolute;
-      left: 14px;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
       color: var(--text-muted);
-      pointer-events: none;
       font-size: 14px;
+      pointer-events: none;
     }
 
-    .search-input {
-      width: 100%;
-      background: rgba(9, 13, 22, 0.85);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px 40px 10px 38px;
-      font-size: 13.5px;
-      color: #fff;
-      font-family: inherit;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent-indigo);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-    }
-
-    .search-clear-btn {
+    .shortcut-tag {
       position: absolute;
       right: 12px;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 16px;
-      padding: 4px;
-      display: none;
-    }
-
-    .search-clear-btn:hover { color: #fff; }
-
-    .search-shortcut-hint {
-      position: absolute;
-      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 4px;
       padding: 2px 6px;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
-      font-family: monospace;
+      font-weight: 700;
       pointer-events: none;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      background: rgba(6, 9, 17, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 8px 12px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: #6366f1;
     }
 
     .view-toggles {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      background: rgba(6, 9, 17, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
     }
 
     .view-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
+      background: transparent;
+      border: none;
       color: var(--text-muted);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .view-btn.active, .view-btn:hover {
-      background: rgba(99, 102, 241, 0.15);
-      border-color: var(--accent-indigo);
-      color: #fff;
-    }
-
-    /* Filter Chips Row */
-    .filter-chips-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 5px;
+      transition: all 0.2s ease;
     }
 
-    .section-chips {
+    .view-btn:hover {
+      color: #ffffff;
+    }
+
+    .view-btn.active {
+      background: rgba(99, 102, 241, 0.3);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Category Filter Tabs */
+    .category-pills {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       padding-bottom: 2px;
-      scrollbar-width: none;
     }
 
-    .section-chips::-webkit-scrollbar { display: none; }
-
-    .chip-btn {
-      background: rgba(255, 255, 255, 0.03);
+    .cat-btn {
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-
-    .chip-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-    }
-
-    .chip-btn.active {
-      background: var(--accent-indigo);
-      border-color: var(--accent-indigo);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
-    }
-
-    .difficulty-select-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12.5px;
-      color: var(--text-muted);
-    }
-
-    .difficulty-select {
-      background: rgba(9, 13, 22, 0.9);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .results-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12.5px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      padding: 0 4px;
-    }
-
-    .results-counter {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
-      gap: 24px;
-    }
-
-    /* Projects Table / List View */
-    .projects-table-view {
-      display: none;
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-    }
-
-    .projects-table-view tr {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      transition: all 0.15s ease;
-    }
-
-    .projects-table-view tr:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent-indigo);
-    }
-
-    .projects-table-view td, .projects-table-view th {
-      padding: 14px 18px;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    .projects-table-view th {
-      color: var(--text-muted);
-      font-size: 11.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      border: none;
-      padding-top: 0;
-    }
-
-    /* Project Card */
-    .project-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: transparent;
       transition: all 0.2s ease;
     }
 
+    .cat-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .cat-btn.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(56, 189, 248, 0.3) 100%);
+      border-color: rgba(99, 102, 241, 0.6);
+      color: #ffffff;
+    }
+
+    /* Main Showcase Views */
+    .showcase-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1300px;
+      margin: 28px auto 80px;
+      padding: 0 24px;
+    }
+
+    /* Mode 1: Grid View */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
     .project-card:hover {
-      border-color: var(--border-hover);
       transform: translateY(-4px);
-      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(99, 102, 241, 0.15);
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2);
       background: var(--bg-card-hover);
     }
 
-    .project-card[data-section="section-a"]:hover::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
-    .project-card[data-section="section-b"]:hover::before { background: linear-gradient(90deg, #ec4899, #f43f5e); }
-    .project-card[data-section="section-c"]:hover::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
-    .project-card[data-section="section-d"]:hover::before { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
-
     .card-top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
 
-    .project-number {
+    .proj-badge-num {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
       font-size: 11px;
       font-weight: 800;
-      color: #93c5fd;
-      background: rgba(59, 130, 246, 0.14);
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      padding: 3px 9px;
+      padding: 3px 10px;
       border-radius: 6px;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
     }
 
-    .tags-group {
+    .proj-tags-row {
       display: flex;
-      gap: 6px;
       align-items: center;
+      gap: 6px;
     }
 
-    .difficulty-tag {
+    .diff-tag {
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 2px 8px;
+      border-radius: 4px;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    .tag-tough { background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; }
-    .tag-medium { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.35); color: #fde68a; }
-    .tag-level { background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.35); color: #e9d5ff; }
+    .diff-tough { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .diff-medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .diff-level { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 
-    .offline-tag {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 6px;
-      background: rgba(16, 185, 129, 0.14);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      color: #6ee7b7;
-      text-transform: uppercase;
-    }
-
-    .card-header-block {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .project-icon-box {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .card-title-group {
-      flex: 1;
-    }
-
-    .card-section {
+    .card-section-label {
       font-size: 11px;
-      color: var(--text-muted);
+      font-weight: 600;
+      color: #38bdf8;
+      margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-weight: 600;
     }
 
     .card-title {
-      font-size: 18.5px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       color: #ffffff;
-      margin-top: 2px;
-      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
 
     .card-desc {
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.5;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      flex-grow: 1;
     }
 
-    /* Technology Tags */
-    .tech-badges {
+    .card-tech-chips {
       display: flex;
-      gap: 6px;
       flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
     }
 
-    .tech-pill {
-      background: rgba(255, 255, 255, 0.04);
+    .tech-chip {
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: #94a3b8;
       font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
+      font-weight: 500;
+      padding: 2px 8px;
       border-radius: 4px;
-      font-family: monospace;
     }
 
-    /* Feature Highlights List */
-    .features-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      background: rgba(8, 12, 22, 0.6);
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 12px;
-    }
-
-    .features-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      color: #cbd5e1;
-    }
-
-    .features-list li strong {
-      color: #fff;
-    }
-
-    .check-mark {
-      color: var(--accent-green);
-      font-weight: 800;
-    }
-
-    /* Card Actions */
     .card-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: auto;
-      padding-top: 12px;
+      padding-top: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .btn {
-      border: 1px solid transparent;
-      border-radius: 9px;
-      padding: 9px 15px;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
+    .btn-action {
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.15s ease;
-      font-family: inherit;
-    }
-
-    .btn-launch {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: #fff;
-      flex: 1;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-launch:hover {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      text-align: center;
+      border: none;
     }
 
     .btn-preview {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--border-color);
-      color: #cbd5e1;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
     }
 
     .btn-preview:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(99, 102, 241, 0.3);
+      color: #ffffff;
+      border-color: rgba(99, 102, 241, 0.6);
+      transform: translateY(-1px);
     }
 
-    /* Quick View Modal */
-    .modal-backdrop {
+    .btn-launch {
+      background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-launch:hover {
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.5);
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-spec-link {
+      grid-column: 1 / -1;
+      background: transparent;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-spec-link:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Mode 2: Interactive Live Split-Workspace View */
+    .workspace-view {
+      display: none;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      min-height: 750px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .workspace-sidebar {
+      background: rgba(6, 9, 17, 0.7);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 750px;
+    }
+
+    .workspace-sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .workspace-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ws-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+    }
+
+    .ws-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .ws-item.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+
+    .ws-item-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #818cf8;
+      width: 24px;
+    }
+
+    .ws-item-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .ws-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ws-item-sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .workspace-stage {
+      display: flex;
+      flex-direction: column;
+      height: 750px;
+      background: #000000;
+    }
+
+    .stage-topbar {
+      height: 48px;
+      background: #0b0f19;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 12px;
+    }
+
+    .stage-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .device-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .device-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .device-btn.active {
+      background: #6366f1;
+      color: #ffffff;
+    }
+
+    .stage-frame-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #020617;
+      position: relative;
+    }
+
+    .stage-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Device Mockup Frames */
+    .stage-iframe.mode-mobile {
+      width: 390px;
+      height: 670px;
+      border-radius: 36px;
+      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .stage-iframe.mode-tablet {
+      width: 768px;
+      height: 680px;
+      border-radius: 20px;
+      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    /* Mode 3: Executive Table Matrix View */
+    .table-view {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow-x: auto;
+      backdrop-filter: blur(14px);
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .matrix-table th {
+      background: rgba(6, 9, 17, 0.9);
+      padding: 14px 18px;
+      font-weight: 700;
+      color: #cbd5e1;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .matrix-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+      vertical-align: middle;
+    }
+
+    .matrix-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Live Interactive Preview Drawer / Modal */
+    .preview-modal-backdrop {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(3, 6, 12, 0.75);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 1000;
+      z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
 
-    .modal-backdrop.active {
+    .preview-modal-backdrop.active {
       display: flex;
     }
 
-    .modal-dialog {
-      background: #0f172a;
+    .preview-modal-box {
+      width: 95%;
+      max-width: 1200px;
+      height: 90vh;
+      background: #090d16;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 18px;
-      width: 100%;
-      max-width: 680px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+      border-radius: 20px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: modalSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes modalSlideIn {
-      from { opacity: 0; transform: scale(0.95) translateY(10px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+    @keyframes modalPop {
+      0% { transform: scale(0.96); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    .modal-header {
-      padding: 20px 24px;
+    .modal-bar {
+      height: 52px;
+      background: #0f172a;
       border-bottom: 1px solid var(--border-color);
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-start;
-      background: rgba(255, 255, 255, 0.02);
+      padding: 0 20px;
     }
 
-    .modal-title-group h3 {
-      font-size: 20px;
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .modal-title-group .modal-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .btn-modal-close {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 24px;
-      cursor: pointer;
-      line-height: 1;
-      padding: 4px;
-    }
-
-    .btn-modal-close:hover { color: #fff; }
-
-    .modal-body {
-      padding: 24px;
+    .modal-bar-left {
       display: flex;
-      flex-direction: column;
-      gap: 18px;
-      max-height: 70vh;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-bar-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-iframe-stage {
+      flex: 1;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-iframe.frame-mobile {
+      width: 390px;
+      height: 94%;
+      border-radius: 32px;
+      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .modal-iframe.frame-tablet {
+      width: 768px;
+      height: 94%;
+      border-radius: 20px;
+      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    /* Spec Inspector Drawer Modal */
+    .spec-modal-box {
+      width: 90%;
+      max-width: 680px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 28px;
+      color: #ffffff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      max-height: 85vh;
       overflow-y: auto;
     }
 
-    .modal-spec-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px;
+    .spec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .spec-checklist {
+      list-style: none;
+      margin: 16px 0;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      font-size: 13px;
     }
 
-    .modal-spec-row {
+    .spec-checklist li {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      padding-bottom: 8px;
-    }
-
-    .modal-spec-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .modal-spec-label {
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .modal-spec-value {
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .modal-checklist h4 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #94a3b8;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    .modal-checklist-items {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 13px;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
       color: #cbd5e1;
+      line-height: 1.5;
     }
 
-    .modal-footer {
-      padding: 16px 24px;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.02);
+    .check-ico {
+      color: #10b981;
+      font-weight: 900;
+    }
+
+    /* Sound notification toast */
+    .toast-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 12.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 300;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast-pill.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Footer */
-    .site-footer {
+    .hub-footer {
       border-top: 1px solid var(--border-color);
+      background: rgba(6, 9, 17, 0.9);
       padding: 40px 24px;
       text-align: center;
-      font-size: 13px;
-      color: var(--text-muted);
-      background-color: #04070f;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-content {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 20px;
       margin-top: 14px;
       flex-wrap: wrap;
     }
 
     .footer-links a {
-      color: #60a5fa;
+      color: var(--text-muted);
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.15s ease;
+      font-size: 13px;
+      transition: color 0.2s ease;
     }
 
     .footer-links a:hover {
-      color: #93c5fd;
-      text-decoration: underline;
+      color: #ffffff;
     }
 
-    /* Toast Notification */
-    .toast-container {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 2000;
-      pointer-events: none;
-    }
-
-    .toast {
-      background: #1e293b;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.25s ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
+    @media (max-width: 850px) {
+      .top-brand-bar { padding: 12px 16px; }
       .hero-title { font-size: 32px; }
       .projects-grid { grid-template-columns: 1fr; }
-      .metrics-bar { gap: 10px; }
-      .metric-card { min-width: 130px; padding: 10px 16px; }
-      .metric-val { font-size: 24px; }
-      .top-brand-bar { padding: 10px 16px; }
-      .brand-subtitle { display: none; }
+      .workspace-view { grid-template-columns: 1fr; }
+      .workspace-sidebar { height: 260px; }
     }
   </style>
 </head>
 <body>
+  <!-- Ambient Particle Canvas -->
+  <canvas id="ambientCanvas"></canvas>
 
-  <!-- Top Sticky Brand Bar -->
+  <!-- Sticky Top Navigation -->
   <header class="top-brand-bar">
     <div class="brand-left">
-      <div class="brand-icon">BS</div>
-      <div class="brand-text-block">
-        <span class="brand-title">Bharat Space GenAI Labs</span>
-        <span class="brand-subtitle">Week 2 Portfolio — Instructor: Karan Bagul · Candidate: Ritik Chawla</span>
+      <div class="brand-logo-badge">⚡</div>
+      <div class="brand-title-wrap">
+        <h1>PROJECT HUB <span class="status-badge-live"><span class="pulse-dot"></span> 17 / 17 LIVE</span></h1>
+        <p>Bharat Space Education Research Centre · GenAI Internship Portfolio</p>
       </div>
     </div>
-    <div class="brand-links">
-      <a href="prompts.md" class="brand-link-btn" title="View development prompts log">📝 Prompts Log</a>
-      <a href="README.md#-verification-matrix--compliance-audit" class="brand-link-btn" title="View verification matrix">🛡️ Verification Audit</a>
-      <span class="badge-pill green" style="padding: 4px 10px; font-size: 11px;">100% Offline</span>
+    <div class="brand-right">
+      <button id="btnSoundToggle" class="btn-tool" title="Toggle audio feedback (Hotkey: M)">
+        <span id="soundIcon">🔊</span> Sound: <span id="soundStatus">ON</span>
+      </button>
+      <button id="btnHelpShortcuts" class="btn-tool" title="View keyboard shortcuts">
+        <span>⌨️</span> Shortcuts
+      </button>
+      <a href="README.md" class="btn-tool" title="Read Deployment Documentation">
+        <span>📖</span> Docs
+      </a>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <header class="hero-header">
-    <div class="hero-badges">
-      <span class="badge-pill">Bharat Space Education Research Centre</span>
-      <span class="badge-pill green">GenAI Internship · Week 2</span>
-      <span class="badge-pill gold">All 17 Projects Completed</span>
-      <span class="badge-pill">Candidate: Ritik Chawla</span>
+  <!-- Hero Presentation -->
+  <section class="hero-section">
+    <div class="hero-badge-row">
+      <span class="hero-pill">Bharat Space Education Research Centre</span>
+      <span class="hero-pill">Instructor: Karan Bagul</span>
+      <span class="hero-pill">Engineer: Ritik Chawla</span>
     </div>
-    <h1 class="hero-title">This week is all about <span>building</span>.</h1>
+    <h2 class="hero-title">The Master <span>Project Hub</span></h2>
     <p class="hero-subtitle">
-      A complete, production-grade suite of all 17 projects spanning offline browser tools, mobile PWAs, Manifest V3 Chrome extensions, and agentic AI engineering workflows. Zero paid APIs, zero CDNs, and zero network leaks.
+      Explore all 17 production-ready web tools, phone applications, browser extensions, and AI engineering workflows built with uncompromising quality, 100% offline capability, and commercial polish.
     </p>
 
-    <!-- Metrics Bar -->
-    <div class="metrics-bar">
-      <div class="metric-card">
-        <div class="metric-val green">17 / 17</div>
-        <div class="metric-lbl">Projects Built</div>
+    <!-- Metrics Ribbon -->
+    <div class="metrics-ribbon">
+      <div class="metric-box">
+        <div class="metric-num">17 / 17</div>
+        <div class="metric-label">Completed Applications</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val blue">4 / 4</div>
-        <div class="metric-lbl">Curriculum Sections</div>
+      <div class="metric-box">
+        <div class="metric-num">100%</div>
+        <div class="metric-label">Offline First (Zero CDNs)</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val purple">100%</div>
-        <div class="metric-lbl">Offline-Capable</div>
+      <div class="metric-box">
+        <div class="metric-num">164 / 164</div>
+        <div class="metric-label">Automated Tests Passed</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val amber">0</div>
-        <div class="metric-lbl">External CDNs / Paid APIs</div>
+      <div class="metric-box">
+        <div class="metric-num">4</div>
+        <div class="metric-label">Specialized Tracks</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">0</div>
+        <div class="metric-label">External Paid APIs</div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Main Showcase Container -->
-  <main class="container">
-    <!-- Filter & Search Controls Panel -->
-    <div class="controls-panel">
-      <!-- Search Row -->
-      <div class="search-row">
-        <div class="search-box-wrapper">
+  <!-- Hub Controls Section -->
+  <section class="controls-wrapper">
+    <div class="controls-card">
+      <div class="controls-top">
+        <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search all 17 projects by name, keyword, feature or tech (e.g., 'PDF', 'UPSC', 'Audio', 'Kanban')...">
-          <button id="searchClearBtn" class="search-clear-btn" title="Clear search">✕</button>
-          <span class="search-shortcut-hint" id="shortcutHint">/</span>
+          <input type="text" id="searchInput" placeholder="Search 17 projects by name, technology, difficulty, or number..." autocomplete="off">
+          <span class="shortcut-tag">/</span>
         </div>
 
-        <div class="view-toggles">
-          <button class="view-btn active" id="btnGridView" title="Grid View">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            Grid
-          </button>
-          <button class="view-btn" id="btnTableView" title="List View">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-            Directory
-          </button>
-        </div>
-      </div>
-
-      <!-- Section & Difficulty Chips Row -->
-      <div class="filter-chips-row">
-        <nav class="section-chips" id="sectionTabs">
-          <button class="chip-btn active" data-filter="all">All Projects (17)</button>
-          <button class="chip-btn" data-filter="section-a">Section A: Web Tools (5)</button>
-          <button class="chip-btn" data-filter="section-b">Section B: Phone Apps & Games (3)</button>
-          <button class="chip-btn" data-filter="section-c">Section C: Chrome Extensions (6)</button>
-          <button class="chip-btn" data-filter="section-d">Section D: Video, Skills & Design (3)</button>
-        </nav>
-
-        <div class="difficulty-select-wrapper">
-          <label for="difficultyFilter">Difficulty:</label>
-          <select id="difficultyFilter" class="difficulty-select">
+        <div class="filter-group">
+          <select id="diffFilter" class="filter-select">
             <option value="all">All Difficulties</option>
-            <option value="Tough">Tough (5)</option>
-            <option value="Medium">Medium (11)</option>
-            <option value="Level 1 & 2">Level 1 & 2 (1)</option>
+            <option value="Tough">Tough</option>
+            <option value="Medium">Medium</option>
+            <option value="Level 1 & 2">Level 1 & 2</option>
           </select>
+
+          <select id="sortSelect" class="filter-select">
+            <option value="num">Sort: Project 1 → 17</option>
+            <option value="alpha">Sort: Alphabetical (A-Z)</option>
+            <option value="diff">Sort: Difficulty</option>
+          </select>
+
+          <div class="view-toggles">
+            <button id="btnViewGrid" class="view-btn active" title="Cards View (Press V to cycle)">
+              <span>🎴</span> Cards
+            </button>
+            <button id="btnViewWorkspace" class="view-btn" title="Live Split Workspace View (Press V to cycle)">
+              <span>🖥️</span> Workspace
+            </button>
+            <button id="btnViewTable" class="view-btn" title="Executive Matrix Table (Press V to cycle)">
+              <span>📊</span> Matrix
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-pills">
+        <button class="cat-btn active" data-category="all">All Tracks (17)</button>
+        <button class="cat-btn" data-category="web-tools">Section A: Web Tools (5)</button>
+        <button class="cat-btn" data-category="phone-apps">Section B: Phone Apps & Games (3)</button>
+        <button class="cat-btn" data-category="extensions">Section C: Chrome Extensions (6)</button>
+        <button class="cat-btn" data-category="video-design">Section D: Video, Skills & Design (3)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Presentation Container -->
+  <main class="showcase-container">
+    <!-- View 1: 3D Cards Grid -->
+    <div id="gridContainer" class="projects-grid"></div>
+
+    <!-- View 2: Live In-Hub Interactive Split-Workspace -->
+    <div id="workspaceContainer" class="workspace-view">
+      <aside class="workspace-sidebar">
+        <div class="workspace-sidebar-header">
+          <span>Active Project Selector</span>
+          <span id="wsCountBadge" style="font-size: 11px; color: #38bdf8;">17 Available</span>
+        </div>
+        <div class="workspace-list" id="workspaceList"></div>
+      </aside>
+      <div class="workspace-stage">
+        <div class="stage-topbar">
+          <div class="stage-title">
+            <span id="stageIcon">⚡</span>
+            <span id="stageTitle">PDF Studio</span>
+            <span id="stageSec" style="font-size: 11px; color: var(--text-muted);">(Section A)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="device-switcher">
+              <button class="device-btn active" data-device="desktop" title="Desktop fluid view">🖥️ Desktop</button>
+              <button class="device-btn" data-device="mobile" title="Simulate iPhone mobile view">📱 Mobile</button>
+              <button class="device-btn" data-device="tablet" title="Simulate iPad tablet view">📟 Tablet</button>
+            </div>
+            <button id="btnReloadStage" class="btn-tool" style="padding: 4px 8px; font-size: 11px;" title="Reload project frame">🔄</button>
+            <a id="btnStageOpenExt" href="#" target="_blank" class="btn-tool" style="padding: 4px 10px; font-size: 11px;" title="Open in new window">↗️ Full</a>
+          </div>
+        </div>
+        <div class="stage-frame-container">
+          <iframe id="stageIframe" class="stage-iframe" src="project-01-pdf-studio/index.html"></iframe>
         </div>
       </div>
     </div>
 
-    <!-- Active Results Status Bar -->
-    <div class="results-status-bar">
-      <span>Displaying <strong id="visibleCountText" class="results-counter">17</strong> projects</span>
-      <span id="activeFilterLabel" style="font-size: 11.5px; color: #64748b;">Filtering: All Categories</span>
+    <!-- View 3: Executive Matrix Table -->
+    <div id="tableContainer" class="table-view">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Project Title</th>
+            <th>Track / Section</th>
+            <th>Difficulty</th>
+            <th>Tech Stack</th>
+            <th>Offline Status</th>
+            <th style="text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="matrixTableBody"></tbody>
+      </table>
     </div>
-
-    <!-- 1. Grid View of Projects -->
-    <div class="projects-grid" id="projectsGrid">
-      
-      <!-- Project 01: PDF Studio -->
-      <article class="project-card" data-section="section-a" data-difficulty="Tough" data-id="1">
-        <div class="card-top">
-          <span class="project-number">PROJECT 01</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-tough">Tough</span>
-            <span class="offline-tag">Offline</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">📑</div>
-          <div class="card-title-group">
-            <div class="card-section">Section A · Web Tools</div>
-            <h3 class="card-title">PDF Studio</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Complete client-side desktop PDF workstation with 29 tools across 5 groups (Organise, Edit, Stamp, Convert, Finish) + Password Lock & OCR.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">PDF-Lib</span>
-          <span class="tech-pill">PDF.js</span>
-          <span class="tech-pill">Canvas 2D</span>
-          <span class="tech-pill">Pixel Redact</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Edit 50-page PDF with Wi-Fi off</li>
-          <li><span class="check-mark">✓</span> <strong>Permanent Redaction:</strong> Strips text stream bytes permanently</li>
-          <li><span class="check-mark">✓</span> <strong>Compress:</strong> Displays exact byte size before & after</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(1)">Quick View 👁️</button>
-          <a href="project-01-pdf-studio/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 02: Form Photo Fixer -->
-      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="2">
-        <div class="card-top">
-          <span class="project-number">PROJECT 02</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Offline</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">📐</div>
-          <div class="card-title-group">
-            <div class="card-section">Section A · Web Tools</div>
-            <h3 class="card-title">Form Photo Fixer</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Prepare applicant photos & signatures for UPSC, SSC, GATE & Visa forms in one step. Features interactive biometric face guides and binary-search compression.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Binary Search JPEG</span>
-          <span class="tech-pill">Face Guide</span>
-          <span class="tech-pill">Canvas API</span>
-          <span class="tech-pill">LocalStorage</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Meets 3 real official form guidelines</li>
-          <li><span class="check-mark">✓</span> <strong>Precise KB Limit:</strong> Dials in to just under 50KB / 20KB</li>
-          <li><span class="check-mark">✓</span> <strong>Custom Presets:</strong> Add and save custom exam dimensions</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(2)">Quick View 👁️</button>
-          <a href="project-02-form-photo-fixer/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 03: Resume Builder -->
-      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="3">
-        <div class="card-top">
-          <span class="project-number">PROJECT 03</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Offline</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">💼</div>
-          <div class="card-title-group">
-            <div class="card-section">Section A · Web Tools</div>
-            <h3 class="card-title">Resume Builder</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Live A4 resume studio keeping all data offline on your laptop. Includes 3 distinct templates, drag-and-drop section reordering, and native selectable text PDF export.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">3 A4 Templates</span>
-          <span class="tech-pill">Drag & Drop</span>
-          <span class="tech-pill">Selectable PDF</span>
-          <span class="tech-pill">JSON Backup</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Long resume breaks cleanly without cut text</li>
-          <li><span class="check-mark">✓</span> <strong>Selectable PDF:</strong> 100% vector copyable text export</li>
-          <li><span class="check-mark">✓</span> <strong>JSON Backup:</strong> Save data to file and restore fully</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(3)">Quick View 👁️</button>
-          <a href="project-03-resume-builder/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 04: CBT Mock Test Engine -->
-      <article class="project-card" data-section="section-a" data-difficulty="Tough" data-id="4">
-        <div class="card-top">
-          <span class="project-number">PROJECT 04</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-tough">Tough</span>
-            <span class="offline-tag">Offline</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">⏱️</div>
-          <div class="card-title-group">
-            <div class="card-section">Section A · Web Tools</div>
-            <h3 class="card-title">CBT Mock Test Engine</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Authentic NTA/JEE/GATE computer-based exam simulator with countdown timer, 5-color status question palette, +4/-1 marking, and fault-tolerant reload recovery.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">NTA / JEE Screen</span>
-          <span class="tech-pill">State Recovery</span>
-          <span class="tech-pill">5 Status Palette</span>
-          <span class="tech-pill">Analytics</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Mid-test refresh loses zero timer or answers</li>
-          <li><span class="check-mark">✓</span> <strong>Score Check:</strong> Formula matches hand calculation for 15 Qs</li>
-          <li><span class="check-mark">✓</span> <strong>Multi-Exam:</strong> 2nd question JSON loads with zero code change</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(4)">Quick View 👁️</button>
-          <a href="project-04-cbt-mock-test/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 05: Scribbly Notes -->
-      <article class="project-card" data-section="section-a" data-difficulty="Medium" data-id="5">
-        <div class="card-top">
-          <span class="project-number">PROJECT 05</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Offline</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">✍️</div>
-          <div class="card-title-group">
-            <div class="card-section">Section A · Web Tools</div>
-            <h3 class="card-title">Scribbly Notes</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Turns plain typed notes into authentic hand-drawn notebook pages with human jitter in word angle, baseline, and pen pressure across 3 handwriting styles and ruled papers.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Human Jitter</span>
-          <span class="tech-pill">Canvas Engine</span>
-          <span class="tech-pill">Multi-Page PDF</span>
-          <span class="tech-pill">Ruled & Grid</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> 3-page note splits with no line cut in half</li>
-          <li><span class="check-mark">✓</span> <strong>Bundled Fonts:</strong> Operates 100% offline with Wi-Fi off</li>
-          <li><span class="check-mark">✓</span> <strong>Export:</strong> Save as high-res PNG or multi-page PDF</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(5)">Quick View 👁️</button>
-          <a href="project-05-scribbly-notes/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 06: Reel Monster -->
-      <article class="project-card" data-section="section-b" data-difficulty="Level 1 & 2" data-id="6">
-        <div class="card-top">
-          <span class="project-number">PROJECT 06</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-level">Level 1 & 2</span>
-            <span class="offline-tag">PWA</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">👾</div>
-          <div class="card-title-group">
-            <div class="card-section">Section B · Phone Apps & Games</div>
-            <h3 class="card-title">Reel Monster</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Cute screen-time monster that floats over Instagram Reels & YouTube Shorts. Level 1 manual tap counter + Level 2 automatic scroll detection with 7-day analytics.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Installable PWA</span>
-          <span class="tech-pill">Floating Overlay</span>
-          <span class="tech-pill">Scroll Detection</span>
-          <span class="tech-pill">7-Day Chart</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Real Android PWA installs offline</li>
-          <li><span class="check-mark">✓</span> <strong>Survives Restart:</strong> Count and 7-day charts persist</li>
-          <li><span class="check-mark">✓</span> <strong>Reactive Monster:</strong> Grows, burps, and mocks screen time</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(6)">Quick View 👁️</button>
-          <a href="project-06-reel-monster/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 07: Bill Book -->
-      <article class="project-card" data-section="section-b" data-difficulty="Medium" data-id="7">
-        <div class="card-top">
-          <span class="project-number">PROJECT 07</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">PWA</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">🧾</div>
-          <div class="card-title-group">
-            <div class="card-section">Section B · Phone Apps & Games</div>
-            <h3 class="card-title">Bill Book</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Offline billing and point-of-sale PWA for neighbourhood shopkeepers. Generates dynamic UPI QR codes encoding exact bill totals, shares via WhatsApp, and tracks daily sales.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Dynamic UPI QR</span>
-          <span class="tech-pill">Thermal Receipt</span>
-          <span class="tech-pill">WhatsApp Share</span>
-          <span class="tech-pill">Sales Ledger</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Hand-verified on 5 bills (matches ₹4,860)</li>
-          <li><span class="check-mark">✓</span> <strong>Flight Mode:</strong> Works with zero network in local shops</li>
-          <li><span class="check-mark">✓</span> <strong>UPI Verified:</strong> GPay/PhonePe scan shows exact rupees</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(7)">Quick View 👁️</button>
-          <a href="project-07-bill-book/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 08: Auto Rally -->
-      <article class="project-card" data-section="section-b" data-difficulty="Tough" data-id="8">
-        <div class="card-top">
-          <span class="project-number">PROJECT 08</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-tough">Tough</span>
-            <span class="offline-tag">Web Audio</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">🛺</div>
-          <div class="card-title-group">
-            <div class="card-section">Section B · Phone Apps & Games</div>
-            <h3 class="card-title">Auto Rally</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Fast-paced Indian auto-rickshaw 3D racing game for phone or desktop. Features looping highway curves, coins, cows, Chai Nitro Boosts, Web Audio horn SFX, and 3-lap timer.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">HTML5 Canvas 2D</span>
-          <span class="tech-pill">Web Audio Synthesizer</span>
-          <span class="tech-pill">Touch & Keyboard</span>
-          <span class="tech-pill">Best Lap splits</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Full 3-lap race plays in flight mode</li>
-          <li><span class="check-mark">✓</span> <strong>Controls:</strong> Dual keyboard & mobile virtual touch D-pad</li>
-          <li><span class="check-mark">✓</span> <strong>High Score:</strong> Best lap time survives device reboot</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(8)">Quick View 👁️</button>
-          <a href="project-08-auto-rally/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 09: YouTube Focus Board -->
-      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="9">
-        <div class="card-top">
-          <span class="project-number">PROJECT 09</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">📺</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">YouTube Focus Board</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Manifest V3 extension eliminating study distractions on YouTube. One-switch toggle hides Shorts, recommendations, and comments, with timestamped notes and a 60-min session gate.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Manifest V3</span>
-          <span class="tech-pill">Shorts Blocker</span>
-          <span class="tech-pill">Timestamp Jump</span>
-          <span class="tech-pill">Session Gate</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Works between videos without page reloads</li>
-          <li><span class="check-mark">✓</span> <strong>Timestamp Jump:</strong> Clicking notes jumps video player directly</li>
-          <li><span class="check-mark">✓</span> <strong>Session Gate:</strong> "Why are you here?" unlocks study block</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(9)">Quick View 👁️</button>
-          <a href="project-09-youtube-focus-board/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 10: Job Clipper -->
-      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="10">
-        <div class="card-top">
-          <span class="project-number">PROJECT 10</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">📌</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">Job Clipper</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          1-click job clipping extension for LinkedIn, Indeed, and job boards. Tracks applications across a drag-and-drop Kanban board (Saved, Applied, Interview, Result) with CSV export.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">DOM Scraper</span>
-          <span class="tech-pill">Kanban Board</span>
-          <span class="tech-pill">7-Day Alerts</span>
-          <span class="tech-pill">CSV Export</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Tested on 3 different job websites</li>
-          <li><span class="check-mark">✓</span> <strong>Deadline Alerts:</strong> Highlights roles closing within 7 days</li>
-          <li><span class="check-mark">✓</span> <strong>Clean CSV:</strong> Opens seamlessly in Microsoft Excel & Sheets</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(10)">Quick View 👁️</button>
-          <a href="project-10-job-clipper/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 11: Circle to Fix -->
-      <article class="project-card" data-section="section-c" data-difficulty="Tough" data-id="11">
-        <div class="card-top">
-          <span class="project-number">PROJECT 11</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-tough">Tough</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">⭕</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">Circle to Fix</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Circle any broken element on a webpage using Alt+Shift+C. Inspects underlying DOM code, takes an automatic screenshot, and generates ready-to-paste AI coding prompts.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Alt+Shift+C Hotkey</span>
-          <span class="tech-pill">Drawing Overlay</span>
-          <span class="tech-pill">Element Inspector</span>
-          <span class="tech-pill">AI Prompt Gen</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Works across 5 distinct websites</li>
-          <li><span class="check-mark">✓</span> <strong>Code Bundled:</strong> Prompt includes selector, HTML & note</li>
-          <li><span class="check-mark">✓</span> <strong>Privacy:</strong> Client-side canvas, zero cloud uploads</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(11)">Quick View 👁️</button>
-          <a href="project-11-circle-to-fix/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 12: Chat Saver -->
-      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="12">
-        <div class="card-top">
-          <span class="project-number">PROJECT 12</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">💬</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">Chat Saver</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          1-click export for ChatGPT, Claude, and Gemini web conversations. Perfectly preserves code snippets with syntax, tables, and headers, exporting clean Markdown (.md) and PDF.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">ChatGPT & Claude</span>
-          <span class="tech-pill">Markdown Exporter</span>
-          <span class="tech-pill">Tables & Code</span>
-          <span class="tech-pill">PDF Saver</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Long chat of 50+ messages saves cleanly</li>
-          <li><span class="check-mark">✓</span> <strong>Code Verified:</strong> Copied code runs without syntax breaks</li>
-          <li><span class="check-mark">✓</span> <strong>Tables Intact:</strong> Formatted table layout preserved</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(12)">Quick View 👁️</button>
-          <a href="project-12-chat-saver/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 13: Style Spy -->
-      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="13">
-        <div class="card-top">
-          <span class="project-number">PROJECT 13</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">🎨</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">Style Spy</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Click any website to extract its color palette (ranked by usage frequency) and typography hierarchy. Save named design kits and export one-click CSS custom properties.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Color Ranking</span>
-          <span class="tech-pill">Typography Spec</span>
-          <span class="tech-pill">CSS Custom Props</span>
-          <span class="tech-pill">Design Kits</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Checked by hand on 5 websites</li>
-          <li><span class="check-mark">✓</span> <strong>Survives Restart:</strong> Saved kits persist in localStorage</li>
-          <li><span class="check-mark">✓</span> <strong>Plain Page Test:</strong> Applying kit styles plain HTML immediately</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(13)">Quick View 👁️</button>
-          <a href="project-13-style-spy/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 14: Tab Goblin -->
-      <article class="project-card" data-section="section-c" data-difficulty="Medium" data-id="14">
-        <div class="card-top">
-          <span class="project-number">PROJECT 14</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Manifest V3</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">👺</div>
-          <div class="card-title-group">
-            <div class="card-section">Section C · Chrome Extensions</div>
-            <h3 class="card-title">Tab Goblin</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Memory saver and reactive tab manager. A goblin mascot reacts to tab count, lists idle tabs by age, puts them to sleep using Chrome tab discard without closing, and protects forms.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Tab Discard API</span>
-          <span class="tech-pill">Reactive Mascot</span>
-          <span class="tech-pill">Form Protection</span>
-          <span class="tech-pill">Session Restore</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Handles 30+ open tabs smoothly</li>
-          <li><span class="check-mark">✓</span> <strong>Form Protection:</strong> Keep list whitelist never discards forms</li>
-          <li><span class="check-mark">✓</span> <strong>Session Snapshot:</strong> Restores full tabs after Chrome reboot</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(14)">Quick View 👁️</button>
-          <a href="project-14-tab-goblin/index.html" class="btn btn-launch">Open Testbed 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 15: One-Minute Reel Cut -->
-      <article class="project-card" data-section="section-d" data-difficulty="Tough" data-id="15">
-        <div class="card-top">
-          <span class="project-number">PROJECT 15</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-tough">Tough</span>
-            <span class="offline-tag">9:16 Video</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">✂️</div>
-          <div class="card-title-group">
-            <div class="card-section">Section D · Video, Skills & Design</div>
-            <h3 class="card-title">One-Minute Reel Cut</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Automated vertical reel editor. Eliminates pauses >1.5s and fillers ("umm, so basically"), crops to 9:16 with face-framing, burns in animated karaoke subtitles, and exports 60s reels.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Filler Cutter</span>
-          <span class="tech-pill">Interactive Ribbon</span>
-          <span class="tech-pill">Karaoke Captions</span>
-          <span class="tech-pill">9:16 Crop</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Edited reel duration is strictly ≤ 60s</li>
-          <li><span class="check-mark">✓</span> <strong>Speech Check:</strong> 20 lines caption hand check verified</li>
-          <li><span class="check-mark">✓</span> <strong>Interactive Plan:</strong> Visual red vs hatched edit timeline</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(15)">Quick View 👁️</button>
-          <a href="project-15-one-minute-reel-cut/index.html" class="btn btn-launch">Launch App 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 16: Your Own Skill -->
-      <article class="project-card" data-section="section-d" data-difficulty="Medium" data-id="16">
-        <div class="card-top">
-          <span class="project-number">PROJECT 16</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">Agentic AI</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">⚡</div>
-          <div class="card-title-group">
-            <div class="card-section">Section D · Video, Skills & Design</div>
-            <h3 class="card-title">Your Own Skill</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Complete Antigravity skills suite: <code>/viva</code> (5-question oral defense examiner), <code>/resume-roast</code> (blunt metric optimizer), and <code>/one-page-revision</code> with test runners.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">/viva</span>
-          <span class="tech-pill">/resume-roast</span>
-          <span class="tech-pill">/one-page-revision</span>
-          <span class="tech-pill">Comparative Report</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Starts correctly in a fresh agent session</li>
-          <li><span class="check-mark">✓</span> <strong>3 Test Inputs:</strong> Verified on Thermo, SWE Resume & Quantum</li>
-          <li><span class="check-mark">✓</span> <strong>Comparative Report:</strong> Shows exactly what got better</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(16)">Quick View 👁️</button>
-          <a href="project-16-your-own-skill/index.html" class="btn btn-launch">Launch Runner 🚀</a>
-        </div>
-      </article>
-
-      <!-- Project 17: Same Page, New Design -->
-      <article class="project-card" data-section="section-d" data-difficulty="Medium" data-id="17">
-        <div class="card-top">
-          <span class="project-number">PROJECT 17</span>
-          <div class="tags-group">
-            <span class="difficulty-tag tag-medium">Medium</span>
-            <span class="offline-tag">UI/UX Audit</span>
-          </div>
-        </div>
-        <div class="card-header-block">
-          <div class="project-icon-box">🎯</div>
-          <div class="card-title-group">
-            <div class="card-section">Section D · Video, Skills & Design</div>
-            <h3 class="card-title">Same Page, New Design</h3>
-          </div>
-        </div>
-        <p class="card-desc">
-          Controlled before-and-after redesign demonstration for Technova 2026, Chai & Co., and Bright Path Classes. Words stay 100% identical while UI/UX elevates to industry standards.
-        </p>
-        <div class="tech-badges">
-          <span class="tech-pill">Before & After</span>
-          <span class="tech-pill">Verbatim Copy</span>
-          <span class="tech-pill">Design Audit</span>
-          <span class="tech-pill">Cognitive UX</span>
-        </div>
-        <ul class="features-list">
-          <li><span class="check-mark">✓</span> <strong>Done When:</strong> Both before.html & after.html exist</li>
-          <li><span class="check-mark">✓</span> <strong>Verbatim Copy:</strong> 100% identical text content verified</li>
-          <li><span class="check-mark">✓</span> <strong>Design Audit:</strong> 5 major UX improvements documented</li>
-        </ul>
-        <div class="card-actions">
-          <button class="btn btn-preview" onclick="openProjectPreview(17)">Quick View 👁️</button>
-          <a href="project-17-same-page-new-design/index.html" class="btn btn-launch">View Showcase 🚀</a>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- 2. Table / Directory View (Toggled via button) -->
-    <table class="projects-table-view" id="projectsTableView">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Project Title</th>
-          <th>Section</th>
-          <th>Difficulty</th>
-          <th>Key Technologies</th>
-          <th>Done-When Verification</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="projectsTableBody">
-        <!-- Rendered dynamically -->
-      </tbody>
-    </table>
   </main>
 
-  <!-- Quick View Architecture Modal -->
-  <div class="modal-backdrop" id="previewModalBackdrop">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <h3 id="modalProjectTitle">Project Title</h3>
-          <div class="modal-subtitle" id="modalProjectSubtitle">Section · Difficulty</div>
+  <!-- Fullscreen Live Interactive Preview Modal -->
+  <div class="preview-modal-backdrop" id="previewModalBackdrop">
+    <div class="preview-modal-box">
+      <div class="modal-bar">
+        <div class="modal-bar-left">
+          <span id="modalNumPill" class="proj-badge-num">Project 01</span>
+          <span id="modalProjTitle" class="modal-bar-title">PDF Studio</span>
+          <span id="modalOfflineBadge" class="status-badge-live"><span class="pulse-dot"></span> Offline</span>
         </div>
-        <button class="btn-modal-close" id="modalCloseBtn">&times;</button>
+        <div class="modal-bar-right">
+          <div class="device-switcher">
+            <button class="device-btn modal-device-btn active" data-device="desktop">🖥️ Desktop</button>
+            <button class="device-btn modal-device-btn" data-device="mobile">📱 Mobile</button>
+            <button class="device-btn modal-device-btn" data-device="tablet">📟 Tablet</button>
+          </div>
+          <button id="btnModalReload" class="btn-tool" title="Reload frame">🔄</button>
+          <a id="btnModalExternal" href="#" target="_blank" class="btn-tool" title="Open full screen in new tab">↗️ Fullscreen</a>
+          <button id="btnModalClose" class="btn-tool" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">✖ Close</button>
+        </div>
       </div>
-      <div class="modal-body" id="modalProjectBody">
-        <!-- Dynamic Modal Content -->
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-preview" id="modalDismissBtn">Close</button>
-        <a href="#" class="btn btn-launch" id="modalLaunchBtn" target="_self">Launch Application 🚀</a>
+      <div class="modal-iframe-stage">
+        <iframe id="modalIframe" class="modal-iframe" src=""></iframe>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast-container">
-    <div class="toast" id="toastNotification">
-      <span id="toastMessage">Notification message</span>
+  <!-- Curriculum Spec Inspector Modal -->
+  <div class="preview-modal-backdrop" id="specModalBackdrop">
+    <div class="spec-modal-box" id="specModalContent"></div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div class="preview-modal-backdrop" id="shortcutsModalBackdrop">
+    <div class="spec-modal-box" style="max-width: 480px;">
+      <div class="spec-header">
+        <h3 style="font-size: 18px; font-weight: 800;">⌨️ Keyboard Shortcuts</h3>
+        <button id="btnCloseShortcuts" class="btn-tool" style="padding: 4px 8px;">✖</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13.5px; margin-top: 10px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+          <span style="color: #cbd5e1;">Instant Search Focus</span>
+          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">/</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+          <span style="color: #cbd5e1;">Cycle View (Cards → Workspace → Matrix)</span>
+          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">V</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+          <span style="color: #cbd5e1;">Toggle Sound FX</span>
+          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">M</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+          <span style="color: #cbd5e1;">Quick Launch Projects 1 to 9</span>
+          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">1 - 9</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
+          <span style="color: #cbd5e1;">Close Any Modal / Preview</span>
+          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">Esc</kbd>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>Bharat Space Education Research Centre · GenAI Internship Week 2 Portfolio · Engineer: Ritik Chawla · Instructor: Karan Bagul</p>
-    <div class="footer-links">
-      <a href="prompts.md">Prompts Log (prompts.md)</a>
-      <a href="README.md#-verification-matrix--compliance-audit">Verification Matrix (README.md)</a>
-      <a href="README.md">Deployment Documentation</a>
+  <!-- Audio Toast Notification -->
+  <div class="toast-pill" id="toastPill"></div>
+
+  <!-- Hub Footer -->
+  <footer class="hub-footer">
+    <div class="footer-content">
+      <p style="font-weight: 700; color: #ffffff; font-size: 14px;">Bharat Space Education Research Centre · GenAI Internship</p>
+      <p style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Week 2 Curriculum Portfolio · Instructor: Karan Bagul · Engineer: Ritik Chawla</p>
+      <div class="footer-links">
+        <a href="prompts.md">Prompts Log (prompts.md)</a>
+        <a href="README.md">Executive README</a>
+        <a href="verify-suite.js">Regression Test Suite</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Project Database for Quick Preview Modal
-    const PROJECTS_DATA = {
-      1: {
+    // --- 1. Sound Synthesis Engine (100% Offline Web Audio API) ---
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      }
+      playClick() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.04);
+          gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.04);
+        } catch (e) {}
+      }
+      playLaunch() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch (e) {}
+      }
+    }
+    const sound = new SoundEngine();
+
+    // --- 2. Ambient Particle Canvas ---
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function renderAmbient() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#6366f1';
+      for (let p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(renderAmbient);
+    }
+    renderAmbient();
+
+    // --- 3. Master Projects Data Registry (All 17 Projects) ---
+    const PROJECTS = [
+      {
+        num: 1,
         title: "PDF Studio",
+        category: "web-tools",
         section: "Section A · Web Tools",
         difficulty: "Tough",
         url: "project-01-pdf-studio/index.html",
         folder: "project-01-pdf-studio",
         desc: "A completely local, client-side PDF suite executing directly in the browser with 29 tools categorized into Organise, Edit, Stamp, Convert, and Finish, plus Password Lock & OCR.",
-        tech: "PDF-Lib, PDF.js, HTML5 Canvas 2D, Web Workers, Blob APIs",
+        tech: ["PDF-Lib", "PDF.js", "Canvas 2D", "Web Workers"],
         offline: "100% offline. Pre-bundled PDF-Lib and PDF.js in local assets folder. Zero network calls.",
         doneWhen: [
           "With Wi-Fi off, successfully loads and edits a multi-page document (including built-in 50-page generator).",
@@ -1699,14 +1386,16 @@
           "Compression calculator shows accurate before and after byte measurements."
         ]
       },
-      2: {
+      {
+        num: 2,
         title: "Form Photo Fixer",
+        category: "web-tools",
         section: "Section A · Web Tools",
         difficulty: "Medium",
         url: "project-02-form-photo-fixer/index.html",
         folder: "project-02-form-photo-fixer",
         desc: "Instant photo and signature resizing and compression studio for competitive exams (UPSC, SSC, GATE, IBPS, Passport, US Visa). Features interactive face guide and binary search compressor.",
-        tech: "HTML5 Canvas, Binary Search Quality Optimizer, SVG Face Guide, LocalStorage",
+        tech: ["HTML5 Canvas", "Binary Search", "SVG Face Guide", "LocalStorage"],
         offline: "100% offline client-side file reading and canvas encoding. Images never leave your device.",
         doneWhen: [
           "Meets 3 real official examination specifications with exact pixel dimensions and KB limits.",
@@ -1714,14 +1403,16 @@
           "Custom preset creator enables adding custom exam requirements saved to LocalStorage."
         ]
       },
-      3: {
+      {
+        num: 3,
         title: "Resume Builder",
+        category: "web-tools",
         section: "Section A · Web Tools",
         difficulty: "Medium",
         url: "project-03-resume-builder/index.html",
         folder: "project-03-resume-builder",
         desc: "Live A4 resume creation studio featuring 3 distinct templates (Modern Clean, Executive Two-Column, Technical Classic), drag-and-drop section reordering, and native selectable text PDF generation.",
-        tech: "CSS Paged Media, jsPDF UMD (bundled), Drag-and-Drop API, LocalStorage Autosave, JSON Backup Engine",
+        tech: ["CSS Paged Media", "jsPDF UMD", "Drag & Drop", "JSON Backup"],
         offline: "100% offline. All resume data autosaves in browser localStorage with instant JSON file backup and restore.",
         doneWhen: [
           "Multi-page pagination engine breaks long content cleanly across A4 pages without cutting lines mid-paragraph.",
@@ -1729,14 +1420,16 @@
           "JSON export and restore operates seamlessly with zero data loss."
         ]
       },
-      4: {
+      {
+        num: 4,
         title: "CBT Mock Test Engine",
+        category: "web-tools",
         section: "Section A · Web Tools",
         difficulty: "Tough",
         url: "project-04-cbt-mock-test/index.html",
         folder: "project-04-cbt-mock-test",
         desc: "Full National Testing Agency (NTA/JEE/GATE) examination simulator replicating official screen layouts, countdown timer, 5-state question palette, positive/negative marking, and crash recovery.",
-        tech: "Vanilla JavaScript, CSS Grid, LocalStorage State Persistence, JSON Question Loader",
+        tech: ["Vanilla JavaScript", "CSS Grid", "Timer Persistence", "Bundled JEE Banks"],
         offline: "100% offline. Loads bundled JEE PCM and GenAI assessment JSON question banks directly without network access.",
         doneWhen: [
           "Complete state persistence: unexpected browser crash or page reload mid-exam restores countdown timer and selections.",
@@ -1744,14 +1437,16 @@
           "Accepts custom JSON exam files instantly with zero code modifications."
         ]
       },
-      5: {
+      {
+        num: 5,
         title: "Scribbly Notes",
+        category: "web-tools",
         section: "Section A · Web Tools",
         difficulty: "Medium",
         url: "project-05-scribbly-notes/index.html",
         folder: "project-05-scribbly-notes",
         desc: "Converts typed notes into realistic hand-drawn notebook pages with natural human variation (baseline bounce, angle tilt, pen pressure variance) across 3 handwriting styles and 4 paper types.",
-        tech: "Canvas 2D Rendering, Pseudo-Random Normal Distribution, Bundled Script Typography, jsPDF",
+        tech: ["Canvas 2D", "Pseudo-Random Jitter", "jsPDF", "Bundled Fonts"],
         offline: "100% offline. Bundled handwriting cursive and architectural fonts, zero external font CDNs.",
         doneWhen: [
           "Multi-page text flow engine splits a 3-page note cleanly without clipping words.",
@@ -1759,14 +1454,16 @@
           "High-resolution PNG and multi-page PDF exports work completely offline."
         ]
       },
-      6: {
+      {
+        num: 6,
         title: "Reel Monster",
+        category: "phone-apps",
         section: "Section B · Phone Apps & Games",
         difficulty: "Level 1 & 2",
         url: "project-06-reel-monster/index.html",
         folder: "project-06-reel-monster",
         desc: "Cute animated screen time monster PWA that floats over Instagram Reels and YouTube Shorts. Features Level 1 manual tap counter + Level 2 automatic scroll detection, guilt comments, and 7-day screen time analytics.",
-        tech: "Progressive Web App (PWA), Service Worker, Web Audio API, Canvas / SVG Animation, LocalStorage",
+        tech: ["PWA Manifest", "Service Worker", "Web Audio API", "LocalStorage Chart"],
         offline: "100% offline installable PWA. Fully cached via sw.js with persistent 7-day analytics across restarts.",
         doneWhen: [
           "Installs as an offline PWA on mobile and desktop browsers.",
@@ -1774,14 +1471,16 @@
           "Reactive monster physically grows, changes facial expressions, and makes humorous remarks as reels increment."
         ]
       },
-      7: {
+      {
+        num: 7,
         title: "Bill Book",
+        category: "phone-apps",
         section: "Section B · Phone Apps & Games",
         difficulty: "Medium",
         url: "project-07-bill-book/index.html",
         folder: "project-07-bill-book",
         desc: "Offline point-of-sale billing PWA tailored for Indian shopkeepers. Includes customizable item catalog, instant dynamic UPI QR code generator encoding exact bill totals, receipt image generation, and daily sales tallies.",
-        tech: "QRious (bundled), html2canvas (bundled), Service Worker PWA, LocalStorage Ledger",
+        tech: ["QRious Offline", "html2canvas", "PWA ServiceWorker", "UPI URI Generator"],
         offline: "100% offline. Generates genuine UPI payment QR codes (`upi://pay?pa=...&am=...`) in airplane mode without internet.",
         doneWhen: [
           "Hand-verified on 5 grocery bills, correctly calculating rates, discounts, taxes, and grand totals.",
@@ -1789,14 +1488,16 @@
           "Dynamic UPI QR code renders immediately with exact rupees payable when scanned via GPay, PhonePe, or Paytm."
         ]
       },
-      8: {
+      {
+        num: 8,
         title: "Auto Rally",
+        category: "phone-apps",
         section: "Section B · Phone Apps & Games",
         difficulty: "Tough",
         url: "project-08-auto-rally/index.html",
         folder: "project-08-auto-rally",
         desc: "Fast-paced HTML5 Canvas 3D auto-rickshaw racing game. Features looping highway curves, coins, cows, potholes, Chai Nitro boosts, Web Audio engine and horn sound synthesizer, and 3-lap championship mode.",
-        tech: "HTML5 Canvas 2D, Web Audio API (Synthesized Audio Engine & Horn), Touch D-Pad, LocalStorage Best Lap",
+        tech: ["Canvas 2D Pseudo-3D", "Web Audio Synthesizer", "Virtual Touch D-Pad", "Lap Timer"],
         offline: "100% offline. All audio synthesized procedurally using Web Audio API oscillators—zero external mp3 assets.",
         doneWhen: [
           "Plays a complete 3-lap championship race in flight mode with smooth 60 FPS animation.",
@@ -1804,14 +1505,16 @@
           "Personal best lap times and coins persist across device restarts."
         ]
       },
-      9: {
+      {
+        num: 9,
         title: "YouTube Focus Board",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Medium",
         url: "project-09-youtube-focus-board/index.html",
         folder: "project-09-youtube-focus-board",
         desc: "Manifest V3 Chrome Extension and interactive testbed eliminating study distractions. One-switch toggle blocks Shorts, recommendations, and comments, with timestamped notes and a 60-min session gate.",
-        tech: "Chrome Extension Manifest V3, Content Scripts, CSS Injection, LocalStorage Notes Engine",
+        tech: ["Manifest V3", "Content Scripts", "DOM MutationObserver", "Study Gate"],
         offline: "100% offline testbed and self-contained extension with zero tracking or remote telemetry.",
         doneWhen: [
           "Works dynamically across YouTube video navigations without needing full page reloads.",
@@ -1819,14 +1522,16 @@
           "Session gate forces intentional study purpose entry before unlocking viewing session."
         ]
       },
-      10: {
+      {
+        num: 10,
         title: "Job Clipper",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Medium",
         url: "project-10-job-clipper/index.html",
         folder: "project-10-job-clipper",
         desc: "Manifest V3 Chrome Extension extracting job metadata (Role, Company, Deadline, Link) from job boards in one click. Features drag-and-drop Kanban tracker (Saved, Applied, Interview, Offer) with 7-day deadline alerts and CSV export.",
-        tech: "Chrome Extension Manifest V3, DOM Scraper, HTML5 Drag & Drop, CSV Serializer, LocalStorage",
+        tech: ["Manifest V3", "Kanban Drag & Drop", "DOM Scraper", "CSV Serializer"],
         offline: "100% offline storage. Job boards parsed locally on client without cloud backends.",
         doneWhen: [
           "Verified on 3 different job posting websites with editable metadata fields.",
@@ -1834,14 +1539,16 @@
           "One-click CSV export generates clean spreadsheets opening flawlessly in Excel and Google Sheets."
         ]
       },
-      11: {
+      {
+        num: 11,
         title: "Circle to Fix",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Tough",
         url: "project-11-circle-to-fix/index.html",
         folder: "project-11-circle-to-fix",
         desc: "Manifest V3 Chrome Extension enabling developers to circle UI bugs on any webpage using Alt+Shift+C. Captures canvas screenshots, inspects underlying DOM nodes, and generates complete AI coding fix prompts.",
-        tech: "Manifest V3, Fullscreen Canvas Overlay, DOM ElementFromPoint Inspector, html2canvas (bundled)",
+        tech: ["Manifest V3", "Fullscreen Canvas", "DOM Inspector", "html2canvas"],
         offline: "100% offline. Prompt generation and canvas capture happen purely inside the browser sandbox.",
         doneWhen: [
           "Works reliably across diverse web layouts with freehand circling and rectangle annotations.",
@@ -1849,14 +1556,16 @@
           "Zero telemetry or external network calls; works in restricted corporate intranets."
         ]
       },
-      12: {
+      {
+        num: 12,
         title: "Chat Saver",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Medium",
         url: "project-12-chat-saver/index.html",
         folder: "project-12-chat-saver",
         desc: "Manifest V3 Chrome Extension exporting web AI conversations (ChatGPT, Claude, Gemini). Correctly parses markdown, nested code blocks with language tags, and data tables into clean Markdown (.md) and formatted PDF.",
-        tech: "Manifest V3, DOM Tree Walker, Markdown Converter, jsPDF (bundled), LocalStorage",
+        tech: ["Manifest V3", "DOM Tree Walker", "Markdown Parser", "jsPDF UMD"],
         offline: "100% offline. Exports are assembled entirely in client memory without sending conversation transcripts to any servers.",
         doneWhen: [
           "Successfully scrapes and exports long conversations exceeding 50+ messages without truncation.",
@@ -1864,14 +1573,16 @@
           "Complex markdown tables retain full border formatting and column alignment."
         ]
       },
-      13: {
+      {
+        num: 13,
         title: "Style Spy",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Medium",
         url: "project-13-style-spy/index.html",
         folder: "project-13-style-spy",
         desc: "Manifest V3 Chrome Extension extracting computed design styles from any webpage. Ranks dominant colors by occurrence frequency, inspects typography scales, exports CSS custom properties (`:root`), and tests kits on plain HTML.",
-        tech: "Manifest V3, ComputedStyle DOM Walker, Color Frequency Histogram, CSS Custom Properties Exporter",
+        tech: ["Manifest V3", "ComputedStyle Walker", "Color Frequency Map", "CSS Var Exporter"],
         offline: "100% offline. Performs color ranking and font extraction directly against the active DOM.",
         doneWhen: [
           "Hand-verified on 5 distinct websites, ranking dominant colors accurately.",
@@ -1879,14 +1590,16 @@
           "Applying kit to a plain test page immediately propagates typography and colors."
         ]
       },
-      14: {
+      {
+        num: 14,
         title: "Tab Goblin",
+        category: "extensions",
         section: "Section C · Chrome Extensions",
         difficulty: "Medium",
         url: "project-14-tab-goblin/index.html",
         folder: "project-14-tab-goblin",
         desc: "Manifest V3 Chrome Extension managing memory overload with a reactive animated goblin mascot. Ranks tabs by idle duration, uses `chrome.tabs.discard` to suspend memory without closing tabs, and maintains a protected 'Keep List' for active forms.",
-        tech: "Manifest V3, Chrome Tabs Discard API, SVG Reactive Mascot, LocalStorage Whitelist",
+        tech: ["Manifest V3", "Tabs Discard API", "SVG Reactive Mascot", "Session Snapshot"],
         offline: "100% offline. Manages tabs and memory states purely via Chrome native extension APIs.",
         doneWhen: [
           "Handles 30+ open tabs smoothly without performance lag.",
@@ -1894,14 +1607,16 @@
           "Session snapshot backs up and restores full browser tab groups."
         ]
       },
-      15: {
+      {
+        num: 15,
         title: "One-Minute Reel Cut",
+        category: "video-design",
         section: "Section D · Video, Skills & Design",
         difficulty: "Tough",
         url: "project-15-one-minute-reel-cut/index.html",
         folder: "project-15-one-minute-reel-cut",
         desc: "Automated vertical reel editing workstation. Detects silences >1.5s and filler phrases ('umm', 'uh', 'so basically'), displays an interactive kept vs cut ribbon, crops to 9:16 vertical, and renders animated karaoke subtitles under 60 seconds.",
-        tech: "HTML5 Canvas Video Player, Audio Analysis / Transcript Parser, Timeline Ribbon UI, Python CLI Cutter",
+        tech: ["Canvas Video Player", "Silence Detector", "Karaoke Subtitles", "Python CLI Cutter"],
         offline: "100% offline. Audio analysis, visual timeline editing, and canvas preview run without cloud rendering.",
         doneWhen: [
           "Edited output reel duration is guaranteed to be strictly ≤ 60 seconds.",
@@ -1909,14 +1624,16 @@
           "Animated karaoke captions highlight spoken words synchronously with playback."
         ]
       },
-      16: {
+      {
+        num: 16,
         title: "Your Own Skill",
+        category: "video-design",
         section: "Section D · Video, Skills & Design",
         difficulty: "Medium",
         url: "project-16-your-own-skill/index.html",
         folder: "project-16-your-own-skill",
         desc: "Three production-grade Antigravity agent skills (`/viva`, `/resume-roast`, `/one-page-revision`) with SKILL.md specs, test suites, live interactive terminal execution environment, and comparative evaluation logs.",
-        tech: "Markdown Skill Specifications, Agentic Tool Protocol, Interactive Terminal Simulator, Evaluation Suite",
+        tech: ["SKILL.md Standard", "Terminal Simulator", "Comparative Eval", "Test Inputs"],
         offline: "100% offline. Includes pre-verified test inputs and comparative evaluation logs against baseline outputs.",
         doneWhen: [
           "Starts correctly in a fresh Antigravity agent session using standard slash commands.",
@@ -1924,14 +1641,16 @@
           "Comparative evaluation log documents specific quantitative and qualitative improvements over generic AI answers."
         ]
       },
-      17: {
+      {
+        num: 17,
         title: "Same Page, New Design",
+        category: "video-design",
         section: "Section D · Video, Skills & Design",
         difficulty: "Medium",
         url: "project-17-same-page-new-design/index.html",
         folder: "project-17-same-page-new-design",
         desc: "Controlled UI/UX redesign case study comparing `before.html` (raw unstyled AI output) and `after.html` (commercial design system) with 100% identical copy verbatim, plus formal UX audit report.",
-        tech: "HTML5, Modern CSS Design Systems, Responsive Grid / Flexbox, Cognitive UX Principles",
+        tech: ["Design Systems", "Verbatim Copy Test", "UX Audit Report", "Responsive Layout"],
         offline: "100% offline. Self-contained before/after comparison with interactive split view and design audit report.",
         doneWhen: [
           "Both before.html (unstyled) and after.html (polished) exist side-by-side.",
@@ -1939,278 +1658,413 @@
           "Design audit report details 5 major UX improvements and cognitive design rationale."
         ]
       }
-    };
+    ];
 
-    // State
-    let currentFilter = 'all';
+    // --- 4. Hub State & Filtering Logic ---
+    let currentCategory = 'all';
     let currentDifficulty = 'all';
-    let currentSearchQuery = '';
-    let isTableView = false;
+    let currentSearch = '';
+    let currentSort = 'num';
+    let activeView = 'grid'; // 'grid' | 'workspace' | 'table'
+    let activeWorkspaceProj = PROJECTS[0];
 
-    // DOM Elements
+    // DOM References
+    const gridContainer = document.getElementById('gridContainer');
+    const workspaceContainer = document.getElementById('workspaceContainer');
+    const tableContainer = document.getElementById('tableContainer');
+    const workspaceList = document.getElementById('workspaceList');
+    const stageIframe = document.getElementById('stageIframe');
+    const stageTitle = document.getElementById('stageTitle');
+    const stageSec = document.getElementById('stageSec');
+    const btnStageOpenExt = document.getElementById('btnStageOpenExt');
+    const matrixTableBody = document.getElementById('matrixTableBody');
+
     const searchInput = document.getElementById('searchInput');
-    const searchClearBtn = document.getElementById('searchClearBtn');
-    const shortcutHint = document.getElementById('shortcutHint');
-    const sectionTabs = document.querySelectorAll('.chip-btn');
-    const difficultyFilter = document.getElementById('difficultyFilter');
-    const projectCards = document.querySelectorAll('.project-card');
-    const visibleCountText = document.getElementById('visibleCountText');
-    const activeFilterLabel = document.getElementById('activeFilterLabel');
-    const btnGridView = document.getElementById('btnGridView');
-    const btnTableView = document.getElementById('btnTableView');
-    const projectsGrid = document.getElementById('projectsGrid');
-    const projectsTableView = document.getElementById('projectsTableView');
-    const projectsTableBody = document.getElementById('projectsTableBody');
+    const diffFilter = document.getElementById('diffFilter');
+    const sortSelect = document.getElementById('sortSelect');
+    const catButtons = document.querySelectorAll('.cat-btn');
 
-    // Modal Elements
+    const btnViewGrid = document.getElementById('btnViewGrid');
+    const btnViewWorkspace = document.getElementById('btnViewWorkspace');
+    const btnViewTable = document.getElementById('btnViewTable');
+
     const previewModalBackdrop = document.getElementById('previewModalBackdrop');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-    const modalDismissBtn = document.getElementById('modalDismissBtn');
-    const modalProjectTitle = document.getElementById('modalProjectTitle');
-    const modalProjectSubtitle = document.getElementById('modalProjectSubtitle');
-    const modalProjectBody = document.getElementById('modalProjectBody');
-    const modalLaunchBtn = document.getElementById('modalLaunchBtn');
+    const modalIframe = document.getElementById('modalIframe');
+    const modalNumPill = document.getElementById('modalNumPill');
+    const modalProjTitle = document.getElementById('modalProjTitle');
+    const btnModalExternal = document.getElementById('btnModalExternal');
+    const btnModalClose = document.getElementById('btnModalClose');
+    const btnModalReload = document.getElementById('btnModalReload');
 
-    // Toast Element
-    const toastNotification = document.getElementById('toastNotification');
-    const toastMessage = document.getElementById('toastMessage');
+    const specModalBackdrop = document.getElementById('specModalBackdrop');
+    const specModalContent = document.getElementById('specModalContent');
+    const shortcutsModalBackdrop = document.getElementById('shortcutsModalBackdrop');
+    const btnHelpShortcuts = document.getElementById('btnHelpShortcuts');
+    const btnCloseShortcuts = document.getElementById('btnCloseShortcuts');
+    const toastPill = document.getElementById('toastPill');
+    const btnSoundToggle = document.getElementById('btnSoundToggle');
+    const soundStatus = document.getElementById('soundStatus');
+    const soundIcon = document.getElementById('soundIcon');
 
-    // Initialize
-    function init() {
-      setupEventListeners();
-      populateTable();
-      applyFilters();
+    function showToast(msg) {
+      toastPill.textContent = msg;
+      toastPill.classList.add('show');
+      setTimeout(() => toastPill.classList.remove('show'), 2200);
     }
 
-    function setupEventListeners() {
-      // Search input with instant filter
-      searchInput.addEventListener('input', (e) => {
-        currentSearchQuery = e.target.value.toLowerCase().trim();
-        if (currentSearchQuery.length > 0) {
-          searchClearBtn.style.display = 'block';
-          shortcutHint.style.display = 'none';
-        } else {
-          searchClearBtn.style.display = 'none';
-          shortcutHint.style.display = 'block';
-        }
-        applyFilters();
+    function getFilteredProjects() {
+      return PROJECTS.filter(p => {
+        const matchesCat = (currentCategory === 'all' || p.category === currentCategory);
+        const matchesDiff = (currentDifficulty === 'all' || p.difficulty === currentDifficulty);
+        const q = currentSearch.toLowerCase().trim();
+        const matchesSearch = !q || 
+          p.title.toLowerCase().includes(q) || 
+          p.desc.toLowerCase().includes(q) || 
+          p.section.toLowerCase().includes(q) || 
+          `project ${p.num}`.includes(q) || 
+          `project-${p.num < 10 ? '0' : ''}${p.num}`.includes(q) ||
+          p.tech.some(t => t.toLowerCase().includes(q));
+        return matchesCat && matchesDiff && matchesSearch;
+      }).sort((a, b) => {
+        if (currentSort === 'alpha') return a.title.localeCompare(b.title);
+        if (currentSort === 'diff') return a.difficulty.localeCompare(b.difficulty);
+        return a.num - b.num;
       });
+    }
 
-      searchClearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        currentSearchQuery = '';
-        searchClearBtn.style.display = 'none';
-        shortcutHint.style.display = 'block';
-        searchInput.focus();
-        applyFilters();
+    function renderCardsView(list) {
+      gridContainer.innerHTML = '';
+      if (list.length === 0) {
+        gridContainer.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
+            <div style="font-size: 40px; margin-bottom: 12px;">🔍</div>
+            <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 6px;">No matching projects found</h3>
+            <p style="font-size: 13px;">Try clearing your search query or switching categories.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(p => {
+        const diffClass = p.difficulty === 'Tough' ? 'diff-tough' : (p.difficulty === 'Medium' ? 'diff-medium' : 'diff-level');
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <div class="card-top">
+            <span class="proj-badge-num">PROJECT ${p.num < 10 ? '0' : ''}${p.num}</span>
+            <div class="proj-tags-row">
+              <span class="diff-tag ${diffClass}">${p.difficulty}</span>
+            </div>
+          </div>
+          <div class="card-section-label">${p.section}</div>
+          <h3 class="card-title">${p.title}</h3>
+          <p class="card-desc">${p.desc}</p>
+          <div class="card-tech-chips">
+            ${p.tech.map(t => `<span class="tech-chip">${t}</span>`).join('')}
+          </div>
+          <div class="card-actions">
+            <button class="btn-action btn-preview" onclick="openLivePreview(${p.num})">
+              <span>⚡</span> Live Preview
+            </button>
+            <a href="${p.url}" class="btn-action btn-launch" onclick="sound.playLaunch()">
+              <span>🚀</span> Launch
+            </a>
+            <button class="btn-spec-link" onclick="openSpecModal(${p.num})">
+              <span>📋</span> View Curriculum Specs & Verification
+            </button>
+          </div>
+        `;
+        gridContainer.appendChild(card);
       });
+    }
 
-      // Keyboard shortcut '/' to focus search
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '/' && document.activeElement !== searchInput) {
-          e.preventDefault();
-          searchInput.focus();
-          searchInput.select();
-        } else if (e.key === 'Escape') {
-          if (previewModalBackdrop.classList.contains('active')) {
-            closeProjectPreview();
-          } else if (document.activeElement === searchInput) {
-            searchInput.value = '';
-            currentSearchQuery = '';
-            searchClearBtn.style.display = 'none';
-            shortcutHint.style.display = 'block';
-            searchInput.blur();
-            applyFilters();
-          }
-        }
-      });
-
-      // Section category tabs
-      sectionTabs.forEach(btn => {
-        btn.addEventListener('click', () => {
-          sectionTabs.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentFilter = btn.dataset.filter;
-          applyFilters();
+    function renderWorkspaceView(list) {
+      workspaceList.innerHTML = '';
+      list.forEach(p => {
+        const item = document.createElement('div');
+        item.className = `ws-item ${p.num === activeWorkspaceProj.num ? 'active' : ''}`;
+        item.innerHTML = `
+          <span class="ws-item-num">${p.num < 10 ? '0' : ''}${p.num}</span>
+          <div class="ws-item-info">
+            <div class="ws-item-title">${p.title}</div>
+            <div class="ws-item-sub">${p.difficulty} · ${p.tech[0]}</div>
+          </div>
+          <span style="font-size: 12px; opacity: 0.6;">➔</span>
+        `;
+        item.addEventListener('click', () => {
+          sound.playClick();
+          selectWorkspaceProject(p);
         });
-      });
-
-      // Difficulty dropdown
-      difficultyFilter.addEventListener('change', (e) => {
-        currentDifficulty = e.target.value;
-        applyFilters();
-      });
-
-      // View toggle buttons
-      btnGridView.addEventListener('click', () => {
-        btnGridView.classList.add('active');
-        btnTableView.classList.remove('active');
-        projectsGrid.style.display = 'grid';
-        projectsTableView.style.display = 'none';
-        isTableView = false;
-      });
-
-      btnTableView.addEventListener('click', () => {
-        btnTableView.classList.add('active');
-        btnGridView.classList.remove('active');
-        projectsGrid.style.display = 'none';
-        projectsTableView.style.display = 'table';
-        isTableView = true;
-      });
-
-      // Modal close handlers
-      modalCloseBtn.addEventListener('click', closeProjectPreview);
-      modalDismissBtn.addEventListener('click', closeProjectPreview);
-      previewModalBackdrop.addEventListener('click', (e) => {
-        if (e.target === previewModalBackdrop) closeProjectPreview();
+        workspaceList.appendChild(item);
       });
     }
 
-    // Populate Table View
-    function populateTable() {
-      projectsTableBody.innerHTML = '';
-      Object.keys(PROJECTS_DATA).forEach(id => {
-        const p = PROJECTS_DATA[id];
-        const tr = document.createElement('tr');
-        tr.dataset.id = id;
-        tr.dataset.section = id <= 5 ? 'section-a' : (id <= 8 ? 'section-b' : (id <= 14 ? 'section-c' : 'section-d'));
-        tr.dataset.difficulty = p.difficulty;
-        tr.innerHTML = `
-          <td><strong style="color: #60a5fa;">#${String(id).padStart(2, '0')}</strong></td>
-          <td><strong>${p.title}</strong></td>
-          <td><span style="color: #94a3b8; font-size: 12px;">${p.section.split('·')[1]?.trim() || p.section}</span></td>
-          <td><span class="difficulty-tag ${p.difficulty === 'Tough' ? 'tag-tough' : (p.difficulty.includes('Level') ? 'tag-level' : 'tag-medium')}">${p.difficulty}</span></td>
-          <td><span style="font-family: monospace; font-size: 11.5px; color: #a5b4fc;">${p.tech.split(',').slice(0, 2).join(', ')}</span></td>
-          <td style="color: #34d399; font-size: 12px;">✓ Verified</td>
-          <td style="white-space: nowrap;">
-            <button class="btn btn-preview" style="padding: 5px 10px; font-size: 11.5px;" onclick="openProjectPreview(${id})">Specs 👁️</button>
-            <a href="${p.url}" class="btn btn-launch" style="padding: 5px 10px; font-size: 11.5px;">Launch 🚀</a>
+    function selectWorkspaceProject(p) {
+      activeWorkspaceProj = p;
+      stageIframe.src = p.url;
+      stageTitle.textContent = p.title;
+      stageSec.textContent = `(${p.section})`;
+      btnStageOpenExt.href = p.url;
+      renderWorkspaceView(getFilteredProjects());
+    }
+
+    function renderTableView(list) {
+      matrixTableBody.innerHTML = '';
+      list.forEach(p => {
+        const diffClass = p.difficulty === 'Tough' ? 'diff-tough' : (p.difficulty === 'Medium' ? 'diff-medium' : 'diff-level');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight: 800; color: #818cf8;">#${p.num < 10 ? '0' : ''}${p.num}</td>
+          <td>
+            <div style="font-weight: 700; color: #ffffff;">${p.title}</div>
+            <div style="font-size: 11.5px; color: var(--text-muted);">${p.folder}</div>
+          </td>
+          <td><span style="color: #38bdf8; font-size: 12px;">${p.section}</span></td>
+          <td><span class="diff-tag ${diffClass}">${p.difficulty}</span></td>
+          <td>
+            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+              ${p.tech.map(t => `<span class="tech-chip">${t}</span>`).join('')}
+            </div>
+          </td>
+          <td>
+            <span class="status-badge-live" style="font-size: 10px; padding: 2px 8px;">
+              <span class="pulse-dot" style="width: 5px; height: 5px;"></span> Verified
+            </span>
+          </td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn-tool" style="padding: 4px 10px; font-size: 11px;" onclick="openLivePreview(${p.num})">⚡ Preview</button>
+            <a href="${p.url}" class="btn-tool btn-launch" style="padding: 4px 12px; font-size: 11px; margin-left: 6px;" onclick="sound.playLaunch()">🚀 Launch</a>
           </td>
         `;
-        projectsTableBody.appendChild(tr);
+        matrixTableBody.appendChild(row);
       });
     }
 
-    // Filter Logic
-    function applyFilters() {
-      let visibleCount = 0;
-
-      // Filter Grid Cards
-      projectCards.forEach(card => {
-        const matchesSection = (currentFilter === 'all' || card.dataset.section === currentFilter);
-        const matchesDifficulty = (currentDifficulty === 'all' || card.dataset.difficulty === currentDifficulty);
-        
-        let matchesSearch = true;
-        if (currentSearchQuery.length > 0) {
-          const cardText = card.textContent.toLowerCase();
-          matchesSearch = cardText.includes(currentSearchQuery);
-        }
-
-        if (matchesSection && matchesDifficulty && matchesSearch) {
-          card.style.display = 'flex';
-          visibleCount++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      // Filter Table Rows
-      const tableRows = projectsTableBody.querySelectorAll('tr');
-      tableRows.forEach(row => {
-        const matchesSection = (currentFilter === 'all' || row.dataset.section === currentFilter);
-        const matchesDifficulty = (currentDifficulty === 'all' || row.dataset.difficulty === currentDifficulty);
-        
-        let matchesSearch = true;
-        if (currentSearchQuery.length > 0) {
-          const rowText = row.textContent.toLowerCase();
-          matchesSearch = rowText.includes(currentSearchQuery);
-        }
-
-        if (matchesSection && matchesDifficulty && matchesSearch) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      });
-
-      visibleCountText.textContent = visibleCount;
-
-      // Update Filter Label
-      let filterText = [];
-      if (currentFilter !== 'all') {
-        const activeChip = document.querySelector(`.chip-btn[data-filter="${currentFilter}"]`);
-        if (activeChip) filterText.push(activeChip.textContent.split('(')[0].trim());
+    function renderCurrentView() {
+      const list = getFilteredProjects();
+      if (activeView === 'grid') {
+        gridContainer.style.display = 'grid';
+        workspaceContainer.style.display = 'none';
+        tableContainer.style.display = 'none';
+        renderCardsView(list);
+      } else if (activeView === 'workspace') {
+        gridContainer.style.display = 'none';
+        workspaceContainer.style.display = 'grid';
+        tableContainer.style.display = 'none';
+        renderWorkspaceView(list);
+      } else if (activeView === 'table') {
+        gridContainer.style.display = 'none';
+        workspaceContainer.style.display = 'none';
+        tableContainer.style.display = 'block';
+        renderTableView(list);
       }
-      if (currentDifficulty !== 'all') filterText.push(`Difficulty: ${currentDifficulty}`);
-      if (currentSearchQuery.length > 0) filterText.push(`Query: "${currentSearchQuery}"`);
-
-      activeFilterLabel.textContent = filterText.length > 0 ? `Active: ${filterText.join(' · ')}` : 'Filtering: All Categories (17 Projects)';
     }
 
-    // Modal Logic
-    window.openProjectPreview = function(projectId) {
-      const p = PROJECTS_DATA[projectId];
+    // --- 5. Interactive Preview Modal Handlers ---
+    window.openLivePreview = function(num) {
+      sound.playLaunch();
+      const p = PROJECTS.find(item => item.num === num);
       if (!p) return;
-
-      modalProjectTitle.textContent = `#${String(projectId).padStart(2, '0')} — ${p.title}`;
-      modalProjectSubtitle.textContent = `${p.section} · Difficulty: ${p.difficulty} · Offline Certified`;
-      modalLaunchBtn.href = p.url;
-
-      modalProjectBody.innerHTML = `
-        <div class="modal-spec-card">
-          <div class="modal-spec-row">
-            <span class="modal-spec-label">Project Directory:</span>
-            <span class="modal-spec-value" style="font-family: monospace; color: #60a5fa;">${p.folder}/</span>
-          </div>
-          <div class="modal-spec-row">
-            <span class="modal-spec-label">Execution Environment:</span>
-            <span class="modal-spec-value" style="color: #34d399;">100% Offline (Local Browser Client)</span>
-          </div>
-          <div class="modal-spec-row">
-            <span class="modal-spec-label">Core Technologies:</span>
-            <span class="modal-spec-value">${p.tech}</span>
-          </div>
-          <div class="modal-spec-row">
-            <span class="modal-spec-label">Zero-Network Proof:</span>
-            <span class="modal-spec-value" style="font-size: 12px; color: #cbd5e1;">${p.offline}</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 style="font-size: 13px; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px;">Product Overview:</h4>
-          <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6;">${p.desc}</p>
-        </div>
-
-        <div class="modal-checklist">
-          <h4>Curriculum "Done When" Compliance Checklist:</h4>
-          <ul class="modal-checklist-items">
-            ${p.doneWhen.map(item => `<li><span class="check-mark">✓</span> ${item}</li>`).join('')}
-          </ul>
-        </div>
-
-        <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 10px; padding: 12px; font-size: 12px; color: #c7d2fe; display: flex; justify-content: space-between; align-items: center;">
-          <span>Need full audit sign-off details?</span>
-          <a href="${p.folder}/verification.md" target="_blank" style="color: #93c5fd; font-weight: 700; text-decoration: none;">Read ${p.folder}/verification.md ↗</a>
-        </div>
-      `;
-
+      modalNumPill.textContent = `PROJECT ${p.num < 10 ? '0' : ''}${p.num}`;
+      modalProjTitle.textContent = p.title;
+      btnModalExternal.href = p.url;
+      modalIframe.src = p.url;
+      setModalDevice('desktop');
       previewModalBackdrop.classList.add('active');
     };
 
-    function closeProjectPreview() {
+    function closeLivePreview() {
+      sound.playClick();
       previewModalBackdrop.classList.remove('active');
+      modalIframe.src = '';
     }
+    btnModalClose.addEventListener('click', closeLivePreview);
+    btnModalReload.addEventListener('click', () => {
+      sound.playClick();
+      modalIframe.src = modalIframe.src;
+    });
 
-    // Toast helper
-    function showToast(msg) {
-      toastMessage.textContent = msg;
-      toastNotification.classList.add('show');
-      setTimeout(() => toastNotification.classList.remove('show'), 2500);
+    function setModalDevice(dev) {
+      sound.playClick();
+      document.querySelectorAll('.modal-device-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.device === dev);
+      });
+      modalIframe.className = 'modal-iframe';
+      if (dev === 'mobile') modalIframe.classList.add('frame-mobile');
+      else if (dev === 'tablet') modalIframe.classList.add('frame-tablet');
     }
-    window.showToast = showToast;
+    document.querySelectorAll('.modal-device-btn').forEach(btn => {
+      btn.addEventListener('click', () => setModalDevice(btn.dataset.device));
+    });
 
-    // Start
-    init();
+    // Stage Device Switcher (Inside Workspace)
+    document.querySelectorAll('.device-btn:not(.modal-device-btn)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playClick();
+        document.querySelectorAll('.device-btn:not(.modal-device-btn)').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const dev = btn.dataset.device;
+        stageIframe.className = 'stage-iframe';
+        if (dev === 'mobile') stageIframe.classList.add('mode-mobile');
+        else if (dev === 'tablet') stageIframe.classList.add('mode-tablet');
+      });
+    });
+    document.getElementById('btnReloadStage').addEventListener('click', () => {
+      sound.playClick();
+      stageIframe.src = stageIframe.src;
+    });
+
+    // --- 6. Spec Modal Handlers ---
+    window.openSpecModal = function(num) {
+      sound.playClick();
+      const p = PROJECTS.find(item => item.num === num);
+      if (!p) return;
+      specModalContent.innerHTML = `
+        <div class="spec-header">
+          <div>
+            <span class="proj-badge-num">SPECIFICATION · PROJECT ${p.num < 10 ? '0' : ''}${p.num}</span>
+            <h3 style="font-size: 22px; font-weight: 800; color: #ffffff; margin-top: 6px;">${p.title}</h3>
+            <p style="font-size: 12px; color: #38bdf8;">${p.section}</p>
+          </div>
+          <button class="btn-tool" onclick="closeSpecModal()" style="padding: 4px 8px;">✖</button>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+          <h4 style="font-size: 12px; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px;">Objective & Scope</h4>
+          <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">${p.desc}</p>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+          <h4 style="font-size: 12px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px;">Curriculum "Done When" Compliance Verification</h4>
+          <ul class="spec-checklist">
+            ${p.doneWhen.map(item => `<li><span class="check-ico">✓</span> <span>${item}</span></li>`).join('')}
+          </ul>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <a href="${p.folder}/README.md" target="_blank" class="btn-tool">📄 README</a>
+          <a href="${p.folder}/verification.md" target="_blank" class="btn-tool">✅ Verification Audit</a>
+          <a href="${p.url}" target="_blank" class="btn-tool btn-launch" onclick="sound.playLaunch()">🚀 Launch App</a>
+        </div>
+      `;
+      specModalBackdrop.classList.add('active');
+    };
+
+    window.closeSpecModal = function() {
+      specModalBackdrop.classList.remove('active');
+    };
+
+    // --- 7. Event Listeners for Filters & Controls ---
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value;
+      renderCurrentView();
+    });
+
+    diffFilter.addEventListener('change', (e) => {
+      sound.playClick();
+      currentDifficulty = e.target.value;
+      renderCurrentView();
+    });
+
+    sortSelect.addEventListener('change', (e) => {
+      sound.playClick();
+      currentSort = e.target.value;
+      renderCurrentView();
+    });
+
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playClick();
+        catButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category;
+        renderCurrentView();
+      });
+    });
+
+    // View Switchers
+    btnViewGrid.addEventListener('click', () => {
+      sound.playClick();
+      activeView = 'grid';
+      btnViewGrid.classList.add('active');
+      btnViewWorkspace.classList.remove('active');
+      btnViewTable.classList.remove('active');
+      renderCurrentView();
+    });
+
+    btnViewWorkspace.addEventListener('click', () => {
+      sound.playClick();
+      activeView = 'workspace';
+      btnViewGrid.classList.remove('active');
+      btnViewWorkspace.classList.add('active');
+      btnViewTable.classList.remove('active');
+      renderCurrentView();
+    });
+
+    btnViewTable.addEventListener('click', () => {
+      sound.playClick();
+      activeView = 'table';
+      btnViewGrid.classList.remove('active');
+      btnViewWorkspace.classList.remove('active');
+      btnViewTable.classList.add('active');
+      renderCurrentView();
+    });
+
+    // Sound toggle
+    btnSoundToggle.addEventListener('click', () => {
+      sound.enabled = !sound.enabled;
+      soundStatus.textContent = sound.enabled ? 'ON' : 'OFF';
+      soundIcon.textContent = sound.enabled ? '🔊' : '🔇';
+      showToast(sound.enabled ? '🔊 Sound Effects Enabled' : '🔇 Sound Effects Muted');
+      if (sound.enabled) sound.playClick();
+    });
+
+    // Shortcuts modal
+    btnHelpShortcuts.addEventListener('click', () => {
+      sound.playClick();
+      shortcutsModalBackdrop.classList.add('active');
+    });
+    btnCloseShortcuts.addEventListener('click', () => {
+      shortcutsModalBackdrop.classList.remove('active');
+    });
+
+    // Close Modals on backdrop click
+    [previewModalBackdrop, specModalBackdrop, shortcutsModalBackdrop].forEach(backdrop => {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          backdrop.classList.remove('active');
+          if (backdrop === previewModalBackdrop) modalIframe.src = '';
+        }
+      });
+    });
+
+    // --- 8. Global Keyboard Navigation ---
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        previewModalBackdrop.classList.remove('active');
+        specModalBackdrop.classList.remove('active');
+        shortcutsModalBackdrop.classList.remove('active');
+        modalIframe.src = '';
+        searchInput.blur();
+      } else if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      } else if ((e.key === 'v' || e.key === 'V') && document.activeElement !== searchInput) {
+        // Cycle views
+        if (activeView === 'grid') btnViewWorkspace.click();
+        else if (activeView === 'workspace') btnViewTable.click();
+        else btnViewGrid.click();
+      } else if ((e.key === 'm' || e.key === 'M') && document.activeElement !== searchInput) {
+        btnSoundToggle.click();
+      } else if (['1','2','3','4','5','6','7','8','9'].includes(e.key) && document.activeElement !== searchInput) {
+        const num = parseInt(e.key, 10);
+        openLivePreview(num);
+      }
+    });
+
+    // Initial render
+    renderCurrentView();
   </script>
 </body>
 </html>

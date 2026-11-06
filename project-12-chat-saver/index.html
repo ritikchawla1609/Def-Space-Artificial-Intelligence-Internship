@@ -58,7 +58,7 @@
     <div class="chat-app-mock">
       <div class="chat-nav">
         <div style="display:flex; align-items:center;">
-          <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+          <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
           <span>🌐 chat.example.com/c/prep</span>
         </div>
         <button id="btnStress50" class="btn btn-secondary btn-xs" style="padding:4px 8px; font-size:11px;">Load 50-Message Long Chat</button>
@@ -164,9 +164,26 @@ print(retrieve("What is RAG?", docs))</code></pre>
         dummyMessages.push({ role: isUser ? 'user' : 'assistant', text: text });
       }
 
-      document.getElementById('msgCountText').textContent = '50';
-      document.getElementById('codeBlockCountText').textContent = '5';
-      alert('50-message conversation generated! Ready to test "A long chat of 50 or more messages saves completely".');
+      if (window.setChatSaverData) {
+        window.setChatSaverData({
+          title: '50-Message Thermodynamic Propulsion Chat',
+          messageCount: 50,
+          codeBlockCount: 5,
+          messages: dummyMessages
+        });
+      }
+      alert('50-message conversation generated & synced to exporter! Click "Save as PDF" or "Save as Markdown" to verify.');
+    });
+  </script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
     });
   </script>
 </body>

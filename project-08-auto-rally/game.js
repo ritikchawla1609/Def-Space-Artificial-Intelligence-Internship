@@ -287,7 +287,9 @@
     const end = (e) => { e.preventDefault(); callback(false); };
     element.addEventListener('touchstart', start, { passive: false });
     element.addEventListener('touchend', end, { passive: false });
+    element.addEventListener('touchcancel', end, { passive: false });
     element.addEventListener('mousedown', () => { initAudio(); callback(true); });
+    element.addEventListener('mouseleave', () => callback(false));
     window.addEventListener('mouseup', () => callback(false));
   }
 

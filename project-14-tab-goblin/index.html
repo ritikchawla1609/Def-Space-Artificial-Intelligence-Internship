@@ -50,7 +50,7 @@
     <!-- Simulated Browser with 47 tabs -->
     <div class="browser-window-sim">
       <div class="browser-tabs-strip" id="browserTabsStrip">
-        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
         <!-- Rendered tabs -->
       </div>
       <div class="browser-page-body">
@@ -134,6 +134,17 @@
       pill.innerHTML = `<span>${i > 5 ? '💤' : '🌐'}</span> <span>${title}</span>`;
       strip.appendChild(pill);
     }
+  </script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
+    });
   </script>
 </body>
 </html>

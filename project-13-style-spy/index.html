@@ -55,7 +55,7 @@
     <div class="website-mock">
       <div class="browser-url-strip">
         <div style="display:flex; align-items:center;">
-          <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+          <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
           <span>🌐 any-nice-site.com</span>
         </div>
         <span style="color: #10b981;">● Inspectable</span>
@@ -85,7 +85,10 @@
             <span class="icon">🎨</span>
             <span class="title">Style Spy</span>
           </div>
-          <span style="font-size:11px; color:#10b981;">Active</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button id="btnRescan" class="btn btn-xs" style="padding:2px 8px; font-size:11px; background:#334155; color:#fff; border:none; border-radius:4px; cursor:pointer;" title="Re-scan page styles">Rescan ⟳</button>
+            <span style="font-size:11px; color:#10b981;">Active</span>
+          </div>
         </header>
 
         <section class="section-card">
@@ -134,6 +137,17 @@
       document.getElementById('plainTitle').style.color = '#f59e0b';
       document.getElementById('plainDesc').style.fontFamily = "'Lora', serif";
       alert("Style picked up! Heading is now Inter (Amber) and Body is now Lora.");
+    });
+  </script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
     });
   </script>
 </body>

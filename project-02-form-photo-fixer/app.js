@@ -147,6 +147,7 @@
     canvasFrame.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchcancel', handleTouchEnd);
 
     btnDownload.addEventListener('click', handleDownload);
     btnLoadSample.addEventListener('click', loadSampleData);
@@ -257,13 +258,25 @@
     recalculateCompression();
   }
 
-  // Touch handlers
+  // Touch handlers with multi-touch pinch-to-zoom
   let touchStartDist = 0;
+  let touchStartScale = 1.0;
+
+  function getTouchDistance(t1, t2) {
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
   function handleTouchStart(e) {
     if (e.touches.length === 1) {
       isDragging = true;
       dragStartX = e.touches[0].clientX - posX;
       dragStartY = e.touches[0].clientY - posY;
+    } else if (e.touches.length === 2) {
+      isDragging = false;
+      touchStartDist = getTouchDistance(e.touches[0], e.touches[1]);
+      touchStartScale = scale;
     }
   }
 
@@ -273,13 +286,25 @@
       posX = e.touches[0].clientX - dragStartX;
       posY = e.touches[0].clientY - dragStartY;
       renderCanvas();
+    } else if (e.touches.length === 2 && touchStartDist > 0) {
+      e.preventDefault();
+      const currentDist = getTouchDistance(e.touches[0], e.touches[1]);
+      const pinchFactor = currentDist / touchStartDist;
+      scale = Math.max(0.2, Math.min(4.0, touchStartScale * pinchFactor));
+      zoomSlider.value = scale;
+      renderCanvas();
     }
   }
 
-  function handleTouchEnd() {
-    if (isDragging) {
+  function handleTouchEnd(e) {
+    if (!e.touches || e.touches.length === 0) {
       isDragging = false;
+      touchStartDist = 0;
       recalculateCompression();
+    } else if (e.touches.length === 1) {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX - posX;
+      dragStartY = e.touches[0].clientY - posY;
     }
   }
 

@@ -144,11 +144,15 @@ jsFiles.forEach(file => {
 });
 
 // 7. Verify Master Hub Connections
-console.log('\n🌐 Test Group 7: Verifying Master Showcase Hub Connections...');
-const rootHtml = fs.readFileSync('index.html', 'utf8');
+console.log('\n🌐 Test Group 7: Verifying Master Project Hub Connections...');
+assert(fs.existsSync('project-hub.html'), 'project-hub.html exists with title Project Hub');
+const hubHtml = fs.readFileSync('project-hub.html', 'utf8');
+assert(hubHtml.includes('<title>Project Hub'), 'project-hub.html has title "Project Hub"');
 EXPECTED_PROJECTS.forEach(proj => {
   const targetLink = `${proj}/index.html`;
-  assert(rootHtml.includes(targetLink), `Master hub index.html links to ${targetLink}`);
+  assert(hubHtml.includes(targetLink), `project-hub.html links to ${targetLink}`);
+  const projHtml = fs.readFileSync(path.join(proj, 'index.html'), 'utf8');
+  assert(projHtml.includes('../project-hub.html'), `${proj} links back to Project Hub`);
 });
 
 // Summary

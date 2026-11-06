@@ -157,10 +157,40 @@
       if (currentModalAction) currentModalAction();
     });
 
-    // Canvas Mouse / Touch events for Edit & Annotation tools
+    // Canvas Mouse & Touch events for Edit & Annotation tools
     overlayCanvas.addEventListener('mousedown', handleCanvasMouseDown);
     overlayCanvas.addEventListener('mousemove', handleCanvasMouseMove);
     overlayCanvas.addEventListener('mouseup', handleCanvasMouseUp);
+
+    // Touch support for mobile & tablet drawing
+    overlayCanvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        e.preventDefault();
+        const t = e.touches[0];
+        handleCanvasMouseDown({ clientX: t.clientX, clientY: t.clientY });
+      }
+    }, { passive: false });
+
+    overlayCanvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1) {
+        e.preventDefault();
+        const t = e.touches[0];
+        handleCanvasMouseMove({ clientX: t.clientX, clientY: t.clientY });
+      }
+    }, { passive: false });
+
+    overlayCanvas.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length > 0) {
+        e.preventDefault();
+        const t = e.changedTouches[0];
+        handleCanvasMouseUp({ clientX: t.clientX, clientY: t.clientY });
+      }
+    });
+
+    overlayCanvas.addEventListener('touchcancel', () => {
+      isDrawing = false;
+      clearOverlay();
+    });
   }
 
   // --- TOOLBAR RENDERING ---
@@ -434,8 +464,12 @@
   }
 
   // --- THUMBNAIL STRIP ---
+  let thumbnailRenderBatchId = 0;
   async function renderThumbnails() {
     thumbnailsList.innerHTML = '';
+    const currentBatch = ++thumbnailRenderBatchId;
+    const queue = [];
+
     for (let i = 0; i < totalPages; i++) {
       const item = document.createElement('div');
       item.className = `thumb-item ${i === currentPageIndex ? 'active' : ''}`;
@@ -461,12 +495,26 @@
       item.addEventListener('click', () => changePage(i));
       thumbnailsList.appendChild(item);
 
-      // Async render thumbnail preview
-      renderThumbCanvas(i, thumbCanvas);
+      queue.push({ pageIndex: i, canvas: thumbCanvas });
+    }
+
+    // Process thumbnail queue in small batches with yield to maintain responsive 60fps UI
+    processThumbnailQueue(queue, currentBatch);
+  }
+
+  async function processThumbnailQueue(queue, batchId) {
+    for (const item of queue) {
+      if (batchId !== thumbnailRenderBatchId) return; // Stale batch superseded by doc reload
+      await renderThumbCanvas(item.pageIndex, item.canvas);
+      // Yield to main thread every 2 pages to keep UI silky smooth
+      if (item.pageIndex % 2 === 0) {
+        await new Promise(r => setTimeout(r, 10));
+      }
     }
   }
 
   async function renderThumbCanvas(pageIndex, canvas) {
+    if (!currentPdfJsDoc) return;
     try {
       const page = await currentPdfJsDoc.getPage(pageIndex + 1);
       const viewport = page.getViewport({ scale: 0.25 });
@@ -1010,6 +1058,31 @@
         sCtx.stroke();
       });
       sigCanvas.addEventListener('mouseup', () => { isSigDrawing = false; });
+
+      // Touch signature support
+      const getSigPos = (t) => {
+        const r = sigCanvas.getBoundingClientRect();
+        return { x: t.clientX - r.left, y: t.clientY - r.top };
+      };
+      sigCanvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          e.preventDefault();
+          isSigDrawing = true;
+          const pos = getSigPos(e.touches[0]);
+          sCtx.beginPath();
+          sCtx.moveTo(pos.x, pos.y);
+        }
+      }, { passive: false });
+      sigCanvas.addEventListener('touchmove', (e) => {
+        if (!isSigDrawing || e.touches.length !== 1) return;
+        e.preventDefault();
+        const pos = getSigPos(e.touches[0]);
+        sCtx.lineTo(pos.x, pos.y);
+        sCtx.stroke();
+      }, { passive: false });
+      sigCanvas.addEventListener('touchend', (e) => { e.preventDefault(); isSigDrawing = false; });
+      sigCanvas.addEventListener('touchcancel', () => { isSigDrawing = false; });
+
       document.getElementById('btnClearSig')?.addEventListener('click', () => {
         sCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
       });

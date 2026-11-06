@@ -12,7 +12,7 @@
     <!-- Top Header -->
     <header class="top-bar">
       <div class="brand">
-        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
         <span class="brand-pen">✍️</span>
         <span class="brand-title">Scribbly Notes</span>
         <span class="badge-offline">100% Offline</span>
@@ -104,5 +104,16 @@
   </div>
 
   <script src="app.js"></script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
+    });
+  </script>
 </body>
 </html>

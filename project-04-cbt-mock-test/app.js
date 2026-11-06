@@ -91,12 +91,28 @@
 
   // --- LOAD EXAM DATA ---
   async function loadExamFile(filename) {
+    // 1. Try bundled offline datasets first for instantaneous zero-latency loading
+    if (window.EMBEDDED_EXAMS && window.EMBEDDED_EXAMS[filename]) {
+      setupExam(JSON.parse(JSON.stringify(window.EMBEDDED_EXAMS[filename])));
+      return;
+    }
+
+    // 2. Fall back to fetch if served over HTTP/HTTPS
     try {
       const res = await fetch(filename);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setupExam(data);
     } catch (e) {
-      console.error('Failed to load exam file', e);
+      console.warn('Network fetch unavailable:', e.message);
+      // Fallback check
+      if (window.EMBEDDED_EXAMS) {
+        const fallbackKey = Object.keys(window.EMBEDDED_EXAMS)[0];
+        if (fallbackKey) {
+          setupExam(JSON.parse(JSON.stringify(window.EMBEDDED_EXAMS[fallbackKey])));
+          return;
+        }
+      }
       alert('Could not load examination file: ' + filename);
     }
   }
@@ -108,21 +124,29 @@
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target.result);
+        if (!data || !Array.isArray(data.questions) || data.questions.length === 0) {
+          throw new Error('Exam file must contain a non-empty "questions" array.');
+        }
         localStorage.removeItem('cbt_exam_state');
         setupExam(data);
       } catch (err) {
-        alert('Invalid JSON file format for CBT exam.');
+        alert('Invalid CBT Exam JSON format: ' + err.message);
       }
     };
+    reader.onerror = () => alert('Failed to read selected JSON file.');
     reader.readAsText(file);
   }
 
   function setupExam(data) {
+    if (!data || !Array.isArray(data.questions) || data.questions.length === 0) {
+      alert('Examination data is invalid or contains no questions.');
+      return;
+    }
     examData = data;
-    examTitleText.textContent = data.examTitle;
+    examTitleText.textContent = data.examTitle || 'National CBT Mock Examination 2026';
     timeRemaining = (data.durationMinutes || 45) * 60;
     activeQuestionIndex = 0;
-    activeSubject = data.subjects[0];
+    activeSubject = (data.subjects && data.subjects.length > 0) ? data.subjects[0] : (data.questions[0].subject || 'General');
     isExamSubmitted = false;
 
     // Initialize answer status for all questions
@@ -134,8 +158,10 @@
     }));
 
     // Mark first question visited
-    candidateAnswers[0].visited = true;
-    candidateAnswers[0].status = 'not-answered';
+    if (candidateAnswers.length > 0) {
+      candidateAnswers[0].visited = true;
+      candidateAnswers[0].status = 'not-answered';
+    }
 
     renderSubjectTabs();
     renderQuestion(activeQuestionIndex);

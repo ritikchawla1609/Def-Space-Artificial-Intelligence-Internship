@@ -86,7 +86,7 @@
 <body>
   <nav class="yt-navbar">
     <div style="display:flex; align-items:center;">
-      <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+      <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
       <div class="yt-logo"><span>▶</span> YouTube <span class="ext-badge">Focus Board Active</span></div>
     </div>
     <div style="font-size: 12px; color: #aaa;">url: youtube.com/watch?v=thermo4</div>
@@ -130,8 +130,17 @@
 
       <!-- "Why Are You Here?" Gate -->
       <div class="gate-box">
-        <h4>Why are you here?</h4>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4>Why are you here?</h4>
+          <button id="btnEditGate" style="background:none; border:none; color:#f87171; font-size:11px; cursor:pointer; text-decoration:underline;">Edit</button>
+        </div>
         <p id="dispGateReason">"Revising thermodynamics"</p>
+        <div id="gateEditRow" style="display:none; margin-top:6px;">
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="inpGateText" value="Revising thermodynamics" style="flex:1; background:#181818; border:1px solid #ef4444; color:#fff; font-size:11px; padding:4px 6px; border-radius:4px;">
+            <button id="btnSaveGate" style="background:#ef4444; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:11px; cursor:pointer;">Set</button>
+          </div>
+        </div>
         <span style="font-size: 11px; color: #38bdf8; display: block; margin-top: 4px;">Session unlocks YouTube for 60 minutes</span>
       </div>
 
@@ -156,14 +165,23 @@
 
       <!-- Timestamped Notes -->
       <div class="card">
-        <div style="font-weight: 700; font-size: 12px; margin-bottom: 4px;">Notes linked to timestamps</div>
-        <div class="note-pill" onclick="jumpTo(760)">
-          <span class="note-time">12:40 · Carnot cycle</span>
-          <span style="color:#ddd;">Ideal heat engine efficiency derivation</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+          <div style="font-weight: 700; font-size: 12px;">Notes linked to timestamps</div>
+          <button id="btnToggleNewNote" style="background:#2563eb; color:#fff; border:none; padding:2px 6px; border-radius:4px; font-size:10px; cursor:pointer;">+ Timestamp</button>
         </div>
-        <div class="note-pill" onclick="jumpTo(1455)" style="margin-top:6px;">
-          <span class="note-time">24:15 · Entropy formula</span>
-          <span style="color:#ddd;">Clausius inequality and reversibility</span>
+        <div id="notesListContainer" style="display:flex; flex-direction:column; gap:6px;">
+          <div class="note-pill" onclick="jumpTo(760)">
+            <span class="note-time">12:40 · Carnot cycle</span>
+            <span style="color:#ddd;">Ideal heat engine efficiency derivation</span>
+          </div>
+          <div class="note-pill" onclick="jumpTo(1455)">
+            <span class="note-time">24:15 · Entropy formula</span>
+            <span style="color:#ddd;">Clausius inequality and reversibility</span>
+          </div>
+        </div>
+        <div id="addNoteForm" style="display:none; margin-top:8px; display:flex; flex-direction:column; gap:6px;">
+          <input type="text" id="inpNoteTopic" placeholder="Topic note..." style="background:#181818; border:1px solid #444; color:#fff; font-size:11px; padding:4px 6px; border-radius:4px;">
+          <button id="btnSaveNote" style="background:#10b981; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:11px; cursor:pointer;">Add Note at Current Time</button>
         </div>
       </div>
     </aside>
@@ -244,11 +262,62 @@
       }
     }, 1000);
 
-    // Initial state
-    recsSection.style.display = 'none';
-    commentsSection.style.display = 'none';
-    renderPlayerCanvas();
-    videoTimeReadout.textContent = `${formatSecs(currentSeconds)} / ${formatSecs(totalSeconds)}`;
+    // Interactive Gate Edit Handlers
+    const btnEditGate = document.getElementById('btnEditGate');
+    const gateEditRow = document.getElementById('gateEditRow');
+    const inpGateText = document.getElementById('inpGateText');
+    const btnSaveGate = document.getElementById('btnSaveGate');
+    const dispGateReason = document.getElementById('dispGateReason');
+
+    btnEditGate.addEventListener('click', () => {
+      gateEditRow.style.display = gateEditRow.style.display === 'none' ? 'block' : 'none';
+      if (gateEditRow.style.display === 'block') inpGateText.focus();
+    });
+
+    btnSaveGate.addEventListener('click', () => {
+      const val = inpGateText.value.trim() || 'Studying';
+      dispGateReason.textContent = `"${val}"`;
+      gateEditRow.style.display = 'none';
+    });
+
+    // Interactive Timestamp Notes Handlers
+    const btnToggleNewNote = document.getElementById('btnToggleNewNote');
+    const addNoteForm = document.getElementById('addNoteForm');
+    const inpNoteTopic = document.getElementById('inpNoteTopic');
+    const btnSaveNote = document.getElementById('btnSaveNote');
+    const notesListContainer = document.getElementById('notesListContainer');
+
+    btnToggleNewNote.addEventListener('click', () => {
+      addNoteForm.style.display = addNoteForm.style.display === 'none' ? 'flex' : 'none';
+      if (addNoteForm.style.display === 'flex') inpNoteTopic.focus();
+    });
+
+    btnSaveNote.addEventListener('click', () => {
+      const topic = inpNoteTopic.value.trim() || 'Note';
+      const snapTime = currentSeconds;
+      const pill = document.createElement('div');
+      pill.className = 'note-pill';
+      pill.style.marginTop = '6px';
+      pill.innerHTML = `
+        <span class="note-time">${formatSecs(snapTime)} · User Note</span>
+        <span style="color:#ddd;">${topic}</span>
+      `;
+      pill.onclick = () => jumpTo(snapTime);
+      notesListContainer.appendChild(pill);
+      inpNoteTopic.value = '';
+      addNoteForm.style.display = 'none';
+    });
+  </script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
+    });
   </script>
 </body>
 </html>

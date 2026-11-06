@@ -6,7 +6,7 @@
   "scripts": {
     "start": "python3 -m http.server 8080",
     "serve": "npx serve . -l 8080",
-    "test": "node test/verify-suite.js"
+    "test": "node verify-suite.js"
   },
   "author": "Ritik Chawla",
   "license": "MIT",

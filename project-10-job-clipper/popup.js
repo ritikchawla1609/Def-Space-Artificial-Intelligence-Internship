@@ -56,18 +56,30 @@
   }
 
   function setupEventListeners() {
-    inpSearch.addEventListener('input', renderBoard);
-    btnExportCsv.addEventListener('click', exportToCsv);
-    btnToggleClipForm.addEventListener('click', () => {
-      clipPanel.style.display = clipPanel.style.display === 'none' ? 'flex' : 'none';
-    });
-    btnCloseClipPanel.addEventListener('click', () => { clipPanel.style.display = 'none'; });
-    btnAddCard.addEventListener('click', handleAddCard);
+    if (inpSearch) inpSearch.addEventListener('input', renderBoard);
+    if (btnExportCsv) btnExportCsv.addEventListener('click', exportToCsv);
+    if (btnToggleClipForm && clipPanel) {
+      btnToggleClipForm.addEventListener('click', () => {
+        clipPanel.style.display = clipPanel.style.display === 'none' ? 'flex' : 'none';
+      });
+    }
+    if (btnCloseClipPanel && clipPanel) {
+      btnCloseClipPanel.addEventListener('click', () => { clipPanel.style.display = 'none'; });
+    }
+    if (btnAddCard) btnAddCard.addEventListener('click', handleAddCard);
 
-    btnCloseEditModal.addEventListener('click', () => { editModal.style.display = 'none'; });
-    btnSaveEdit.addEventListener('click', handleSaveEdit);
-    btnDeleteCard.addEventListener('click', handleDeleteCard);
+    if (btnCloseEditModal && editModal) {
+      btnCloseEditModal.addEventListener('click', () => { editModal.style.display = 'none'; });
+    }
+    if (btnSaveEdit) btnSaveEdit.addEventListener('click', handleSaveEdit);
+    if (btnDeleteCard) btnDeleteCard.addEventListener('click', handleDeleteCard);
   }
+
+  // Expose board refresh and card insertion for standalone testbed
+  window.refreshJobBoard = () => {
+    loadJobs();
+    renderBoard();
+  };
 
   // Detect active tab details if running in Chrome Extension
   function detectPageDetails() {
@@ -174,11 +186,15 @@
       }
     });
 
-    document.getElementById('countSaved').textContent = counts.saved || 0;
-    document.getElementById('countApplied').textContent = counts.applied || 0;
-    document.getElementById('countInterview').textContent = counts.interview || 0;
-    document.getElementById('countResult').textContent = counts.result || 0;
-    dueSoonCount.textContent = dueSoon;
+    const elSaved = document.getElementById('countSaved');
+    if (elSaved) elSaved.textContent = counts.saved || 0;
+    const elApplied = document.getElementById('countApplied');
+    if (elApplied) elApplied.textContent = counts.applied || 0;
+    const elInterview = document.getElementById('countInterview');
+    if (elInterview) elInterview.textContent = counts.interview || 0;
+    const elResult = document.getElementById('countResult');
+    if (elResult) elResult.textContent = counts.result || 0;
+    if (dueSoonCount) dueSoonCount.textContent = dueSoon;
   }
 
   // Edit Modal

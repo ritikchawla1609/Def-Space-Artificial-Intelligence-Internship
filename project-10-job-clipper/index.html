@@ -54,7 +54,7 @@
     <!-- Browser Mock Header -->
     <div class="sim-browser-bar">
       <div style="display:flex; align-items:center; gap:8px;">
-        <a href="../index.html" class="nav-back-pill" title="Return to Master Showcase Hub">← Hub</a>
+        <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
         <div style="display:flex; gap:6px;">
           <span style="color:#ef4444;">●</span>
           <span style="color:#f59e0b;">●</span>
@@ -105,7 +105,10 @@
     <div class="kanban-section">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h2 style="font-size: 18px; font-weight: 700;">Your Applications Kanban Board</h2>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div class="deadline-alert-badge" id="deadlineAlertBadge" style="padding: 4px 10px; font-size: 12px; background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 6px; color: #fbbf24;">
+            ⏰ <span id="dueSoonCount">0</span> Due Soon
+          </div>
           <input type="text" id="inpSearch" placeholder="Search applications..." class="search-input" style="width: 220px;">
           <button id="btnExportCsv" class="btn btn-secondary btn-sm">Export to CSV</button>
         </div>
@@ -156,9 +159,9 @@
   <script src="popup.js"></script>
   <script>
     document.getElementById('btnQuickClip').addEventListener('click', () => {
-      const role = document.getElementById('simRole').value;
-      const comp = document.getElementById('simComp').value;
-      const dead = document.getElementById('simDead').value;
+      const role = document.getElementById('simRole').value.trim() || 'Data Analyst Intern';
+      const comp = document.getElementById('simComp').value.trim() || 'Nova Labs';
+      const dead = document.getElementById('simDead').value.trim() || '12 Nov';
       const cards = JSON.parse(localStorage.getItem('jobClipper_cards') || '[]');
       cards.unshift({
         id: Date.now().toString(),
@@ -167,10 +170,31 @@
         deadline: '2026-11-12',
         url: window.location.href,
         status: 'saved',
-        notes: 'Clipped from Nova Labs job page'
+        notes: `Clipped from ${comp} job page (${dead})`
       });
       localStorage.setItem('jobClipper_cards', JSON.stringify(cards));
-      location.reload();
+      if (window.refreshJobBoard) {
+        window.refreshJobBoard();
+      }
+      const btn = document.getElementById('btnQuickClip');
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Added to Board!';
+      btn.style.backgroundColor = '#10b981';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.backgroundColor = '';
+      }, 1500);
+    });
+  </script>
+
+  <script>
+    // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
+      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+        window.location.href = "../project-hub.html";
+      }
     });
   </script>
 </body>

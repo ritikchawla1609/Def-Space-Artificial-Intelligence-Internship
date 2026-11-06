@@ -90,6 +90,14 @@ The retrieved documents are then concatenated into the prompt context for synthe
     codeBlockCountText.textContent = chatData.codeBlockCount || 3;
   }
 
+  // Expose global updater so standalone testbeds and 50+ message stress tests sync seamlessly
+  window.setChatSaverData = function (newChatData) {
+    if (newChatData) {
+      chatData = Object.assign({}, chatData, newChatData);
+      updateStatsUI();
+    }
+  };
+
   function setupListeners() {
     btnSaveMd.addEventListener('click', exportMarkdown);
     btnSavePdf.addEventListener('click', exportPdf);

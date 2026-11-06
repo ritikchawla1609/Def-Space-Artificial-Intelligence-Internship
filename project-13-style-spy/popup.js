@@ -36,10 +36,10 @@
   }
 
   function setupEventListeners() {
-    btnRescan.addEventListener('click', queryActiveTab);
-    btnSaveKit.addEventListener('click', handleSaveKit);
-    savedKitsDropdown.addEventListener('change', handleLoadSavedKit);
-    btnCopyCss.addEventListener('click', exportCssVariables);
+    if (btnRescan) btnRescan.addEventListener('click', queryActiveTab);
+    if (btnSaveKit) btnSaveKit.addEventListener('click', handleSaveKit);
+    if (savedKitsDropdown) savedKitsDropdown.addEventListener('change', handleLoadSavedKit);
+    if (btnCopyCss) btnCopyCss.addEventListener('click', exportCssVariables);
   }
 
   function queryActiveTab() {
