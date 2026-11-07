@@ -89,7 +89,11 @@
   function handleSaveKit() {
     const name = inpKitName.value.trim() || 'Modern Brand Kit';
     savedKits[name] = JSON.parse(JSON.stringify(extractedStyle));
-    localStorage.setItem('styleSpy_kits', JSON.stringify(savedKits));
+    try {
+      localStorage.setItem('styleSpy_kits', JSON.stringify(savedKits));
+    } catch (e) {
+      console.warn('Could not save kits to localStorage:', e);
+    }
     inpKitName.value = '';
     renderKitsDropdown();
     showToast(`Kit "${name}" saved!`);

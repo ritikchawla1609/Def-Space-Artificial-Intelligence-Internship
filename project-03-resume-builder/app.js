@@ -125,11 +125,15 @@
   }
 
   function saveState() {
-    localStorage.setItem('resumeBuilder_data', JSON.stringify({
-      resumeData,
-      sectionOrder,
-      currentTemplate
-    }));
+    try {
+      localStorage.setItem('resumeBuilder_data', JSON.stringify({
+        resumeData,
+        sectionOrder,
+        currentTemplate
+      }));
+    } catch (e) {
+      console.warn('Could not save resume data to localStorage:', e);
+    }
   }
 
   function setupEventListeners() {

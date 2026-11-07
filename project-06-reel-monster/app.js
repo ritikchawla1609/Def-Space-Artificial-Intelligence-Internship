@@ -93,7 +93,11 @@
       history7Days,
       savedAt: Date.now()
     };
-    localStorage.setItem('reelMonster_state', JSON.stringify(state));
+    try {
+      localStorage.setItem('reelMonster_state', JSON.stringify(state));
+    } catch (e) {
+      console.warn('Could not save Reel Monster state to localStorage:', e);
+    }
   }
 
   function setupEventListeners() {

@@ -66,7 +66,7 @@
 
   function setupEventListeners() {
     examFileSelect.addEventListener('change', async (e) => {
-      localStorage.removeItem('cbt_exam_state');
+      try { localStorage.removeItem('cbt_exam_state'); } catch (err) {}
       await loadExamFile(e.target.value);
     });
 
@@ -182,13 +182,17 @@
       candidateAnswers,
       savedAt: Date.now()
     };
-    localStorage.setItem('cbt_exam_state', JSON.stringify(state));
+    try {
+      localStorage.setItem('cbt_exam_state', JSON.stringify(state));
+    } catch (e) {
+      console.warn('Could not save progress to localStorage:', e);
+    }
   }
 
   function loadSavedProgress() {
-    const saved = localStorage.getItem('cbt_exam_state');
-    if (!saved) return false;
     try {
+      const saved = localStorage.getItem('cbt_exam_state');
+      if (!saved) return false;
       const state = JSON.parse(saved);
       if (state.examData && state.candidateAnswers) {
         examData = state.examData;
@@ -212,7 +216,9 @@
   }
 
   function resetExamState() {
-    localStorage.removeItem('cbt_exam_state');
+    try {
+      localStorage.removeItem('cbt_exam_state');
+    } catch (e) {}
     clearInterval(timerInterval);
     loadExamFile(examFileSelect.value);
   }
@@ -416,7 +422,7 @@
   function submitExam() {
     isExamSubmitted = true;
     clearInterval(timerInterval);
-    localStorage.removeItem('cbt_exam_state');
+    try { localStorage.removeItem('cbt_exam_state'); } catch (err) {}
 
     const totalQuestions = examData.questions.length;
     const pos = examData.positiveMarks;

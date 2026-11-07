@@ -172,7 +172,11 @@
         status: 'saved',
         notes: `Clipped from ${comp} job page (${dead})`
       });
-      localStorage.setItem('jobClipper_cards', JSON.stringify(cards));
+      try {
+        localStorage.setItem('jobClipper_cards', JSON.stringify(cards));
+      } catch (e) {
+        console.warn('Could not save card to localStorage:', e);
+      }
       if (window.refreshJobBoard) {
         window.refreshJobBoard();
       }
@@ -196,6 +200,11 @@
       const modal = document.getElementById('editModal');
       if (e.key === "Escape" && modal && modal.style.display !== "none") {
         modal.style.display = "none";
+        return;
+      }
+      const clipPanel = document.getElementById('clipPanel');
+      if (e.key === "Escape" && clipPanel && clipPanel.style.display !== "none") {
+        clipPanel.style.display = "none";
         return;
       }
       if (e.key === "h" || e.key === "H" || e.key === "Escape") {

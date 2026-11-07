@@ -123,7 +123,11 @@
       keepListUrls = keepListUrls.filter(u => u !== tab.url);
     }
 
-    localStorage.setItem('tabGoblin_keepList', JSON.stringify(keepListUrls));
+    try {
+      localStorage.setItem('tabGoblin_keepList', JSON.stringify(keepListUrls));
+    } catch (e) {
+      console.warn('Could not save keep list to localStorage:', e);
+    }
     renderTabsList();
   };
 
@@ -180,7 +184,11 @@
     };
 
     savedSessions.unshift(sessionObj);
-    localStorage.setItem('tabGoblin_sessions', JSON.stringify(savedSessions));
+    try {
+      localStorage.setItem('tabGoblin_sessions', JSON.stringify(savedSessions));
+    } catch (e) {
+      console.warn('Could not save sessions to localStorage:', e);
+    }
     renderSessions();
     sessionsSection.style.display = 'block';
   }
@@ -223,7 +231,11 @@
 
   window._deleteSession = (idx) => {
     savedSessions.splice(idx, 1);
-    localStorage.setItem('tabGoblin_sessions', JSON.stringify(savedSessions));
+    try {
+      localStorage.setItem('tabGoblin_sessions', JSON.stringify(savedSessions));
+    } catch (e) {
+      console.warn('Could not update sessions in localStorage:', e);
+    }
     renderSessions();
   };
 

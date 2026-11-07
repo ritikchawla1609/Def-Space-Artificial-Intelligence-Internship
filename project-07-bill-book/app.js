@@ -162,9 +162,13 @@
   }
 
   function saveData() {
-    localStorage.setItem('billBook_profile', JSON.stringify(shopProfile));
-    localStorage.setItem('billBook_history', JSON.stringify(billHistory));
-    localStorage.setItem('billBook_currentBill', JSON.stringify(currentBill));
+    try {
+      localStorage.setItem('billBook_profile', JSON.stringify(shopProfile));
+      localStorage.setItem('billBook_history', JSON.stringify(billHistory));
+      localStorage.setItem('billBook_currentBill', JSON.stringify(currentBill));
+    } catch (e) {
+      console.warn('Could not save Bill Book state to localStorage:', e);
+    }
   }
 
   function setupEventListeners() {

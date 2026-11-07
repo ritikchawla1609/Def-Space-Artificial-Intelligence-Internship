@@ -247,10 +247,13 @@ body {
   border-radius: 6px;
   overflow: hidden;
   background-color: #ffffff;
+  max-width: 100%;
 }
 
 .page-canvas {
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Buttons */

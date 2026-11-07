@@ -52,7 +52,11 @@
   }
 
   function saveJobs() {
-    localStorage.setItem('jobClipper_cards', JSON.stringify(jobs));
+    try {
+      localStorage.setItem('jobClipper_cards', JSON.stringify(jobs));
+    } catch (e) {
+      console.warn('Could not save jobs to localStorage:', e);
+    }
   }
 
   function setupEventListeners() {

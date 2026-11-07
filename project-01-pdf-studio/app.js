@@ -404,30 +404,41 @@
     if (!file) return;
     statusMessage.textContent = `Opening ${file.name}...`;
     docTitle = file.name;
-    const arrayBuffer = await file.arrayBuffer();
-    currentPdfBytes = new Uint8Array(arrayBuffer);
-    currentPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes, { ignoreEncryption: true });
-    currentPageIndex = 0;
-    await reloadDocument();
-    statusMessage.textContent = `Loaded ${file.name} (${totalPages} pages) offline.`;
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      currentPdfBytes = new Uint8Array(arrayBuffer);
+      currentPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes, { ignoreEncryption: true });
+      currentPageIndex = 0;
+      await reloadDocument();
+      statusMessage.textContent = `Loaded ${file.name} (${totalPages} pages) offline.`;
+    } catch (err) {
+      console.error('Failed to load PDF:', err);
+      statusMessage.textContent = `❌ Error: Could not open "${file.name}". File may be password-protected or corrupted.`;
+      alert(`Could not open "${file.name}".\n\nReason: The PDF file may be encrypted/password-protected, corrupted, or an unsupported format.`);
+    }
   }
 
   async function reloadDocument() {
-    if (!currentPdfBytes) return;
-    totalPages = currentPdfDoc.getPageCount();
-    pageCountBadgeEl.textContent = `${totalPages} page${totalPages === 1 ? '' : 's'}`;
-    currentDocNameEl.textContent = docTitle;
-    fileSizeBadgeEl.textContent = formatBytes(currentPdfBytes.byteLength);
-    pageNumInput.max = totalPages;
-    totalPagesSpan.textContent = totalPages;
-    thumbCountEl.textContent = totalPages;
+    if (!currentPdfBytes || !currentPdfDoc) return;
+    try {
+      totalPages = currentPdfDoc.getPageCount();
+      pageCountBadgeEl.textContent = `${totalPages} page${totalPages === 1 ? '' : 's'}`;
+      currentDocNameEl.textContent = docTitle;
+      fileSizeBadgeEl.textContent = formatBytes(currentPdfBytes.byteLength);
+      pageNumInput.max = totalPages;
+      totalPagesSpan.textContent = totalPages;
+      thumbCountEl.textContent = totalPages;
 
-    // Load in PDF.js for crisp canvas rendering
-    const loadingTask = pdfjsLib.getDocument({ data: currentPdfBytes.slice(0) });
-    currentPdfJsDoc = await loadingTask.promise;
+      // Load in PDF.js for crisp canvas rendering
+      const loadingTask = pdfjsLib.getDocument({ data: currentPdfBytes.slice(0) });
+      currentPdfJsDoc = await loadingTask.promise;
 
-    renderThumbnails();
-    renderPage(currentPageIndex);
+      renderThumbnails();
+      renderPage(currentPageIndex);
+    } catch (err) {
+      console.error('Error reloading document:', err);
+      statusMessage.textContent = `⚠️ PDF render warning: ${err.message || 'Partial render issue'}`;
+    }
   }
 
   // --- RENDER PAGE TO CANVAS ---
@@ -628,15 +639,20 @@
     `, async () => {
       const input = document.getElementById('mergeFileInput');
       if (!input.files || !input.files[0]) return;
-      const fileBytes = new Uint8Array(await input.files[0].arrayBuffer());
-      const secondDoc = await PDFLib.PDFDocument.load(fileBytes);
-      const copiedPages = await currentPdfDoc.copyPages(secondDoc, secondDoc.getPageIndices());
-      copiedPages.forEach(p => currentPdfDoc.addPage(p));
-      currentPdfBytes = await currentPdfDoc.save();
-      currentPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes);
-      closeModal();
-      await reloadDocument();
-      statusMessage.textContent = `Merged ${copiedPages.length} pages from ${input.files[0].name}!`;
+      try {
+        const fileBytes = new Uint8Array(await input.files[0].arrayBuffer());
+        const secondDoc = await PDFLib.PDFDocument.load(fileBytes, { ignoreEncryption: true });
+        const copiedPages = await currentPdfDoc.copyPages(secondDoc, secondDoc.getPageIndices());
+        copiedPages.forEach(p => currentPdfDoc.addPage(p));
+        currentPdfBytes = await currentPdfDoc.save();
+        currentPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes);
+        closeModal();
+        await reloadDocument();
+        statusMessage.textContent = `Merged ${copiedPages.length} pages from ${input.files[0].name}!`;
+      } catch (err) {
+        console.error('Merge error:', err);
+        alert(`Failed to merge PDF: ${err.message || 'File may be encrypted or corrupted.'}`);
+      }
     });
   }
 

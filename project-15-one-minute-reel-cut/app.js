@@ -308,30 +308,63 @@
   function renderAndDownloadReel() {
     alert("Rendering 60-Second Vertical Reel (1080x1920 scaled) with burned-in captions, audio fades, and face-framing...");
 
-    // Record 5 seconds of canvas frames as demo .webm video file
-    const stream = canvas.captureStream(30);
-    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-    const chunks = [];
+    try {
+      if (!canvas.captureStream) {
+        throw new Error('Canvas captureStream not supported in this environment.');
+      }
+      const stream = canvas.captureStream(30);
+      let options = {};
+      if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported) {
+        if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+          options = { mimeType: 'video/webm;codecs=vp9' };
+        } else if (MediaRecorder.isTypeSupported('video/webm')) {
+          options = { mimeType: 'video/webm' };
+        } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+          options = { mimeType: 'video/mp4' };
+        }
+      }
+      const recorder = new MediaRecorder(stream, options);
+      const chunks = [];
 
-    recorder.ondataavailable = (e) => chunks.push(e.data);
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `one-minute-reel-${Date.now()}.webm`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      alert("Reel export complete! Saved as one-minute-reel.webm (plays natively on phones & browsers).");
-    };
+      recorder.ondataavailable = (e) => chunks.push(e.data);
+      recorder.onstop = () => {
+        const mime = options.mimeType || 'video/webm';
+        const ext = mime.includes('mp4') ? 'mp4' : 'webm';
+        const blob = new Blob(chunks, { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `one-minute-reel-${Date.now()}.${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        alert(`Reel export complete! Saved as one-minute-reel.${ext} (plays natively on phones & browsers).`);
+      };
 
-    recorder.start();
-    startPlayback();
-    setTimeout(() => {
-      recorder.stop();
-      pausePlayback();
-    }, 4000);
+      recorder.start();
+      startPlayback();
+      setTimeout(() => {
+        try {
+          if (recorder.state !== 'inactive') recorder.stop();
+        } catch (e) {}
+        pausePlayback();
+      }, 4000);
+    } catch (err) {
+      console.warn('MediaRecorder recording fallback:', err);
+      // Fallback: export high-res 9:16 frame snapshot
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `one-minute-reel-frame-${Date.now()}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          alert('Exported current vertical 9:16 frame snapshot as PNG (MediaRecorder video encoding not supported in this browser profile).');
+        }
+      });
+    }
   }
 
   window.addEventListener('DOMContentLoaded', init);

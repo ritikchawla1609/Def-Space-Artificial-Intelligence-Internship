@@ -79,22 +79,26 @@
   let engineGain = null;
 
   function initAudio() {
-    if (audioCtx) return;
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
+    if (!audioCtx) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
 
-      // Continuous engine oscillator
-      engineOsc = audioCtx.createOscillator();
-      engineGain = audioCtx.createGain();
-      engineOsc.type = 'sawtooth';
-      engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
-      engineGain.gain.setValueAtTime(0, audioCtx.currentTime);
-      engineOsc.connect(engineGain);
-      engineGain.connect(audioCtx.destination);
-      engineOsc.start();
-    } catch (e) {
-      console.warn('Web Audio not supported', e);
+        // Continuous engine oscillator
+        engineOsc = audioCtx.createOscillator();
+        engineGain = audioCtx.createGain();
+        engineOsc.type = 'sawtooth';
+        engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
+        engineGain.gain.setValueAtTime(0, audioCtx.currentTime);
+        engineOsc.connect(engineGain);
+        engineGain.connect(audioCtx.destination);
+        engineOsc.start();
+      } catch (e) {
+        console.warn('Web Audio not supported', e);
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
     }
   }
 

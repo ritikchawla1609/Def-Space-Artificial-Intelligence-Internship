@@ -201,6 +201,10 @@
   }
 
   function loadImageFromFile(file) {
+    if (!file || (file.type && !file.type.startsWith('image/'))) {
+      alert('Please select a valid image file (JPEG, PNG, WebP).');
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (event) => {
       const img = new Image();
@@ -209,7 +213,13 @@
         resetTransforms();
         processAndRender();
       };
+      img.onerror = () => {
+        alert('Failed to decode image. The file may be corrupted.');
+      };
       img.src = event.target.result;
+    };
+    reader.onerror = () => {
+      alert('Error reading the selected image file.');
     };
     reader.readAsDataURL(file);
   }
@@ -517,7 +527,11 @@
       signature: { width: Math.round(width * 0.9), height: Math.round(height * 0.4), cm: 'Custom Sign', maxKb: Math.round(maxKb * 0.4), minKb: 5, notes: 'Custom signature size' }
     };
 
-    localStorage.setItem('formPhoto_customPresets', JSON.stringify(customPresets));
+    try {
+      localStorage.setItem('formPhoto_customPresets', JSON.stringify(customPresets));
+    } catch (e) {
+      console.warn('Could not save custom presets to localStorage:', e);
+    }
 
     // Add option to dropdown
     const opt = document.createElement('option');

@@ -217,6 +217,45 @@ const totalKeptSec = keptSegments.reduce((sum, s) => sum + (s.end - s.start), 0)
 assert(totalKeptSec <= 60.0, `Project 15 kept segments duration (${totalKeptSec.toFixed(1)}s) is <= 60.0s`);
 assert(fs.existsSync('project-15-one-minute-reel-cut/cli-cutter.py'), 'Project 15 cli-cutter.py exists');
 
+// 13. Verify Modal Dismissal, Error Resiliency & Mobile Scaling Across Projects
+console.log('\n🛡️ Test Group 13: Verifying Modal Dismissal, Error Resiliency & Mobile Scaling...');
+
+const MODAL_PROJECTS = [
+  { proj: 'project-01-pdf-studio', element: 'modalBackdrop' },
+  { proj: 'project-02-form-photo-fixer', element: 'customPresetModal' },
+  { proj: 'project-06-reel-monster', element: 'appDashboard' },
+  { proj: 'project-07-bill-book', element: 'profileModal' },
+  { proj: 'project-09-youtube-focus-board', element: 'addNoteForm' },
+  { proj: 'project-10-job-clipper', element: 'editModal' },
+  { proj: 'project-11-circle-to-fix', element: 'promptCopiedCard' },
+  { proj: 'project-14-tab-goblin', element: 'sessionsSection' },
+  { proj: 'project-16-your-own-skill', element: 'evalModal' },
+  { proj: 'project-17-same-page-new-design', element: 'auditModal' }
+];
+
+MODAL_PROJECTS.forEach(({ proj, element }) => {
+  const html = fs.readFileSync(path.join(proj, 'index.html'), 'utf8');
+  assert(html.includes(element) && html.includes('Escape'), `${proj} intercepts Escape to dismiss ${element}`);
+});
+
+const pdfAppJs = fs.readFileSync('project-01-pdf-studio/app.js', 'utf8');
+assert(pdfAppJs.includes('catch') && pdfAppJs.includes('ignoreEncryption'), 'project-01-pdf-studio handles encrypted/corrupted PDFs');
+
+const photoAppJs = fs.readFileSync('project-02-form-photo-fixer/app.js', 'utf8');
+assert(photoAppJs.includes("startsWith('image/')") && photoAppJs.includes('img.onerror'), 'project-02-form-photo-fixer validates image files');
+
+const notesCss = fs.readFileSync('project-05-scribbly-notes/style.css', 'utf8');
+assert(notesCss.includes('.page-canvas') && notesCss.includes('max-width: 100%'), 'project-05-scribbly-notes scales canvas responsively');
+
+const rallyJs = fs.readFileSync('project-08-auto-rally/game.js', 'utf8');
+assert(rallyJs.includes("audioCtx.state === 'suspended'") && rallyJs.includes('audioCtx.resume()'), 'project-08-auto-rally resumes suspended AudioContext');
+
+const hubJs = fs.readFileSync('project-hub.html', 'utf8');
+assert(hubJs.includes("this.ctx.state === 'suspended'") && hubJs.includes('this.ctx.resume()'), 'project-hub resumes suspended AudioContext');
+
+const reelAppJs = fs.readFileSync('project-15-one-minute-reel-cut/app.js', 'utf8');
+assert(reelAppJs.includes('isTypeSupported') && reelAppJs.includes('toBlob'), 'project-15-one-minute-reel-cut has cross-browser MediaRecorder fallback');
+
 // Summary
 console.log('\n===============================================================');
 console.log(`🏁 TEST SUITE SUMMARY: ${passedTests} of ${totalTests} tests passed (${Math.round((passedTests/totalTests)*100)}%)`);

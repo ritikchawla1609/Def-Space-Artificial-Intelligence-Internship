@@ -129,7 +129,10 @@
 
       <!-- Prompt Copied Card (Matching PDF Page 13) -->
       <div class="prompt-copied-card" id="promptCopiedCard">
-        <div class="prompt-copied-header">Prompt copied ✓</div>
+        <div class="prompt-copied-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Prompt copied ✓</span>
+          <button id="btnClosePromptCard" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 14px; padding: 0 4px; line-height: 1;" title="Dismiss (Esc)">✕</button>
+        </div>
         <div class="prompt-copied-body" id="promptCopiedBody">
           Fix button.buy in .card: text overflows on phone. Screenshot attached.
         </div>
@@ -289,11 +292,24 @@
   </script>
 
   <script>
+    const btnClosePromptCard = document.getElementById('btnClosePromptCard');
+    if (btnClosePromptCard) {
+      btnClosePromptCard.addEventListener('click', () => {
+        promptCard.style.display = 'none';
+      });
+    }
+
     // Global shortcut to return to Project Hub (Press H or Esc when outside input fields)
     window.addEventListener("keydown", (e) => {
       const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
       const isInput = tag === "input" || tag === "textarea" || (document.activeElement && document.activeElement.isContentEditable);
-      if (!isInput && (e.key === "h" || e.key === "H" || e.key === "Escape")) {
+      if (isInput) return;
+      const card = document.getElementById('promptCopiedCard');
+      if (e.key === "Escape" && card && card.style.display !== "none") {
+        card.style.display = "none";
+        return;
+      }
+      if (e.key === "h" || e.key === "H" || e.key === "Escape") {
         window.location.href = "../project-hub.html";
       }
     });
