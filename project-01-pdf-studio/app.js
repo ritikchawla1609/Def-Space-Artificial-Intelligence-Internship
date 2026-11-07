@@ -60,44 +60,44 @@
       { id: 'split', label: 'Split PDF', icon: '✂', desc: 'Extract page ranges' },
       { id: 'reorder', label: 'Reorder', icon: '⇅', desc: 'Move page position' },
       { id: 'rotate', label: 'Rotate 90°', icon: '↻', desc: 'Rotate current page' },
-      { id: 'delete', label: 'Delete Page', icon: '🗑', desc: 'Remove current page' },
+      { id: 'delete', label: 'Delete Page', icon: '×', desc: 'Remove current page' },
       { id: 'duplicate', label: 'Duplicate', icon: '⎘', desc: 'Duplicate current page' },
       { id: 'extract', label: 'Extract Pages', icon: '⤓', desc: 'Save page to new PDF' },
-      { id: 'blank', label: 'Insert Blank', icon: '📄', desc: 'Add empty A4 page' },
+      { id: 'blank', label: 'Insert Blank', icon: '+', desc: 'Add empty A4 page' },
       { id: 'crop', label: 'Crop Page', icon: '⊡', desc: 'Trim page margins' }
     ],
     edit: [
       { id: 'add_text', label: 'Add Text', icon: 'T', desc: 'Type text onto page' },
-      { id: 'add_image', label: 'Add Image', icon: '🖼', desc: 'Insert PNG/JPG' },
+      { id: 'add_image', label: 'Add Image', icon: '◫', desc: 'Insert PNG/JPG' },
       { id: 'highlight', label: 'Highlight', icon: '✎', desc: 'Yellow text highlighter' },
       { id: 'draw', label: 'Draw', icon: '✏', desc: 'Freehand pen' },
       { id: 'shapes', label: 'Shapes', icon: '▭', desc: 'Draw rectangle or circle' },
       { id: 'whiteout', label: 'Whiteout', icon: '◻', desc: 'Cover area with white' },
       { id: 'redact', label: 'Redact', icon: '⬛', desc: 'Permanently remove text & graphics' },
       { id: 'sign', label: 'Sign', icon: '✍', desc: 'Draw and place signature' },
-      { id: 'forms', label: 'Fill Forms', icon: '📝', desc: 'Fill form fields' }
+      { id: 'forms', label: 'Fill Forms', icon: '✎', desc: 'Fill form fields' }
     ],
     stamp: [
-      { id: 'watermark', label: 'Watermark', icon: '🖹', desc: 'Diagonal DRAFT / Custom stamp' },
+      { id: 'watermark', label: 'Watermark', icon: 'W', desc: 'Diagonal DRAFT / Custom stamp' },
       { id: 'page_numbers', label: 'Page Numbers', icon: '#', desc: 'Add Page X of Y numbering' },
       { id: 'header_footer', label: 'Header & Footer', icon: '⬒', desc: 'Top/bottom margin text' },
-      { id: 'date_stamp', label: 'Date Stamp', icon: '📅', desc: 'Stamp current date & time' }
+      { id: 'date_stamp', label: 'Date Stamp', icon: 'D', desc: 'Stamp current date & time' }
     ],
     convert: [
-      { id: 'images_to_pdf', label: 'Images to PDF', icon: '🖼→📄', desc: 'Bundle images into PDF' },
-      { id: 'pdf_to_images', label: 'PDF to Images', icon: '📄→🖼', desc: 'Extract pages as PNGs' },
-      { id: 'pdf_to_text', label: 'PDF to Text', icon: '📄→🔤', desc: 'Extract selectable text' }
+      { id: 'images_to_pdf', label: 'Images to PDF', icon: 'IMG→PDF', desc: 'Bundle images into PDF' },
+      { id: 'pdf_to_images', label: 'PDF to Images', icon: 'PDF→IMG', desc: 'Extract pages as PNGs' },
+      { id: 'pdf_to_text', label: 'PDF to Text', icon: 'PDF→TXT', desc: 'Extract selectable text' }
     ],
     finish: [
-      { id: 'compress', label: 'Compress', icon: '🗜', desc: 'Reduce file size (Before & After)' },
+      { id: 'compress', label: 'Compress', icon: '⇣', desc: 'Reduce file size (Before & After)' },
       { id: 'edit_details', label: 'Edit Details', icon: 'ℹ', desc: 'Title, Author, Metadata' },
       { id: 'remove_details', label: 'Remove Details', icon: '⊘', desc: 'Strip all metadata' },
       { id: 'compare', label: 'Compare Two PDFs', icon: '⚖', desc: 'Visual side-by-side diff' }
     ],
     advanced: [
-      { id: 'password_lock', label: 'Password Lock', icon: '🔒', desc: 'Encrypt document' },
-      { id: 'ocr_scan', label: 'OCR Scanned Pages', icon: '🔍', desc: 'Optical character recognizer' },
-      { id: 'gen_50_pages', label: 'Create 50-Page PDF', icon: '📚', desc: 'Generate 50-page test suite' }
+      { id: 'password_lock', label: 'Password Lock', icon: 'Lock', desc: 'Encrypt document' },
+      { id: 'ocr_scan', label: 'OCR Scanned Pages', icon: 'OCR', desc: 'Optical character recognizer' },
+      { id: 'gen_50_pages', label: 'Create 50-Page PDF', icon: '50p', desc: 'Generate 50-page test suite' }
     ]
   };
 

@@ -240,7 +240,7 @@
       ` : ''}
 
       <button id="ctfCopyPromptBtn" style="background:#10b981; color:#fff; border:none; padding:10px; border-radius:6px; font-weight:700; cursor:pointer; font-size:13px;">
-        Copy Prompt for AI Agent 📋
+        Copy Fix Prompt
       </button>
       <div id="ctfCopySuccess" style="display:none; color:#34d399; font-size:11.5px; text-align:center; font-weight:600;">
         ✓ Prompt copied! Paste directly into your AI coding agent chat.

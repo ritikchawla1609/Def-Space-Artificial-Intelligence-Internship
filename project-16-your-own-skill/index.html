@@ -171,7 +171,7 @@
   <header>
     <div class="brand">
       <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
-      <span>⚡</span> Antigravity Custom Skill Runner
+      Antigravity Agent Skill Runner
     </div>
     <div style="font-size: 12px; color: #10b981;">● Skill Execution Environment Ready</div>
   </header>
@@ -238,7 +238,7 @@ Q2. Why can no engine beat Carnot efficiency?</div>
   <div class="eval-modal-backdrop" id="evalModal" style="display: none;">
     <div class="eval-modal-card">
       <div class="eval-modal-head">
-        <h2><span>📊</span> Comparative Evaluation: Custom Skill vs Raw Prompting</h2>
+        <h2>Comparative Evaluation: Custom Skill vs Raw Prompting</h2>
         <div style="display: flex; gap: 8px; align-items: center;">
           <a href="comparative-evaluation.md" target="_blank" class="btn-quick-test" style="text-decoration: none;">Open .md File ↗</a>
           <button class="btn-quick-test" id="btnCloseEvalModal" style="font-size: 14px; padding: 4px 8px;">✕</button>
@@ -252,10 +252,10 @@ Q2. Why can no engine beat Carnot efficiency?</div>
 
         <!-- Section 1 -->
         <div class="eval-section">
-          <h3><span>🎓</span> 1. Oral Defense Viva Voce (`/viva thermo-notes.pdf`)</h3>
+          <h3>1. Oral Defense Viva Voce (`/viva thermo-notes.pdf`)</h3>
           <div class="eval-grid">
             <div class="eval-col-before">
-              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div class="eval-col-title">Raw Prompting (Baseline)</div>
               <div>• Dumps all 5 questions simultaneously in a giant numbered wall of text.</div>
               <div>• Fails to wait for student responses before revealing answers.</div>
               <div>• Gives superficial "Good job!" or "Incorrect" without probing physical laws.</div>
@@ -278,10 +278,10 @@ Score: 3/5. Revise page 14 on Carnot Limits.</div>
 
         <!-- Section 2 -->
         <div class="eval-section">
-          <h3><span>🔥</span> 2. Resume Critique &amp; Job Alignment (`/resume-roast`)</h3>
+          <h3>2. Resume Critique &amp; Job Alignment (`/resume-roast`)</h3>
           <div class="eval-grid">
             <div class="eval-col-before">
-              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div class="eval-col-title">Raw Prompting (Baseline)</div>
               <div>• Excessive sycophantic praise ("Great resume! Outstanding background!").</div>
               <div>• Vague advice: "Consider expanding on your technical achievements."</div>
               <div>• Misses that key job requirements (Docker, Kubernetes) are 100% absent.</div>
@@ -302,10 +302,10 @@ Score: 3/5. Revise page 14 on Carnot Limits.</div>
 
         <!-- Section 3 -->
         <div class="eval-section">
-          <h3><span>⚡</span> 3. Quick Revision Cheat Sheet (`/one-page-revision`)</h3>
+          <h3>3. Quick Revision Cheat Sheet (`/one-page-revision`)</h3>
           <div class="eval-grid">
             <div class="eval-col-before">
-              <div class="eval-col-title">❌ Raw Prompting (Without Skill)</div>
+              <div class="eval-col-title">Raw Prompting (Baseline)</div>
               <div>• Generates 8 pages of verbose repetitive paragraphs.</div>
               <div>• Fails to distinguish between fundamental laws and trivial details.</div>
             </div>
@@ -313,7 +313,7 @@ Score: 3/5. Revise page 14 on Carnot Limits.</div>
               <div class="eval-col-title">✅ Custom Skill (`/one-page-revision`)</div>
               <div>• Compresses entire chapter into a single high-density structured cheat sheet.</div>
               <div>• Formatted ASCII gate diagrams, formula matrices, and rapid-recall traps.</div>
-              <div class="eval-code-box">=== ⚡ ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===
+              <div class="eval-code-box">=== ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===
 1. State: |psi&gt; = alpha|0&gt; + beta|1&gt; (|alpha|^2 + |beta|^2 = 1)
 2. Bell State: |Phi+&gt; = (1/sqrt(2)) * (|00&gt; + |11&gt;)
 3. Critical Trap: No-Cloning Theorem forbids copying arbitrary unknown quantum states!</div>
@@ -364,7 +364,7 @@ Score: 3/5. Revise page 14 on Carnot Limits.</div>
         document.getElementById('btnSkillRevision').classList.add('active');
         term.innerHTML = `
           <div class="term-user-prompt">&gt; /one-page-revision quantum-chapter.txt</div>
-          <div class="term-agent-response">=== ⚡ ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===\n\n1. Core Formula: |psi&gt; = alpha|0&gt; + beta|1&gt;, where |alpha|^2 + |beta|^2 = 1\n2. Entangled Bell State: |Phi+&gt; = (1/sqrt(2)) * (|00&gt; + |11&gt;)\n3. Critical Trap: The No-Cloning Theorem forbids copying arbitrary unknown quantum states!\n4. Gates: H (Superposition), X (NOT), CNOT (Entanglement)</div>
+          <div class="term-agent-response">=== ONE-PAGE CHEAT SHEET: QUANTUM COMPUTING ===\n\n1. Core Formula: |psi&gt; = alpha|0&gt; + beta|1&gt;, where |alpha|^2 + |beta|^2 = 1\n2. Entangled Bell State: |Phi+&gt; = (1/sqrt(2)) * (|00&gt; + |11&gt;)\n3. Critical Trap: The No-Cloning Theorem forbids copying arbitrary unknown quantum states!\n4. Gates: H (Superposition), X (NOT), CNOT (Entanglement)</div>
         `;
       }
     }

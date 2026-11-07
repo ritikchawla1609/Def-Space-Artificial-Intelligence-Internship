@@ -9,7 +9,7 @@
 
 ---
 
-## 🌟 Executive Summary
+## Executive Summary
 
 This repository contains the complete, production-grade implementation of all **17 required projects** outlined in the official Bharat Space Education Research Centre Week 2 curriculum. 
 
@@ -22,7 +22,7 @@ Every single project has been developed with uncompromising attention to visual 
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### 1. Launch the Project Hub
 You can launch the entire project portfolio using any local HTTP server:
@@ -42,7 +42,7 @@ npx serve . -l 8080
 ```
 
 Once running, navigate to:
-👉 **`http://localhost:8080/project-hub.html`** (or `http://localhost:8080/` / [`project-hub.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/project-hub.html) directly in any modern browser).
+**`http://localhost:8080/project-hub.html`** (or `http://localhost:8080/` / [`project-hub.html`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/project-hub.html) directly in any modern browser).
 
 ### 2. Verify 100% Offline Capability
 1. Disconnect your computer from Wi-Fi or enable Airplane Mode.
@@ -51,7 +51,7 @@ Once running, navigate to:
 
 ---
 
-## 📂 Repository Directory Layout (Strictly 17 Self-Contained Project Folders)
+## Repository Structure (17 Self-Contained Project Directories)
 
 ```text
 INTERSHIP WEEK2/
@@ -100,7 +100,7 @@ INTERSHIP WEEK2/
 
 ---
 
-## 🧩 Section-by-Section Project Catalog
+## Project Catalog
 
 ### Section A: Web Tools
 
@@ -278,7 +278,7 @@ INTERSHIP WEEK2/
 
 ---
 
-## 🛠️ How to Install Chrome Extensions (Projects 9 to 14)
+## Chrome Extension Setup (Projects 09 to 14)
 
 Follow these steps to load any of the 6 Chrome extensions in Google Chrome:
 
@@ -297,11 +297,11 @@ Follow these steps to load any of the 6 Chrome extensions in Google Chrome:
    - `project-14-tab-goblin/`
 5. The extension will appear in your Chrome toolbar. Click its icon to open the popup.
 
-> **💡 Instant Simulator Alternative:** If you do not have Chrome or prefer immediate browser testing, simply open `index.html` inside any of the extension folders (or click *"Open Testbed"* on the Master Showcase). Each extension includes a complete Web Testbed Simulator that mocks Chrome extension APIs.
+> **Web Testbed Alternative:** If you do not have Chrome or prefer immediate browser testing, simply open `index.html` inside any of the extension folders (or click *"Open Testbed"* on the Master Showcase). Each extension includes a complete Web Testbed Simulator that mocks Chrome extension APIs.
 
 ---
 
-## 📱 How to Install & Test Phone Apps (PWAs 6, 7, 8)
+## Progressive Web App Setup (Projects 06, 07, 08)
 
 Projects 6 (*Reel Monster*), 7 (*Bill Book*), and 8 (*Auto Rally*) are built as installable Progressive Web Apps.
 
@@ -317,33 +317,33 @@ Projects 6 (*Reel Monster*), 7 (*Bill Book*), and 8 (*Auto Rally*) are built as 
 
 ---
 
-## 🧪 Verification Matrix & Compliance Audit
+## Verification Matrix
 
 All requirements from the official curriculum PDF have been validated and signed off in each project's dedicated `verification.md` file:
 
 | # | Project Name | Section | Difficulty | "Done When" Verification Status | Offline Status |
 |---|---|---|---|---|---|
-| **01** | **PDF Studio** | A: Web Tools | Tough | ✅ **PASS:** 50-page edit, unsearchable redaction, byte compress | 100% Offline |
-| **02** | **Form Photo Fixer** | A: Web Tools | Medium | ✅ **PASS:** UPSC/SSC/GATE rules, binary search KB gauge | 100% Offline |
-| **03** | **Resume Builder** | A: Web Tools | Medium | ✅ **PASS:** A4 pagination, selectable copyable PDF, JSON restore | 100% Offline |
-| **04** | **CBT Mock Test Engine** | A: Web Tools | Tough | ✅ **PASS:** Timer survives refresh, hand score math, 2nd JSON | 100% Offline |
-| **05** | **Scribbly Notes** | A: Web Tools | Medium | ✅ **PASS:** 3-page split without cut lines, bundled fonts | 100% Offline |
-| **06** | **Reel Monster** | B: Phone Apps | Med/Tough | ✅ **PASS:** PWA installs, overlay stays on top, survives reboot | 100% Offline |
-| **07** | **Bill Book** | B: Phone Apps | Medium | ✅ **PASS:** 5 bills hand math, ₹4860 tally, flight mode UPI QR | 100% Offline |
-| **08** | **Auto Rally** | B: Phone Apps | Tough | ✅ **PASS:** 3-lap timer, localStorage best time, synthesized SFX | 100% Offline |
-| **09** | **YouTube Focus Board**| C: Extensions | Medium | ✅ **PASS:** Hide Shorts/recs, timestamp jump, 60m session gate | 100% Offline |
-| **10** | **Job Clipper** | C: Extensions | Medium | ✅ **PASS:** Works on 3 boards, Kanban drag/drop, CSV opens | 100% Offline |
-| **11** | **Circle to Fix** | C: Extensions | Tough | ✅ **PASS:** Alt+Shift+C, element code snippet + note prompt | 100% Offline |
-| **12** | **Chat Saver** | C: Extensions | Medium | ✅ **PASS:** 50+ msgs, code runnable, tables preserved, PDF/MD | 100% Offline |
-| **13** | **Style Spy** | C: Extensions | Medium | ✅ **PASS:** Ranked colors, font computed styles, CSS variables | 100% Offline |
-| **14** | **Tab Goblin** | C: Extensions | Medium | ✅ **PASS:** 30+ tabs smooth, form protection Keep list, discard | 100% Offline |
-| **15** | **One-Minute Reel Cut** | D: Video/Skills | Tough | ✅ **PASS:** <=60s reel, 20 lines caption hand check, 9:16 crop | 100% Offline |
-| **16** | **Your Own Skill** | D: Video/Skills | Medium | ✅ **PASS:** Fresh session starts, 3 inputs tested, comparative report | 100% Offline |
-| **17** | **Same Page New Design**| D: Video/Skills | Medium | ✅ **PASS:** Words match 100%, mobile responsive, 5 design reasons | 100% Offline |
+| **01** | **PDF Studio** | A: Web Tools | Tough | [PASS] 50-page edit, unsearchable redaction, byte compress | 100% Offline |
+| **02** | **Form Photo Fixer** | A: Web Tools | Medium | [PASS] UPSC/SSC/GATE rules, binary search KB gauge | 100% Offline |
+| **03** | **Resume Builder** | A: Web Tools | Medium | [PASS] A4 pagination, selectable copyable PDF, JSON restore | 100% Offline |
+| **04** | **CBT Mock Test Engine** | A: Web Tools | Tough | [PASS] Timer survives refresh, hand score math, 2nd JSON | 100% Offline |
+| **05** | **Scribbly Notes** | A: Web Tools | Medium | [PASS] 3-page split without cut lines, bundled fonts | 100% Offline |
+| **06** | **Reel Monster** | B: Phone Apps | Med/Tough | [PASS] PWA installs, overlay stays on top, survives reboot | 100% Offline |
+| **07** | **Bill Book** | B: Phone Apps | Medium | [PASS] 5 bills hand math, ₹4860 tally, flight mode UPI QR | 100% Offline |
+| **08** | **Auto Rally** | B: Phone Apps | Tough | [PASS] 3-lap timer, localStorage best time, synthesized SFX | 100% Offline |
+| **09** | **YouTube Focus Board**| C: Extensions | Medium | [PASS] Hide Shorts/recs, timestamp jump, 60m session gate | 100% Offline |
+| **10** | **Job Clipper** | C: Extensions | Medium | [PASS] Works on 3 boards, Kanban drag/drop, CSV opens | 100% Offline |
+| **11** | **Circle to Fix** | C: Extensions | Tough | [PASS] Alt+Shift+C, element code snippet + note prompt | 100% Offline |
+| **12** | **Chat Saver** | C: Extensions | Medium | [PASS] 50+ msgs, code runnable, tables preserved, PDF/MD | 100% Offline |
+| **13** | **Style Spy** | C: Extensions | Medium | [PASS] Ranked colors, font computed styles, CSS variables | 100% Offline |
+| **14** | **Tab Goblin** | C: Extensions | Medium | [PASS] 30+ tabs smooth, form protection Keep list, discard | 100% Offline |
+| **15** | **One-Minute Reel Cut** | D: Video/Skills | Tough | [PASS] <=60s reel, 20 lines caption hand check, 9:16 crop | 100% Offline |
+| **16** | **Your Own Skill** | D: Video/Skills | Medium | [PASS] Fresh session starts, 3 inputs tested, comparative report | 100% Offline |
+| **17** | **Same Page New Design**| D: Video/Skills | Medium | [PASS] Words match 100%, mobile responsive, 5 design reasons | 100% Offline |
 
 ---
 
-## 📝 Development Prompts Log
+## Development Trajectory & Prompts
 
 The complete record of engineering prompts, architectural specifications, edge-case hardening, and verification steps is preserved in [`prompts.md`](file:///Users/ritikchawla/Desktop/INTERSHIP%20WEEK2/prompts.md). 
 
@@ -355,11 +355,11 @@ It documents the step-by-step reasoning behind:
 
 ---
 
-## 🏆 Submission Sign-Off
+## Submission Sign-Off
 
 * **Organization:** Bharat Space Education Research Centre
 * **Track:** GenAI Internship — Week 2
 * **Instructor:** Karan Bagul
 * **Lead Engineer:** Ritik Chawla
 * **Date of Completion:** November 5, 2026
-* **Verification Outcome:** 17 of 17 Projects Completed, Verified & Production Ready 🚀
+* **Verification Outcome:** 17 of 17 Projects Completed, Verified & Production Ready

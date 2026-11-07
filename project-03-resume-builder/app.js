@@ -431,10 +431,10 @@
 
         <div class="exec-side-block">
           <div class="exec-side-heading">Contact</div>
-          <div class="exec-contact-item">📧 ${personal.email}</div>
-          <div class="exec-contact-item">📞 ${personal.phone}</div>
-          <div class="exec-contact-item">🔗 ${personal.linkedin}</div>
-          <div class="exec-contact-item">💻 ${personal.github}</div>
+          <div class="exec-contact-item">Email: ${personal.email}</div>
+          <div class="exec-contact-item">Phone: ${personal.phone}</div>
+          <div class="exec-contact-item">LinkedIn: ${personal.linkedin}</div>
+          <div class="exec-contact-item">GitHub: ${personal.github}</div>
         </div>
 
         <div class="exec-side-block">

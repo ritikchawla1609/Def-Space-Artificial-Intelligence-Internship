@@ -4,24 +4,24 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 Fast-paced HTML5 Canvas auto-rickshaw racing game featuring pseudo-3D curved highways, Indian roadside obstacles, and procedural Web Audio sound synthesis.
 
-## 🛠️ Key Features
+## Key Features
 - **2.5D Curved Road Engine:** Smooth pseudo-3D parallax road rendering with roadside scenery.
 - **Dual Control Scheme:** Keyboard (Arrow keys / WASD, Space for Nitro, H for Horn) and mobile touch buttons.
 - **Indian Road Obstacles:** Holy cows, potholes, slow taxis, and heavy trucks; collect gold coins and Chai Nitro Boosts.
 - **Synthesized Web Audio SFX:** 100% procedural audio (auto-rickshaw two-stroke engine hum, twin-tone "Pom Pom" horn, coin chime, crash) with mute toggle.
 - **3-Lap Championship:** Lap timer with personal best lap record saved to `localStorage`.
 
-## 🚀 How to Run
+## Execution & Setup
 Open `index.html` directly in any browser:
 ```bash
 python3 -m http.server 8080
 ```
 Navigate to `http://localhost:8080/project-08-auto-rally/`.
 
-## ✅ "Done When" Verification
+## Verification & Acceptance Criteria
 - [x] Full race plays smoothly on phone in flight mode with 60 FPS canvas performance.
 - [x] Player finishes race without instructions thanks to clear HUD cues and responsive steering.
 - [x] Collision hitboxes feel fair and rewarding; high score persists across page reloads.

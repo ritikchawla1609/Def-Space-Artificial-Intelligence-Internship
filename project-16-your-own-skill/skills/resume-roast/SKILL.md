@@ -21,7 +21,7 @@ Cut through generic resume filler. Provides blunt, actionable feedback by cross-
 > /resume-roast my-resume.pdf target-job.txt
 ROAST VERDICT: 52% MATCH (Candidate sounds like an observer, not an engineer)
 
-🚨 Biggest Blunders:
+Critical Issues:
 1. "Worked on machine learning models for internal teams."
    Who cares? Did it speed up anything? Did anyone use it?
    Fix: "Fine-tuned Llama-3 8B with LoRA on 120k domain samples, cutting latency by 34%."

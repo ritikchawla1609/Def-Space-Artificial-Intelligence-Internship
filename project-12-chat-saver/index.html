@@ -67,13 +67,13 @@
       <div class="chat-body" id="chatMessageStream">
         <!-- Message 1: User -->
         <div class="msg-bubble msg-user">
-          <strong>👤 You</strong>
+          <strong>User</strong>
           <p>Explain RAG simply with code and architecture table.</p>
         </div>
 
         <!-- Message 2: Assistant -->
         <div class="msg-bubble msg-assistant">
-          <strong style="color: #10b981;">🤖 Assistant</strong>
+          <strong style="color: #10b981;">Assistant</strong>
           <h3>Retrieval-Augmented Generation (RAG)</h3>
           <p style="color: #cbd5e1; line-height: 1.5;">
             RAG bridges real-time external knowledge bases into LLM contexts without expensive retraining.
@@ -105,7 +105,7 @@ print(retrieve("What is RAG?", docs))</code></pre>
     <aside class="ext-widget-frame">
       <div class="popup-box">
         <header class="card-header">
-          <span class="icon">💬</span>
+          <span class="icon">Export</span>
           <span class="title">Save this chat</span>
         </header>
 
@@ -159,7 +159,7 @@ print(retrieve("What is RAG?", docs))</code></pre>
           ? `Question ${i}: Can you explain step ${i} of the thermodynamic propulsion cycle?`
           : `Step ${i}: At state point ${i}, the working fluid undergoes isentropic expansion. Temperature drops to T_${i}.`;
 
-        msgDiv.innerHTML = `<strong>${isUser ? '👤 You' : '🤖 Assistant'}</strong><p>${text}</p>`;
+        msgDiv.innerHTML = `<strong>${isUser ? 'User' : 'Assistant'}</strong><p>${text}</p>`;
         stream.appendChild(msgDiv);
         dummyMessages.push({ role: isUser ? 'user' : 'assistant', text: text });
       }

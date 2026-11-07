@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Hub — All 17 Production-Grade Projects Portfolio</title>
+  <title>Project Hub — 17 Engineering Projects Directory</title>
   <style>
     :root {
-      --bg-dark: #060911;
-      --bg-card: rgba(15, 23, 42, 0.75);
-      --bg-card-hover: rgba(30, 41, 59, 0.9);
+      --bg-dark: #080c15;
+      --bg-surface: #0f1626;
+      --bg-surface-elevated: #152035;
+      --bg-card: rgba(15, 23, 42, 0.7);
+      --bg-card-hover: rgba(26, 38, 66, 0.85);
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(99, 102, 241, 0.45);
+      --border-hover: rgba(99, 102, 241, 0.4);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      --text-subtle: #64748b;
       --accent-blue: #38bdf8;
       --accent-indigo: #6366f1;
-      --accent-purple: #a855f7;
+      --accent-primary: #4f46e5;
       --accent-green: #10b981;
       --accent-red: #ef4444;
       --accent-amber: #f59e0b;
-      --accent-pink: #ec4899;
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,9 +31,8 @@
       font-family: var(--font-family);
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 60%);
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
+        linear-gradient(to bottom, #090e18 0%, #060910 100%);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
@@ -40,7 +41,7 @@
       overflow-x: hidden;
     }
 
-    /* Ambient Background Canvas */
+    /* Subtle Ambient Canvas */
     #ambientCanvas {
       position: fixed;
       top: 0;
@@ -49,17 +50,17 @@
       height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.6;
+      opacity: 0.35;
     }
 
-    /* Top Sticky Brand Bar */
+    /* Top Sticky Navigation Bar */
     .top-brand-bar {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      background: rgba(6, 9, 17, 0.85);
+      background: rgba(8, 12, 21, 0.88);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -71,29 +72,29 @@
     .brand-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand-logo-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(79, 70, 229, 0.35);
     }
 
     .brand-title-wrap h1 {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
       color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .brand-title-wrap p {
@@ -105,112 +106,116 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       color: #34d399;
       font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
+      font-weight: 600;
+      padding: 2px 9px;
       border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .pulse-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulseGlow 2s infinite;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseGlow 2.5s infinite ease-in-out;
     }
 
     @keyframes pulseGlow {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+      50% { opacity: 0.45; transform: scale(0.85); }
     }
 
     .brand-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn-tool {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 8px;
+      padding: 6px 12px;
+      border-radius: 7px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       text-decoration: none;
     }
 
     .btn-tool:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
     }
 
     .btn-tool.active {
-      background: rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.5);
-      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.18);
+      border-color: rgba(99, 102, 241, 0.45);
+      color: #c7d2fe;
+    }
+
+    .btn-icon-svg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Hero Presentation */
     .hero-section {
       position: relative;
       z-index: 1;
-      max-width: 1300px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 48px 24px 32px;
+      padding: 44px 24px 28px;
       text-align: center;
     }
 
     .hero-badge-row {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
 
     .hero-pill {
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      color: #c7d2fe;
-      padding: 4px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: #cbd5e1;
+      padding: 4px 12px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 500;
     }
 
     .hero-title {
-      font-size: 46px;
-      font-weight: 900;
-      letter-spacing: -1.2px;
-      line-height: 1.15;
-      margin-bottom: 16px;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.9px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #ffffff;
     }
 
     .hero-title span {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f472b6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #818cf8;
     }
 
     .hero-subtitle {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--text-muted);
-      max-width: 780px;
-      margin: 0 auto 36px;
+      max-width: 760px;
+      margin: 0 auto 32px;
       line-height: 1.6;
     }
 
@@ -218,40 +223,37 @@
     .metrics-ribbon {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      max-width: 1050px;
+      gap: 14px;
+      max-width: 1040px;
       margin: 0 auto;
     }
 
     .metric-box {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 16px;
       text-align: center;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       backdrop-filter: blur(10px);
     }
 
     .metric-box:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(99, 102, 241, 0.3);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(99, 102, 241, 0.25);
     }
 
     .metric-num {
-      font-size: 28px;
-      font-weight: 800;
+      font-size: 26px;
+      font-weight: 700;
       color: #ffffff;
       line-height: 1;
       margin-bottom: 6px;
-      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
     }
 
     .metric-label {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-muted);
       font-weight: 500;
     }
@@ -260,27 +262,27 @@
     .controls-wrapper {
       position: relative;
       z-index: 2;
-      max-width: 1300px;
-      margin: 24px auto 0;
+      max-width: 1280px;
+      margin: 20px auto 0;
       padding: 0 24px;
     }
 
     .controls-card {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.65);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px 20px;
+      border-radius: 14px;
+      padding: 14px 18px;
       backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .controls-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
@@ -292,59 +294,60 @@
 
     .search-box input {
       width: 100%;
-      background: rgba(6, 9, 17, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
-      padding: 10px 42px 10px 38px;
+      background: rgba(6, 9, 17, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 9px 38px 9px 36px;
       color: #ffffff;
       font-size: 13px;
       outline: none;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
 
     .search-box input:focus {
       border-color: #6366f1;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
     }
 
     .search-icon {
       position: absolute;
-      left: 12px;
+      left: 11px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 14px;
+      color: var(--text-subtle);
+      display: flex;
+      align-items: center;
       pointer-events: none;
     }
 
     .shortcut-tag {
       position: absolute;
-      right: 12px;
+      right: 11px;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 4px;
-      padding: 2px 6px;
+      padding: 1px 5px;
       font-size: 10px;
       color: var(--text-muted);
-      font-weight: 700;
+      font-weight: 600;
       pointer-events: none;
     }
 
     .filter-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .filter-select {
-      background: rgba(6, 9, 17, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
+      background: rgba(6, 9, 17, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 7px;
       color: var(--text-main);
-      padding: 8px 12px;
+      padding: 7px 11px;
       font-size: 12px;
       outline: none;
       cursor: pointer;
@@ -356,26 +359,26 @@
 
     .view-toggles {
       display: flex;
-      background: rgba(6, 9, 17, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 3px;
-      gap: 3px;
+      background: rgba(6, 9, 17, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 7px;
+      padding: 2px;
+      gap: 2px;
     }
 
     .view-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
-      transition: all 0.2s ease;
+      gap: 6px;
+      transition: all 0.15s ease;
     }
 
     .view-btn:hover {
@@ -383,40 +386,39 @@
     }
 
     .view-btn.active {
-      background: rgba(99, 102, 241, 0.3);
+      background: rgba(99, 102, 241, 0.25);
       color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     /* Category Filter Tabs */
     .category-pills {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
       padding-bottom: 2px;
     }
 
     .cat-btn {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
 
     .cat-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.06);
       color: #ffffff;
     }
 
     .cat-btn.active {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(56, 189, 248, 0.3) 100%);
-      border-color: rgba(99, 102, 241, 0.6);
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
       color: #ffffff;
     }
 
@@ -424,35 +426,33 @@
     .showcase-container {
       position: relative;
       z-index: 1;
-      max-width: 1300px;
-      margin: 28px auto 80px;
+      max-width: 1280px;
+      margin: 24px auto 70px;
       padding: 0 24px;
     }
 
     /* Mode 1: Grid View */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
     }
 
     .project-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
       border-color: var(--border-hover);
-      box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       background: var(--bg-card-hover);
     }
 
@@ -460,18 +460,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .proj-badge-num {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #cbd5e1;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 10px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.4px;
     }
 
     .proj-tags-row {
@@ -481,107 +481,105 @@
     }
 
     .diff-tag {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 7px;
       border-radius: 4px;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    .diff-tough { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .diff-medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .diff-level { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .diff-tough { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
+    .diff-medium { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .diff-level { background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
 
     .card-section-label {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 600;
       color: #38bdf8;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .card-title {
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 18px;
+      font-weight: 700;
       color: #ffffff;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       line-height: 1.3;
     }
 
     .card-desc {
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 18px;
+      line-height: 1.55;
+      margin-bottom: 16px;
       flex-grow: 1;
     }
 
     .card-tech-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 20px;
+      gap: 5px;
+      margin-bottom: 18px;
     }
 
     .tech-chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       color: #94a3b8;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 500;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
     }
 
     .card-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
       padding-top: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .btn-action {
-      padding: 9px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 11.5px;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       text-align: center;
       border: none;
     }
 
     .btn-preview {
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      color: #c7d2fe;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
     }
 
     .btn-preview:hover {
-      background: rgba(99, 102, 241, 0.3);
+      background: rgba(255, 255, 255, 0.1);
       color: #ffffff;
-      border-color: rgba(99, 102, 241, 0.6);
-      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
     .btn-launch {
-      background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+      background: #4f46e5;
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
     }
 
     .btn-launch:hover {
-      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.5);
-      filter: brightness(1.1);
-      transform: translateY(-1px);
+      background: #4338ca;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
     }
 
     .btn-spec-link {
@@ -596,27 +594,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      transition: all 0.2s ease;
+      gap: 6px;
+      transition: all 0.15s ease;
     }
 
     .btn-spec-link:hover {
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.28);
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     /* Mode 2: Interactive Live Split-Workspace View */
     .workspace-view {
       display: none;
-      grid-template-columns: 320px 1fr;
-      gap: 20px;
-      min-height: 750px;
+      grid-template-columns: 300px 1fr;
+      gap: 16px;
+      min-height: 720px;
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     }
 
     .workspace-sidebar {
@@ -624,14 +622,14 @@
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      height: 750px;
+      height: 720px;
     }
 
     .workspace-sidebar-header {
-      padding: 16px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border-color);
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12.5px;
+      font-weight: 600;
       color: #ffffff;
       display: flex;
       justify-content: space-between;
@@ -641,38 +639,38 @@
     .workspace-list {
       flex: 1;
       overflow-y: auto;
-      padding: 8px;
+      padding: 6px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .ws-item {
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 9px 11px;
+      border-radius: 7px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 10px;
       transition: all 0.15s ease;
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.01);
       border: 1px solid transparent;
     }
 
     .ws-item:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .ws-item.active {
-      background: rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.5);
+      background: rgba(99, 102, 241, 0.18);
+      border-color: rgba(99, 102, 241, 0.45);
     }
 
     .ws-item-num {
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 10.5px;
+      font-weight: 700;
       color: #818cf8;
-      width: 24px;
+      width: 22px;
     }
 
     .ws-item-info {
@@ -681,8 +679,8 @@
     }
 
     .ws-item-title {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12.5px;
+      font-weight: 600;
       color: #ffffff;
       white-space: nowrap;
       overflow: hidden;
@@ -690,19 +688,19 @@
     }
 
     .ws-item-sub {
-      font-size: 10.5px;
+      font-size: 10px;
       color: var(--text-muted);
     }
 
     .workspace-stage {
       display: flex;
       flex-direction: column;
-      height: 750px;
+      height: 720px;
       background: #000000;
     }
 
     .stage-topbar {
-      height: 48px;
+      height: 44px;
       background: #0b0f19;
       border-bottom: 1px solid var(--border-color);
       display: flex;
@@ -713,8 +711,8 @@
     }
 
     .stage-title {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12.5px;
+      font-weight: 600;
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -723,7 +721,7 @@
 
     .device-switcher {
       display: flex;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 6px;
       padding: 2px;
       gap: 2px;
@@ -739,11 +737,12 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      transition: all 0.15s ease;
     }
 
     .device-btn.active {
-      background: #6366f1;
+      background: #4f46e5;
       color: #ffffff;
     }
 
@@ -761,22 +760,21 @@
       width: 100%;
       height: 100%;
       border: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
     }
 
-    /* Device Mockup Frames */
     .stage-iframe.mode-mobile {
       width: 390px;
-      height: 670px;
-      border-radius: 36px;
-      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+      height: 640px;
+      border-radius: 28px;
+      box-shadow: 0 0 0 8px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
     }
 
     .stage-iframe.mode-tablet {
       width: 768px;
-      height: 680px;
-      border-radius: 20px;
-      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+      height: 650px;
+      border-radius: 16px;
+      box-shadow: 0 0 0 8px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
     }
 
     /* Mode 3: Executive Table Matrix View */
@@ -784,7 +782,7 @@
       display: none;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
+      border-radius: 14px;
       overflow-x: auto;
       backdrop-filter: blur(14px);
     }
@@ -793,29 +791,29 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 13px;
+      font-size: 12.5px;
     }
 
     .matrix-table th {
       background: rgba(6, 9, 17, 0.9);
-      padding: 14px 18px;
-      font-weight: 700;
+      padding: 12px 16px;
+      font-weight: 600;
       color: #cbd5e1;
       border-bottom: 1px solid var(--border-color);
-      font-size: 11.5px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .matrix-table td {
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       color: #e2e8f0;
       vertical-align: middle;
     }
 
     .matrix-table tr:hover td {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     /* Live Interactive Preview Drawer / Modal */
@@ -825,7 +823,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(8px);
       z-index: 200;
       display: none;
@@ -843,28 +841,28 @@
       max-width: 1200px;
       height: 90vh;
       background: #090d16;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes modalPop {
-      0% { transform: scale(0.96); opacity: 0; }
+      0% { transform: scale(0.97); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
     .modal-bar {
-      height: 52px;
+      height: 48px;
       background: #0f172a;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 18px;
     }
 
     .modal-bar-left {
@@ -874,15 +872,15 @@
     }
 
     .modal-bar-title {
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 700;
       color: #ffffff;
     }
 
     .modal-bar-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .modal-iframe-stage {
@@ -898,33 +896,33 @@
       width: 100%;
       height: 100%;
       border: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
     }
 
     .modal-iframe.frame-mobile {
       width: 390px;
       height: 94%;
-      border-radius: 32px;
-      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+      border-radius: 28px;
+      box-shadow: 0 0 0 8px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
     }
 
     .modal-iframe.frame-tablet {
       width: 768px;
       height: 94%;
-      border-radius: 20px;
-      box-shadow: 0 0 0 10px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
+      border-radius: 16px;
+      box-shadow: 0 0 0 8px #1e293b, 0 20px 40px rgba(0,0,0,0.8);
     }
 
     /* Spec Inspector Drawer Modal */
     .spec-modal-box {
       width: 90%;
-      max-width: 680px;
+      max-width: 660px;
       background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 18px;
-      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 24px;
       color: #ffffff;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
       max-height: 85vh;
       overflow-y: auto;
     }
@@ -933,32 +931,34 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .spec-checklist {
       list-style: none;
-      margin: 16px 0;
+      margin: 14px 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .spec-checklist li {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 13.5px;
+      font-size: 13px;
       color: #cbd5e1;
       line-height: 1.5;
     }
 
     .check-ico {
       color: #10b981;
-      font-weight: 900;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
 
-    /* Sound notification toast */
+    /* Toast Notification */
     .toast-pill {
       position: fixed;
       bottom: 24px;
@@ -966,16 +966,19 @@
       background: rgba(15, 23, 42, 0.95);
       border: 1px solid rgba(99, 102, 241, 0.4);
       color: #ffffff;
-      padding: 10px 18px;
-      border-radius: 30px;
-      font-size: 12.5px;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: 9px 16px;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
       z-index: 300;
       opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.25s ease;
+      transform: translateY(8px);
+      transition: all 0.2s ease;
       pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .toast-pill.show {
@@ -987,30 +990,30 @@
     .hub-footer {
       border-top: 1px solid var(--border-color);
       background: rgba(6, 9, 17, 0.9);
-      padding: 40px 24px;
+      padding: 36px 24px;
       text-align: center;
       position: relative;
       z-index: 1;
     }
 
     .footer-content {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-top: 14px;
+      gap: 18px;
+      margin-top: 12px;
       flex-wrap: wrap;
     }
 
     .footer-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 13px;
-      transition: color 0.2s ease;
+      font-size: 12.5px;
+      transition: color 0.15s ease;
     }
 
     .footer-links a:hover {
@@ -1019,7 +1022,7 @@
 
     @media (max-width: 850px) {
       .top-brand-bar { padding: 12px 16px; }
-      .hero-title { font-size: 32px; }
+      .hero-title { font-size: 30px; }
       .projects-grid { grid-template-columns: 1fr; }
       .workspace-view { grid-template-columns: 1fr; }
       .workspace-sidebar { height: 260px; }
@@ -1033,21 +1036,35 @@
   <!-- Sticky Top Navigation -->
   <header class="top-brand-bar">
     <div class="brand-left">
-      <div class="brand-logo-badge">⚡</div>
+      <div class="brand-logo-badge">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+      </div>
       <div class="brand-title-wrap">
-        <h1>PROJECT HUB <span class="status-badge-live"><span class="pulse-dot"></span> 17 / 17 LIVE</span></h1>
-        <p>Bharat Space Education Research Centre · GenAI Internship Portfolio</p>
+        <h1>Project Hub <span class="status-badge-live"><span class="pulse-dot"></span> 17 Verified</span></h1>
+        <p>Bharat Space Education Research Centre · Engineering Portfolio</p>
       </div>
     </div>
     <div class="brand-right">
       <button id="btnSoundToggle" class="btn-tool" title="Toggle audio feedback (Hotkey: M)">
-        <span id="soundIcon">🔊</span> Sound: <span id="soundStatus">ON</span>
+        <span id="soundIcon" class="btn-icon-svg">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        </span>
+        <span>Audio: <span id="soundStatus">On</span></span>
       </button>
       <button id="btnHelpShortcuts" class="btn-tool" title="View keyboard shortcuts">
-        <span>⌨️</span> Shortcuts
+        <span class="btn-icon-svg">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg>
+        </span>
+        <span>Shortcuts</span>
       </button>
       <a href="README.md" class="btn-tool" title="Read Deployment Documentation">
-        <span>📖</span> Docs
+        <span class="btn-icon-svg">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </span>
+        <span>Docs</span>
       </a>
     </div>
   </header>
@@ -1056,35 +1073,35 @@
   <section class="hero-section">
     <div class="hero-badge-row">
       <span class="hero-pill">Bharat Space Education Research Centre</span>
-      <span class="hero-pill">Instructor: Karan Bagul</span>
+      <span class="hero-pill">Track: GenAI Internship</span>
       <span class="hero-pill">Engineer: Ritik Chawla</span>
     </div>
-    <h2 class="hero-title">The Master <span>Project Hub</span></h2>
+    <h2 class="hero-title">Engineering Project <span>Directory</span></h2>
     <p class="hero-subtitle">
-      Explore all 17 production-ready web tools, phone applications, browser extensions, and AI engineering workflows built with uncompromising quality, 100% offline capability, and commercial polish.
+      Comprehensive portfolio of 17 client-side applications, mobile PWAs, Chrome extensions, and developer tools built with 100% offline functionality and zero external runtime dependencies.
     </p>
 
     <!-- Metrics Ribbon -->
     <div class="metrics-ribbon">
       <div class="metric-box">
         <div class="metric-num">17 / 17</div>
-        <div class="metric-label">Completed Applications</div>
+        <div class="metric-label">Applications Verified</div>
       </div>
       <div class="metric-box">
         <div class="metric-num">100%</div>
-        <div class="metric-label">Offline First (Zero CDNs)</div>
+        <div class="metric-label">Offline Client Architecture</div>
       </div>
       <div class="metric-box">
-        <div class="metric-num">164 / 164</div>
-        <div class="metric-label">Automated Tests Passed</div>
+        <div class="metric-num">254</div>
+        <div class="metric-label">Regression Tests Passing</div>
       </div>
       <div class="metric-box">
         <div class="metric-num">4</div>
-        <div class="metric-label">Specialized Tracks</div>
+        <div class="metric-label">Curriculum Tracks</div>
       </div>
       <div class="metric-box">
         <div class="metric-num">0</div>
-        <div class="metric-label">External Paid APIs</div>
+        <div class="metric-label">External Dependencies</div>
       </div>
     </div>
   </section>
@@ -1094,8 +1111,10 @@
     <div class="controls-card">
       <div class="controls-top">
         <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" placeholder="Search 17 projects by name, technology, difficulty, or number..." autocomplete="off">
+          <span class="search-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input type="text" id="searchInput" placeholder="Search by name, technology, difficulty, or project number..." autocomplete="off">
           <span class="shortcut-tag">/</span>
         </div>
 
@@ -1115,13 +1134,16 @@
 
           <div class="view-toggles">
             <button id="btnViewGrid" class="view-btn active" title="Cards View (Press V to cycle)">
-              <span>🎴</span> Cards
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <span>Grid</span>
             </button>
             <button id="btnViewWorkspace" class="view-btn" title="Live Split Workspace View (Press V to cycle)">
-              <span>🖥️</span> Workspace
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+              <span>Split View</span>
             </button>
-            <button id="btnViewTable" class="view-btn" title="Executive Matrix Table (Press V to cycle)">
-              <span>📊</span> Matrix
+            <button id="btnViewTable" class="view-btn" title="Matrix Table (Press V to cycle)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+              <span>Table</span>
             </button>
           </div>
         </div>
@@ -1140,14 +1162,14 @@
 
   <!-- Showcase Presentation Container -->
   <main class="showcase-container">
-    <!-- View 1: 3D Cards Grid -->
+    <!-- View 1: Cards Grid -->
     <div id="gridContainer" class="projects-grid"></div>
 
     <!-- View 2: Live In-Hub Interactive Split-Workspace -->
     <div id="workspaceContainer" class="workspace-view">
       <aside class="workspace-sidebar">
         <div class="workspace-sidebar-header">
-          <span>Active Project Selector</span>
+          <span>Projects</span>
           <span id="wsCountBadge" style="font-size: 11px; color: #38bdf8;">17 Available</span>
         </div>
         <div class="workspace-list" id="workspaceList"></div>
@@ -1155,18 +1177,31 @@
       <div class="workspace-stage">
         <div class="stage-topbar">
           <div class="stage-title">
-            <span id="stageIcon">⚡</span>
             <span id="stageTitle">PDF Studio</span>
             <span id="stageSec" style="font-size: 11px; color: var(--text-muted);">(Section A)</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <div class="device-switcher">
-              <button class="device-btn active" data-device="desktop" title="Desktop fluid view">🖥️ Desktop</button>
-              <button class="device-btn" data-device="mobile" title="Simulate iPhone mobile view">📱 Mobile</button>
-              <button class="device-btn" data-device="tablet" title="Simulate iPad tablet view">📟 Tablet</button>
+              <button class="device-btn active" data-device="desktop" title="Desktop fluid view">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                <span>Desktop</span>
+              </button>
+              <button class="device-btn" data-device="mobile" title="Simulate iPhone mobile view">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                <span>Mobile</span>
+              </button>
+              <button class="device-btn" data-device="tablet" title="Simulate iPad tablet view">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                <span>Tablet</span>
+              </button>
             </div>
-            <button id="btnReloadStage" class="btn-tool" style="padding: 4px 8px; font-size: 11px;" title="Reload project frame">🔄</button>
-            <a id="btnStageOpenExt" href="#" target="_blank" class="btn-tool" style="padding: 4px 10px; font-size: 11px;" title="Open in new window">↗️ Full</a>
+            <button id="btnReloadStage" class="btn-tool" style="padding: 4px 8px; font-size: 11px;" title="Reload project frame">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            </button>
+            <a id="btnStageOpenExt" href="#" target="_blank" class="btn-tool" style="padding: 4px 10px; font-size: 11px;" title="Open in new window">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              <span>Full</span>
+            </a>
           </div>
         </div>
         <div class="stage-frame-container">
@@ -1175,17 +1210,17 @@
       </div>
     </div>
 
-    <!-- View 3: Executive Matrix Table -->
+    <!-- View 3: Matrix Table -->
     <div id="tableContainer" class="table-view">
       <table class="matrix-table">
         <thead>
           <tr>
             <th>#</th>
             <th>Project Title</th>
-            <th>Track / Section</th>
+            <th>Track</th>
             <th>Difficulty</th>
             <th>Tech Stack</th>
-            <th>Offline Status</th>
+            <th>Status</th>
             <th style="text-align: right;">Action</th>
           </tr>
         </thead>
@@ -1201,17 +1236,22 @@
         <div class="modal-bar-left">
           <span id="modalNumPill" class="proj-badge-num">Project 01</span>
           <span id="modalProjTitle" class="modal-bar-title">PDF Studio</span>
-          <span id="modalOfflineBadge" class="status-badge-live"><span class="pulse-dot"></span> Offline</span>
+          <span id="modalOfflineBadge" class="status-badge-live"><span class="pulse-dot"></span> Offline Ready</span>
         </div>
         <div class="modal-bar-right">
           <div class="device-switcher">
-            <button class="device-btn modal-device-btn active" data-device="desktop">🖥️ Desktop</button>
-            <button class="device-btn modal-device-btn" data-device="mobile">📱 Mobile</button>
-            <button class="device-btn modal-device-btn" data-device="tablet">📟 Tablet</button>
+            <button class="device-btn modal-device-btn active" data-device="desktop">Desktop</button>
+            <button class="device-btn modal-device-btn" data-device="mobile">Mobile</button>
+            <button class="device-btn modal-device-btn" data-device="tablet">Tablet</button>
           </div>
-          <button id="btnModalReload" class="btn-tool" title="Reload frame">🔄</button>
-          <a id="btnModalExternal" href="#" target="_blank" class="btn-tool" title="Open full screen in new tab">↗️ Fullscreen</a>
-          <button id="btnModalClose" class="btn-tool" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">✖ Close</button>
+          <button id="btnModalReload" class="btn-tool" title="Reload frame">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+          </button>
+          <a id="btnModalExternal" href="#" target="_blank" class="btn-tool" title="Open full screen in new tab">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <span>Fullscreen</span>
+          </a>
+          <button id="btnModalClose" class="btn-tool" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5;">Close</button>
         </div>
       </div>
       <div class="modal-iframe-stage">
@@ -1227,31 +1267,33 @@
 
   <!-- Keyboard Shortcuts Modal -->
   <div class="preview-modal-backdrop" id="shortcutsModalBackdrop">
-    <div class="spec-modal-box" style="max-width: 480px;">
+    <div class="spec-modal-box" style="max-width: 460px;">
       <div class="spec-header">
-        <h3 style="font-size: 18px; font-weight: 800;">⌨️ Keyboard Shortcuts</h3>
-        <button id="btnCloseShortcuts" class="btn-tool" style="padding: 4px 8px;">✖</button>
+        <h3 style="font-size: 16px; font-weight: 700;">Keyboard Shortcuts</h3>
+        <button id="btnCloseShortcuts" class="btn-tool" style="padding: 4px 8px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13.5px; margin-top: 10px;">
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 11px; font-size: 13px; margin-top: 8px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 7px;">
           <span style="color: #cbd5e1;">Instant Search Focus</span>
-          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">/</kbd>
+          <kbd style="background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 4px; font-family: monospace;">/</kbd>
         </div>
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
-          <span style="color: #cbd5e1;">Cycle View (Cards → Workspace → Matrix)</span>
-          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">V</kbd>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 7px;">
+          <span style="color: #cbd5e1;">Cycle View (Grid → Split → Table)</span>
+          <kbd style="background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 4px; font-family: monospace;">V</kbd>
         </div>
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
-          <span style="color: #cbd5e1;">Toggle Sound FX</span>
-          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">M</kbd>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 7px;">
+          <span style="color: #cbd5e1;">Toggle Audio FX</span>
+          <kbd style="background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 4px; font-family: monospace;">M</kbd>
         </div>
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 7px;">
           <span style="color: #cbd5e1;">Quick Launch Projects 1 to 9</span>
-          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">1 - 9</kbd>
+          <kbd style="background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 4px; font-family: monospace;">1 - 9</kbd>
         </div>
         <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
-          <span style="color: #cbd5e1;">Close Any Modal / Preview</span>
-          <kbd style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">Esc</kbd>
+          <span style="color: #cbd5e1;">Close Modal / Preview</span>
+          <kbd style="background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 4px; font-family: monospace;">Esc</kbd>
         </div>
       </div>
     </div>
@@ -1263,12 +1305,12 @@
   <!-- Hub Footer -->
   <footer class="hub-footer">
     <div class="footer-content">
-      <p style="font-weight: 700; color: #ffffff; font-size: 14px;">Bharat Space Education Research Centre · GenAI Internship</p>
-      <p style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Week 2 Curriculum Portfolio · Instructor: Karan Bagul · Engineer: Ritik Chawla</p>
+      <p style="font-weight: 600; color: #ffffff; font-size: 13.5px;">Bharat Space Education Research Centre · GenAI Internship</p>
+      <p style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Curriculum Engineering Portfolio · Ritik Chawla</p>
       <div class="footer-links">
-        <a href="prompts.md">Prompts Log (prompts.md)</a>
-        <a href="README.md">Executive README</a>
-        <a href="verify-suite.js">Regression Test Suite</a>
+        <a href="prompts.md">Prompts Log</a>
+        <a href="README.md">Documentation</a>
+        <a href="verify-suite.js">Test Suite</a>
       </div>
     </div>
   </footer>
@@ -1328,7 +1370,7 @@
     }
     const sound = new SoundEngine();
 
-    // --- 2. Ambient Particle Canvas ---
+    // --- 2. Ambient Canvas ---
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
     let width, height, particles = [];
@@ -1340,14 +1382,14 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 28; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 1.4 + 0.5,
+        alpha: Math.random() * 0.35 + 0.08
       });
     }
 
@@ -1370,7 +1412,7 @@
     }
     renderAmbient();
 
-    // --- 3. Master Projects Data Registry (All 17 Projects) ---
+    // --- 3. Projects Registry ---
     const PROJECTS = [
       {
         num: 1,
@@ -1668,7 +1710,7 @@
     let currentDifficulty = 'all';
     let currentSearch = '';
     let currentSort = 'num';
-    let activeView = 'grid'; // 'grid' | 'workspace' | 'table'
+    let activeView = 'grid';
     let activeWorkspaceProj = PROJECTS[0];
 
     // DOM References
@@ -1709,10 +1751,13 @@
     const soundStatus = document.getElementById('soundStatus');
     const soundIcon = document.getElementById('soundIcon');
 
+    const SVG_SOUND_ON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+    const SVG_SOUND_MUTED = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+
     function showToast(msg) {
       toastPill.textContent = msg;
       toastPill.classList.add('show');
-      setTimeout(() => toastPill.classList.remove('show'), 2200);
+      setTimeout(() => toastPill.classList.remove('show'), 2000);
     }
 
     function getFilteredProjects() {
@@ -1740,8 +1785,7 @@
       if (list.length === 0) {
         gridContainer.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
-            <div style="font-size: 40px; margin-bottom: 12px;">🔍</div>
-            <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 6px;">No matching projects found</h3>
+            <h3 style="color: #ffffff; font-size: 16px; margin-bottom: 6px;">No matching projects found</h3>
             <p style="font-size: 13px;">Try clearing your search query or switching categories.</p>
           </div>
         `;
@@ -1767,13 +1811,16 @@
           </div>
           <div class="card-actions">
             <button class="btn-action btn-preview" onclick="openLivePreview(${p.num})">
-              <span>⚡</span> Live Preview
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>Preview</span>
             </button>
             <a href="${p.url}" class="btn-action btn-launch" onclick="sound.playLaunch()">
-              <span>🚀</span> Launch
+              <span>Launch</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
             <button class="btn-spec-link" onclick="openSpecModal(${p.num})">
-              <span>📋</span> View Curriculum Specs & Verification
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              <span>Specifications &amp; Verification</span>
             </button>
           </div>
         `;
@@ -1792,7 +1839,7 @@
             <div class="ws-item-title">${p.title}</div>
             <div class="ws-item-sub">${p.difficulty} · ${p.tech[0]}</div>
           </div>
-          <span style="font-size: 12px; opacity: 0.6;">➔</span>
+          <span style="font-size: 11px; opacity: 0.5;">→</span>
         `;
         item.addEventListener('click', () => {
           sound.playClick();
@@ -1817,12 +1864,12 @@
         const diffClass = p.difficulty === 'Tough' ? 'diff-tough' : (p.difficulty === 'Medium' ? 'diff-medium' : 'diff-level');
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td style="font-weight: 800; color: #818cf8;">#${p.num < 10 ? '0' : ''}${p.num}</td>
+          <td style="font-weight: 700; color: #818cf8;">#${p.num < 10 ? '0' : ''}${p.num}</td>
           <td>
-            <div style="font-weight: 700; color: #ffffff;">${p.title}</div>
-            <div style="font-size: 11.5px; color: var(--text-muted);">${p.folder}</div>
+            <div style="font-weight: 600; color: #ffffff;">${p.title}</div>
+            <div style="font-size: 11px; color: var(--text-muted);">${p.folder}</div>
           </td>
-          <td><span style="color: #38bdf8; font-size: 12px;">${p.section}</span></td>
+          <td><span style="color: #38bdf8; font-size: 11.5px;">${p.section}</span></td>
           <td><span class="diff-tag ${diffClass}">${p.difficulty}</span></td>
           <td>
             <div style="display: flex; gap: 4px; flex-wrap: wrap;">
@@ -1830,13 +1877,13 @@
             </div>
           </td>
           <td>
-            <span class="status-badge-live" style="font-size: 10px; padding: 2px 8px;">
+            <span class="status-badge-live" style="font-size: 10px; padding: 2px 7px;">
               <span class="pulse-dot" style="width: 5px; height: 5px;"></span> Verified
             </span>
           </td>
           <td style="text-align: right; white-space: nowrap;">
-            <button class="btn-tool" style="padding: 4px 10px; font-size: 11px;" onclick="openLivePreview(${p.num})">⚡ Preview</button>
-            <a href="${p.url}" class="btn-tool btn-launch" style="padding: 4px 12px; font-size: 11px; margin-left: 6px;" onclick="sound.playLaunch()">🚀 Launch</a>
+            <button class="btn-tool" style="padding: 4px 10px; font-size: 11px;" onclick="openLivePreview(${p.num})">Preview</button>
+            <a href="${p.url}" class="btn-tool btn-launch" style="padding: 4px 12px; font-size: 11px; margin-left: 6px;" onclick="sound.playLaunch()">Launch</a>
           </td>
         `;
         matrixTableBody.appendChild(row);
@@ -1926,28 +1973,30 @@
         <div class="spec-header">
           <div>
             <span class="proj-badge-num">SPECIFICATION · PROJECT ${p.num < 10 ? '0' : ''}${p.num}</span>
-            <h3 style="font-size: 22px; font-weight: 800; color: #ffffff; margin-top: 6px;">${p.title}</h3>
+            <h3 style="font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 6px;">${p.title}</h3>
             <p style="font-size: 12px; color: #38bdf8;">${p.section}</p>
           </div>
-          <button class="btn-tool" onclick="closeSpecModal()" style="padding: 4px 8px;">✖</button>
+          <button class="btn-tool" onclick="closeSpecModal()" style="padding: 4px 8px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
         
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
-          <h4 style="font-size: 12px; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px;">Objective & Scope</h4>
-          <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">${p.desc}</p>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <h4 style="font-size: 11px; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; letter-spacing: 0.5px;">Objective &amp; Scope</h4>
+          <p style="font-size: 13px; color: #cbd5e1; line-height: 1.55;">${p.desc}</p>
         </div>
 
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
-          <h4 style="font-size: 12px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px;">Curriculum "Done When" Compliance Verification</h4>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <h4 style="font-size: 11px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; letter-spacing: 0.5px;">Acceptance Criteria Verification</h4>
           <ul class="spec-checklist">
             ${p.doneWhen.map(item => `<li><span class="check-ico">✓</span> <span>${item}</span></li>`).join('')}
           </ul>
         </div>
 
-        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
-          <a href="${p.folder}/README.md" target="_blank" class="btn-tool">📄 README</a>
-          <a href="${p.folder}/verification.md" target="_blank" class="btn-tool">✅ Verification Audit</a>
-          <a href="${p.url}" target="_blank" class="btn-tool btn-launch" onclick="sound.playLaunch()">🚀 Launch App</a>
+        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px;">
+          <a href="${p.folder}/README.md" target="_blank" class="btn-tool">README</a>
+          <a href="${p.folder}/verification.md" target="_blank" class="btn-tool">Verification Audit</a>
+          <a href="${p.url}" target="_blank" class="btn-tool btn-launch" onclick="sound.playLaunch()">Launch Application</a>
         </div>
       `;
       specModalBackdrop.classList.add('active');
@@ -2016,9 +2065,9 @@
     // Sound toggle
     btnSoundToggle.addEventListener('click', () => {
       sound.enabled = !sound.enabled;
-      soundStatus.textContent = sound.enabled ? 'ON' : 'OFF';
-      soundIcon.textContent = sound.enabled ? '🔊' : '🔇';
-      showToast(sound.enabled ? '🔊 Sound Effects Enabled' : '🔇 Sound Effects Muted');
+      soundStatus.textContent = sound.enabled ? 'On' : 'Muted';
+      soundIcon.innerHTML = sound.enabled ? SVG_SOUND_ON : SVG_SOUND_MUTED;
+      showToast(sound.enabled ? 'Audio feedback enabled' : 'Audio feedback muted');
       if (sound.enabled) sound.playClick();
     });
 
@@ -2054,7 +2103,6 @@
         searchInput.focus();
         searchInput.select();
       } else if ((e.key === 'v' || e.key === 'V') && document.activeElement !== searchInput) {
-        // Cycle views
         if (activeView === 'grid') btnViewWorkspace.click();
         else if (activeView === 'workspace') btnViewTable.click();
         else btnViewGrid.click();
@@ -2065,7 +2113,7 @@
         btnHelpShortcuts.click();
       } else if ((e.key === 'h' || e.key === 'H') && document.activeElement !== searchInput) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        showToast('🏠 Project Hub — 17 Projects Active');
+        showToast('Project Hub — 17 Projects Active');
       } else if (['1','2','3','4','5','6','7','8','9'].includes(e.key) && document.activeElement !== searchInput) {
         const num = parseInt(e.key, 10);
         openLivePreview(num);

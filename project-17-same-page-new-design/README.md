@@ -4,29 +4,29 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 A controlled before-and-after UI/UX redesign case study across 3 real ventures, proving that visual hierarchy, typography, and layout elevate perceived value while preserving 100% verbatim copy.
 
-## 🛠️ Ventures Analyzed
+## Case Study Ventures
 1. **TechNova 2026:** National AI & Robotics Symposium landing page.
 2. **Chai & Co.:** Artisanal Indian Street Tea brand menu.
 3. **Bright Path Classes:** IIT-JEE & NEET Coaching Institute admissions page.
 
-## 📐 5 Documented Design Pillars
+## Five Documented Design Pillars
 - Visual Hierarchy & Typographic Scale
 - 8pt Spatial Grid & Layout Breathing Room
 - Intentional Color Psychology & Accessible Contrast (WCAG AAA)
 - Modern Component Card Architecture
 - Delightful Micro-Interactions & Hover States
 
-## 🚀 How to Run
+## Execution & Setup
 Open `index.html` directly in any browser:
 ```bash
 python3 -m http.server 8080
 ```
 Navigate to `http://localhost:8080/project-17-same-page-new-design/`.
 
-## ✅ "Done When" Verification
+## Verification & Acceptance Criteria
 - [x] Every single word and heading in `after.html` matches `before.html` 100% verbatim.
 - [x] Layout is fully responsive across mobile, tablet, and desktop viewports.
 - [x] Formal UX audit in `design-report.md` documents 5 specific design enhancements.

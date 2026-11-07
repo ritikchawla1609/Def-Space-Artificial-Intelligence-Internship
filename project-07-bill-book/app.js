@@ -351,7 +351,7 @@
     if (currentBill.taxVal > 0) text += `GST: +₹${currentBill.taxVal.toFixed(2)}\n`;
     text += `*TOTAL AMOUNT: ₹${currentBill.grandTotal}*\n\n`;
     text += `Pay instantly via UPI:\nupi://pay?pa=${shopProfile.upiId}&pn=${encodeURIComponent(shopProfile.name)}&am=${currentBill.grandTotal}&cu=INR\n`;
-    text += `Thank you for your visit! 🙏`;
+    text += `Thank you for your business!`;
 
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');

@@ -279,7 +279,7 @@
 
     btnSoundToggle.addEventListener('click', () => {
       isMuted = !isMuted;
-      btnSoundToggle.textContent = isMuted ? '🔇' : '🔊';
+      btnSoundToggle.textContent = isMuted ? 'Muted' : 'SFX: On';
     });
 
     btnStartGame.addEventListener('click', startRace);

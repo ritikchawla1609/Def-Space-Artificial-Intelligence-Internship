@@ -13,7 +13,7 @@
     <header class="game-hud">
       <a href="../project-hub.html" class="nav-back-pill" title="Return to Project Hub (Press H or Esc)">← Project Hub</a>
       <div class="hud-item coins">
-        <span>🪙</span>
+        <span>Coins:</span>
         <strong id="hudCoinCount">0</strong>
       </div>
       <div class="hud-item lap">
@@ -25,7 +25,7 @@
       <div class="hud-item best">
         <span>Best: <strong id="hudBestTime">--:--</strong></span>
       </div>
-      <button id="btnSoundToggle" class="btn-sound" title="Mute / Unmute Audio">🔊</button>
+      <button id="btnSoundToggle" class="btn-sound" title="Mute / Unmute Audio">SFX</button>
     </header>
 
     <!-- Main Arcade Canvas -->
@@ -35,15 +35,15 @@
       <!-- Start / Ready Overlay -->
       <div class="game-overlay" id="startOverlay">
         <div class="overlay-card">
-          <h1>🛺 AUTO RALLY</h1>
+          <h1>AUTO RALLY</h1>
           <p class="tagline">The Ultimate Desi Highway Championship</p>
           <div class="rules-box">
             <div>• Complete <strong>3 Laps</strong> in record time</div>
-            <div>• Collect <strong>🪙 Coins</strong> & <strong>☕ Chai Boosts</strong></div>
-            <div>• Dodge <strong>🐄 Cows</strong>, <strong>🕳️ Potholes</strong> & <strong>🚌 Buses</strong></div>
+            <div>• Collect <strong>Coins</strong> & <strong>Chai Boosts</strong></div>
+            <div>• Dodge <strong>Cows</strong>, <strong>Potholes</strong> & <strong>Buses</strong></div>
             <div>• Controls: <strong>Arrow/WASD · Space/B Honk · Shift Nitro</strong></div>
           </div>
-          <button id="btnStartGame" class="btn btn-start">START RACE 🏁</button>
+          <button id="btnStartGame" class="btn btn-start">START RACE</button>
         </div>
       </div>
 
@@ -55,7 +55,7 @@
           <div class="victory-time-box">
             <span class="lbl">Total Race Time:</span>
             <div class="val" id="vicTotalTime">1:42.8</div>
-            <div class="best-badge" id="vicNewBestBadge" style="display:none;">🎉 NEW TRACK RECORD!</div>
+            <div class="best-badge" id="vicNewBestBadge" style="display:none;">NEW TRACK RECORD!</div>
           </div>
           <div class="lap-splits-grid">
             <div>Lap 1: <strong id="splitLap1">0:35.2</strong></div>
@@ -63,9 +63,9 @@
             <div>Lap 3: <strong id="splitLap3">0:34.2</strong></div>
           </div>
           <div class="coins-summary">
-            🪙 Coins Collected: <strong id="vicCoinsCollected">24</strong> (+5s bonus)
+            Coins Collected: <strong id="vicCoinsCollected">24</strong> (+5s bonus)
           </div>
-          <button id="btnPlayAgain" class="btn btn-start">PASS PHONE TO FRIEND 📱</button>
+          <button id="btnPlayAgain" class="btn btn-start">PASS DEVICE TO FRIEND</button>
         </div>
       </div>
     </div>
@@ -77,9 +77,9 @@
         <button id="btnTouchRight" class="touch-btn steer-btn" aria-label="Steer Right">STEER ▶</button>
       </div>
       <div class="touch-group action-group">
-        <button id="btnTouchHonk" class="touch-btn action-btn-small" aria-label="Horn">📯 POM!</button>
-        <button id="btnTouchNitro" class="touch-btn nitro-btn" aria-label="Nitro Boost">☕ NITRO</button>
-        <button id="btnTouchGas" class="touch-btn gas-btn" aria-label="Accelerate">GAS ⚡</button>
+        <button id="btnTouchHonk" class="touch-btn action-btn-small" aria-label="Horn">POM!</button>
+        <button id="btnTouchNitro" class="touch-btn nitro-btn" aria-label="Nitro Boost">NITRO</button>
+        <button id="btnTouchGas" class="touch-btn gas-btn" aria-label="Accelerate">GAS</button>
       </div>
     </div>
   </div>

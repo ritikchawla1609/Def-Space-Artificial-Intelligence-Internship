@@ -111,7 +111,7 @@ The retrieved documents are then concatenated into the prompt context for synthe
     md += `*Exported via Chat Saver Extension · ${new Date().toLocaleDateString()}*\n\n---\n\n`;
 
     chatData.messages.forEach((msg, idx) => {
-      const speaker = msg.role === 'user' ? '👤 **User**' : '🤖 **Assistant**';
+      const speaker = msg.role === 'user' ? '**User**' : '**Assistant**';
       md += `### ${speaker} (Message ${idx + 1})\n\n`;
       md += `${msg.text}\n\n---\n\n`;
     });

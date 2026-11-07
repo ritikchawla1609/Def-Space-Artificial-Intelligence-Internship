@@ -51,11 +51,11 @@
   ```text
   ROAST VERDICT: 48% MATCH (Observer, not an impact-driven engineer)
   
-  🚨 Critical Missing Skills:
+  Critical Missing Skills:
   - Job requires production Docker & Kubernetes. Your resume has ZERO mention.
   - Job requires quantitative metrics. You have zero numbers or latency metrics.
   
-  💥 Bullet Rewrites:
+  Bullet Rewrites:
   • OLD: "Worked on backend APIs using Python and Flask."
     NEW: "Engineered 14 RESTful microservices in Python/Flask with Redis caching, supporting 2,500 daily requests with 99.9% uptime."
   ```
